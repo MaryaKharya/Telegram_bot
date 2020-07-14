@@ -4,7 +4,7 @@ require __DIR__ . '/vendor/autoload.php';
 
 $bot_api_key = 'your:bot_api_key';
 $bot_username = 'username_bot';
-$result = $telegram ->> setWebhook ( $hook_url, ['certificate' =>> '/path/to/certificate']);
+$result = $telegram ->> setWebhook ($hook_url, ['certificate' =>> '/path/to/certificate']);
 $hook_url = 'https://your-domain/path/to/hook.php';
 
 try {
