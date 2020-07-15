@@ -1,16 +1,26 @@
  <?php
+ function sendMessage($chat_id, $message) 
+ {
+ file_get_contents($GLOBALS['api'] . '/sendMessage?chat_id=' . $chat_id . '&text=' . urlencode($message));
+ }
  
-$body = file_get_contents('php://input'); 
-$arr = json_decode($body, true); 
+ $access_token = '794519976:AAFVA4NguNYVsSymwPqn0iVHrBVoDIeMNnE';
+ $api = 'https://api.telegram.org/bot' . $access_token;
  
-include_once ('telegramgclass.php');   
-
-$tg = new tg('794519976:AAFVA4NguNYVsSymwPqn0iVHrBVoDIeMNnE');
-
-$chat_id = $arr['message']['chat']['id'];
-$userTgId = $arr['message']['from']['id'];
-$text = $arr['message']['text'];
-$coord1 = $arr['message']['location']['latitude'];
-$coord2 = $arr['message']['location']['longitude'];
-
-$tg->send($chat_id, "Нас не догонят!");
+ 
+ $output = json_decode(file_get_contents('php://input'), TRUE);
+ $chat_id = $output['message']['chat']['id'];
+ $first_name = $output['message']['chat']['first_name'];
+ $message = $output['message']['text'];
+ 
+if ($message)
+{
+    if ($message == "/start")
+    {
+        $preload_text = $first_name . ', добро пожаловть!';
+    }
+	else
+	{
+		$preload_text = $first_name . ', я пока не умею отвечать!';
+	}
+ sendMessage($chat_id, $preload_text);
