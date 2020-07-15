@@ -10,4 +10,4 @@
  $message = $output['message']['text'];
  
  $preload_text = $first_name . ', я получила ваше сообщение!';
-$tg->send($chat_id, $preload_text);
+$access_token->send($chat_id, $preload_text);
