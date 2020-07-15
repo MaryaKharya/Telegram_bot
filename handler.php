@@ -23,4 +23,5 @@ if ($message)
 	{
 		$preload_text = $first_name . ', я пока не умею отвечать!';
 	}
+}
  sendMessage($chat_id, $preload_text);
