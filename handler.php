@@ -1,27 +1,23 @@
- <?php
- function sendMessage($chat_id, $message) 
- {
- file_get_contents($GLOBALS['api'] . '/sendMessage?chat_id=' . $chat_id . '&text=' . urlencode($message));
- }
+<?php
+header('Content-Type: text/html; charset=utf-8');
  
- $access_token = '794519976:AAFVA4NguNYVsSymwPqn0iVHrBVoDIeMNnE';
- $api = 'https://api.telegram.org/bot' . $access_token;
+require_once("vendor/autoload.php");
+
+$access_token = '794519976:AAFVA4NguNYVsSymwPqn0iVHrBVoDIeMNnE';
+$bot = new \TelegramBot\Api\Client($token);
  
- 
- $output = json_decode(file_get_contents('php://input'), TRUE);
- $chat_id = $output['message']['chat']['id'];
- $first_name = $output['message']['chat']['first_name'];
- $message = $output['message']['text'];
- 
-if ($message)
-{
-    if ($message == "/start")
-    {
-        $preload_text = $first_name . ', добро пожаловть!';
-    }
-	else
-	{
-		$preload_text = $first_name . ', я пока не умею отвечать!';
-	}
-}
- sendMessage($chat_id, $preload_text);
+// обязательное. Запуск бота
+$bot->command('start', function ($message) use ($bot) {
+    $answer = 'Добро пожаловать!';
+    $bot->sendMessage($message->getChat()->getId(), $answer);
+});
+
+// помощ
+$bot->command('help', function ($message) use ($bot) {
+    $answer = 'Команды:
+/help - помощ';
+    $bot->sendMessage($message->getChat()->getId(), $answer);
+});
+
+// запускаем обработку
+$bot->run();
