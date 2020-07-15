@@ -4,7 +4,7 @@
  file_get_contents($GLOBALS['api'] . '/sendMessage?chat_id=' . $chat_id . '&text=' . urlencode($message));
  }
  
- $access_token = 'YOUR TOKEN';
+ $access_token = '794519976:AAFVA4NguNYVsSymwPqn0iVHrBVoDIeMNnE';
  $api = 'https://api.telegram.org/bot' . $access_token;
  
  
