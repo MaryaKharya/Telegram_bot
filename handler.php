@@ -1,13 +1,16 @@
  <?php
  
- $access_token = '794519976:AAFVA4NguNYVsSymwPqn0iVHrBVoDIeMNnE';
- $api = 'https://api.telegram.org/bot' . $access_token;
+$body = file_get_contents('php://input'); 
+$arr = json_decode($body, true); 
  
- 
- $output = json_decode(file_get_contents('php://input'), TRUE);
- $chat_id = $output['message']['chat']['id'];
- $first_name = $output['message']['chat']['first_name'];
- $message = $output['message']['text'];
- 
- $preload_text = $first_name . ', я получила ваше сообщение!';
-$access_token->send($chat_id, $preload_text);
+include_once ('telegramgclass.php');   
+
+$tg = new tg('794519976:AAFVA4NguNYVsSymwPqn0iVHrBVoDIeMNnE');
+
+$chat_id = $arr['message']['chat']['id'];
+$userTgId = $arr['message']['from']['id'];
+$text = $arr['message']['text'];
+$coord1 = $arr['message']['location']['latitude'];
+$coord2 = $arr['message']['location']['longitude'];
+
+$tg->send($chat_id, "Нас не догонят!");
