@@ -1,8 +1,4 @@
  <?php
- function sendMessage($chat_id, $message) 
- {
- file_get_contents($GLOBALS['api'] . '/sendMessage?chat_id=' . $chat_id . '&text=' . urlencode($message));
- }
  
  $access_token = '794519976:AAFVA4NguNYVsSymwPqn0iVHrBVoDIeMNnE';
  $api = 'https://api.telegram.org/bot' . $access_token;
@@ -14,4 +10,4 @@
  $message = $output['message']['text'];
  
  $preload_text = $first_name . ', я получила ваше сообщение!';
- sendMessage($chat_id, $preload_text);
+$tg->send($chat_id, $preload_text);
