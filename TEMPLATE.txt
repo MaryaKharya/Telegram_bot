@@ -1,0 +1,10 @@
+[NewRequest]
+; В этом разделе должно быть хотя бы одно значение:
+Subject = "CN=DOMAIN.EXAMPLE"
+KeyLength = 2048
+KeyAlgorithm = RSA
+HashAlgorithm = sha256
+; MachineKeySet = true
+RequestType = Cert
+UseExistingKeySet=false ; Генерирует новый приватный ключ для экспорта
+Exportable = true ; Делает возможным экспорт приватного ключа в PFX
