@@ -103,7 +103,7 @@ if (!empty($data['message']['text'])) {
 			'sendPhoto', 
 			array(
 				'chat_id' => $data['message']['chat']['id'],
-				'photo' => curl_file_create(__DIR__ . '/torin.jpg')
+				'photo' => curl_file_create(__DIR__ . '/3b064388ab.jpg')
 			)
 		);
 		
