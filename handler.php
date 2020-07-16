@@ -31,5 +31,11 @@ $answer = 'Команды:
 /help - помощь';
 $bot->sendMessage($message->getChat()->getId(), $answer);
 });
+
+// передаем картинку
+$bot->command('getpic', function ($message) use ($bot) {
+$pic = "https://icopydoc.ru/wp-content/uploads/fortelegrambot.jpg";
+$bot->sendPhoto($message->getChat()->getId(), $pic);
+});
 // запускаем обработку
 $bot->run();
