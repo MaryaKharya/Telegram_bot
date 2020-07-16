@@ -1,5 +1,5 @@
 <?php
- 
+
 $data = file_get_contents('php://input');
 $data = json_decode($data, true);
  
@@ -103,7 +103,7 @@ if (!empty($data['message']['text'])) {
 			'sendPhoto', 
 			array(
 				'chat_id' => $data['message']['chat']['id'],
-				'photo' => curl_file_create(__DIR__ . '/torin.jpg')
+				'photo' => https://sun9-3.userapi.com/c10056/u81896685/-6/y_ba15737f.jpg
 			)
 		);
 		
