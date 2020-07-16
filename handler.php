@@ -20,6 +20,10 @@ $answer = 'Команды:
 $bot->sendMessage($message->getChat()->getId(), $answer);
 });
 
+    $bot->command('ping', function ($message) use ($bot) {
+        $bot->sendMessage($message->getChat()->getId(), 'pong!');
+    });
+
 // передаем картинку
 $bot->command('getpic', function ($message) use ($bot) {
 $pic = "https://icopydoc.ru/wp-content/uploads/fortelegrambot.jpg";
