@@ -1,20 +1,35 @@
  <?php
 
-require "../vendor/autoload.php";
-use \TelegramBot\Api;
-
-$bot = new \TelegramBot\Api\BotApi('794519976:AAFVA4NguNYVsSymwPqn0iVHrBVoDIeMNnE');
-
+header('Content-Type: text/html; charset=utf-8');
+// подключаемся к API
+require_once("vendor/autoload.php");
+// создаем переменную бота
+$token = "токен, который выдал BotFather";
+$bot = new \TelegramBot\Api\Client($token);
+// если Телеграм-бот не зарегистрирован - регистрируем
+if(!file_exists("registered.trigger")){
+/**
+* файл registered.trigger будет создаваться после регистрации бота.
+* если этого файла не существует, значит бот не
+* зарегистрирован в Телеграмм
+*/
+// URl текущей страницы
+$page_url = "https://".$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+$result = $bot->setWebhook($page_url);
+if($result){
+file_put_contents("registered.trigger",time()); // создаем файл дабы остановить повторные регистрации
+}
+}
+// обязательное. Запуск бота
 $bot->command('start', function ($message) use ($bot) {
-    $answer = 'Добро пожаловать!';
-    $bot->sendMessage($message->getChat()->getId(), $answer);
+$answer = 'Добро пожаловать!';
+$bot->sendMessage($message->getChat()->getId(), $answer);
 });
-
-// помощ
+// помощь
 $bot->command('help', function ($message) use ($bot) {
-    $answer = 'Команды:
-/help - помощ';
-    $bot->sendMessage($message->getChat()->getId(), $answer);
+$answer = 'Команды:
+/help - помощь';
+$bot->sendMessage($message->getChat()->getId(), $answer);
 });
-
+// запускаем обработку
 $bot->run();
