@@ -1,6 +1,5 @@
  <?php
     require "vendor/autoload.php"; //Подключаем библиотеку
-    use Telegram-bot\api; 
 
     $telegram = new \TelegramBot\Api\BotApi('794519976:AAFVA4NguNYVsSymwPqn0iVHrBVoDIeMNnE'); //Устанавливаем токен, полученный у BotFather
     $result = $telegram -> getWebhookUpdates(); //Передаем в переменную $result полную информацию о сообщении пользователя
