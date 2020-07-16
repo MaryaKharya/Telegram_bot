@@ -7,19 +7,7 @@ require_once("vendor/autoload.php");
 $token = "794519976:AAFVA4NguNYVsSymwPqn0iVHrBVoDIeMNnE";
 $bot = new \TelegramBot\Api\Client($token);
 // если Телеграм-бот не зарегистрирован - регистрируем
-if(!file_exists("registered.trigger")){
-/**
-* файл registered.trigger будет создаваться после регистрации бота.
-* если этого файла не существует, значит бот не
-* зарегистрирован в Телеграмм
-*/
-// URl текущей страницы
-$page_url = "https://".$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
-$result = $bot->setWebhook($page_url);
-if($result){
-file_put_contents("registered.trigger",time()); // создаем файл дабы остановить повторные регистрации
-}
-}
+
 // обязательное. Запуск бота
 $bot->command('start', function ($message) use ($bot) {
 $answer = 'Добро пожаловать!';
