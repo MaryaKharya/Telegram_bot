@@ -53,72 +53,34 @@ class Bot
         ], "sendMessage");
     }
 
-    // общая функция загрузки картинки
-    private function getPhoto($data)
-    {
-    	// берем последнюю картинку в массиве
-        $file_id = $data[count($data) - 1]['file_id'];
-        // получаем file_path
-        $file_path = $this->getPhotoPath($file_id);
-        // возвращаем результат загрузки фото
-        return $this->copyPhoto($file_path);
-    }
-
-    // функция получения метонахождения файла
-    private function getPhotoPath($file_id) {
-    	// получаем объект File
-        $array = json_decode($this->requestToTelegram(['file_id' => $file_id], "getFile"), TRUE);
-        // возвращаем file_path
-        return  $array['result']['file_path'];
-    }
-
-    // копируем фото к себе
-    private function copyPhoto($file_path) {
-    	// ссылка на файл в телеграме
-        $file_from_tgrm = "https://api.telegram.org/file/bot".$this->botToken."/".$file_path;
-        // достаем расширение файла
-        $ext =  end(explode(".", $file_path));
-        // назначаем свое имя здесь время_в_секундах.расширение_файла
-        $name_our_new_file = time().".".$ext;
-        return copy($file_from_tgrm, "img/".$name_our_new_file);
-    }
-
-    // функция логирования в файл
-    private function setFileLog($data, $file)
-    {
-        $fh = fopen($file, 'a') or die('can\'t open file');
-        ((is_array($data)) || (is_object($data))) ? fwrite($fh, print_r($data, TRUE) . "\n") : fwrite($fh, $data . "\n");
-        fclose($fh);
-    }
-
-    /**
-     * Парсим что приходит преобразуем в массив
-     * @param $data
-     * @return mixed
-     */
-    private function getData($data)
-    {
-        return json_decode(file_get_contents($data), TRUE);
-    }
-
-    /** Отправляем запрос в Телеграмм
-     * @param $data
-     * @param string $type
-     * @return mixed
-     */
-    private function requestToTelegram($data, $type)
-    {
-        $result = null;
-
-        if (is_array($data)) {
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $this->apiUrl . $this->botToken . '/' . $type);
-            curl_setopt($ch, CURLOPT_POST, count($data));
-            curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-            $result = curl_exec($ch);
-            curl_close($ch);
-        }
-        return $result;
+	public function getPhoto($data){
+		$out = $this->request('getFile', $data);        
+        return $out;
+	}  
+	
+	public function savePhoto($url,$puth){
+		$ch = curl_init('https://api.telegram.org/file/bot' . $this->token .  '/' . $url);
+		$fp = fopen($puth, 'wb');
+		curl_setopt($ch, CURLOPT_FILE, $fp);
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_exec($ch);
+		curl_close($ch);
+		fclose($fp);
+	}
+	
+    public  function request($method, $data = array()) {
+        $curl = curl_init(); 
+          
+        curl_setopt($curl, CURLOPT_URL, 'https://api.telegram.org/bot' . $this->token .  '/' . $method);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'POST');
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $data); 
+          
+        $out = json_decode(curl_exec($curl), true); 
+          
+        curl_close($curl); 
+          
+        return $out; 
     }
 }
