@@ -85,7 +85,7 @@ if (!empty($data['message']['document'])) {
 if (!empty($data['message']['text'])) {
 	$text = $data['message']['text'];
  
-	if (mb_stripos($text, 'привет') !== false) {
+	if ($text == 'привет') {
 		sendTelegram(
 			'sendMessage', 
 			array(
@@ -98,7 +98,7 @@ if (!empty($data['message']['text'])) {
 	} 
  
 	// Отправка фото.
-	if (mb_stripos($text, 'фото') !== false) {
+	if ($text == 'фото') {
 		sendTelegram(
 			'sendPhoto', 
 			array(
@@ -111,7 +111,7 @@ if (!empty($data['message']['text'])) {
 	}
  
 	// Отправка файла.
-	if (mb_stripos($text, 'файл') !== false) {
+	if ($text == 'файл') {
 		sendTelegram(
 			'sendDocument', 
 			array(
