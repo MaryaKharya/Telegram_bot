@@ -4,7 +4,7 @@ header('Content-Type: text/html; charset=utf-8');
 // подключаемся к API
 require_once("vendor/autoload.php");
 // создаем переменную бота
-$token = "токен, который выдал BotFather";
+$token = "794519976:AAFVA4NguNYVsSymwPqn0iVHrBVoDIeMNnE";
 $bot = new \TelegramBot\Api\Client($token);
 // если Телеграм-бот не зарегистрирован - регистрируем
 if(!file_exists("registered.trigger")){
