@@ -9,7 +9,8 @@
         }
     ],
     "require": {
-        "telegram-bot/api": "^2.3"
+        "telegram-bot/api": "^2.3",
+		"imgix/imgix-php": "dev-main"
     },
     "require-dev": {
         "heroku/heroku-buildpack-php": "*"
