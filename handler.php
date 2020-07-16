@@ -8,11 +8,6 @@ $token = "794519976:AAFVA4NguNYVsSymwPqn0iVHrBVoDIeMNnE";
 $bot = new \TelegramBot\Api\Client($token);
 // если Телеграм-бот не зарегистрирован - регистрируем
 // обязательное. Запуск бота
-$input = $message->getText();
-if ($input == 'Маря')
-{
-	$bot->sendMessage($message->getChat()->getId(), 'Приветствую создателя!');
-}
 $bot->command('start', function ($message) use ($bot) {
 $answer = 'Добро пожаловать!';
 $bot->sendMessage($message->getChat()->getId(), $answer);
