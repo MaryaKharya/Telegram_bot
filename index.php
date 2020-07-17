@@ -38,16 +38,13 @@ if (!empty($data['message']['photo'])) {
         $src = 'https://api.telegram.org/file/bot' . TOKEN . '/' . $res['result']['file_path'];
         $dest = __DIR__ . '/' . basename($src);
  
-        if (copy($src, $dest)) {
             sendTelegram(
-                'sendMessage', 
+                'sendPhoto', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => $_FILES['userfile']['tmp_name'] 
+                    'photo' => $src
                 )
             );
-            
-        }
     }
     
     exit(); 
