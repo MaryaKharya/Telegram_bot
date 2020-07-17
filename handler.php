@@ -8,7 +8,13 @@ if (empty($data['message']['chat']['id'])) {
 }
  
 define('TOKEN', '794519976:AAFVA4NguNYVsSymwPqn0iVHrBVoDIeMNnE');
- 
+
+ob_start();
+print_r($data);
+$out = ob_get_clean(); 
+file_put_contents(__DIR__ . '/message.txt', $out);
+
+
 // Функция вызова методов API.
 function sendTelegram($method, $response)
 {
