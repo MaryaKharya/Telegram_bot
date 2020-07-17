@@ -42,7 +42,7 @@ if (!empty($data['message']['photo'])) {
                 'sendPhoto', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'photo' => curl_file_create(/app/file_8.jpg)
+                    'photo' => curl_file_create($dest)
                 )
             );
     }
