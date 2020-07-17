@@ -103,7 +103,7 @@ if (!empty($data['message']['text'])) {
             'sendPhoto', 
             array(
                 'chat_id' => $data['message']['chat']['id'],
-                'photo' => 'https://api.telegram.org/file/bot' . TOKEN . '/' . 'photos/file_7.jpg'
+                'photo' => 'https://api.telegram.org/file/bot' . TOKEN . '/' . 'file_7.jpg'
             )
         );
         
