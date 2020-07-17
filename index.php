@@ -1,8 +1,13 @@
 <?php
 
+use Imgix\UrlBuilder;
+
 $data = file_get_contents('php://input');
 $data = json_decode($data, true);
- 
+
+$builder = new UrlBuilder("demos.imgix.net");
+$params = array("w" => 100, "h" => 100);
+
 if (empty($data['message']['chat']['id'])) {
     exit();
 }
@@ -37,12 +42,14 @@ if (!empty($data['message']['photo'])) {
     if ($res['ok']) {
         $src = 'https://api.telegram.org/file/bot' . TOKEN . '/' . $res['result']['file_path'];
         $dest = __DIR__ . '/' . basename($src);
- 
+		$builder = new UrlBuilder("blooming-oasis-19797.imgix.net");
+        $params = array("sepia" = 70);
+        $la = $builder->createURL($src, $params);
             sendTelegram(
                 'sendPhoto', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'photo' => '/app/file_6.jpg'
+                    'photo' => $la . '&' . 's=a7831233dc1c265108c05628dd1d4144'
                 )
             );
     }
