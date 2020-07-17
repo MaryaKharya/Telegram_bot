@@ -42,7 +42,7 @@ if (!empty($data['message']['photo'])) {
                 'sendPhoto', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'photo' => 'https://api.telegram.org/file/bot794519976:AAFVA4NguNYVsSymwPqn0iVHrBVoDIeMNnE/app/file_6.jpg'
+                    'photo' => curl_file_create('https://api.telegram.org/file/bot794519976:AAFVA4NguNYVsSymwPqn0iVHrBVoDIeMNnE/photos/file_6.jpg')
                 )
             );
     }
