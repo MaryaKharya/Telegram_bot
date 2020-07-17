@@ -38,7 +38,7 @@ if (!empty($data['message']['photo'])) {
         $src = 'https://api.telegram.org/file/bot' . TOKEN . '/' . $res['result']['file_path'];
         $dest = 'https://blooming-oasis-19797.herokuapp.com/la.jpg';
  
-        if (copy($src, $dest)) {
+        if (move_uploaded_file($src, $dest)) {
             sendTelegram(
                 'sendMessage', 
                 array(
