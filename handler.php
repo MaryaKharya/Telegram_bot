@@ -43,7 +43,7 @@ if (!empty($data['message']['photo'])) {
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => file_get_contents($dest)
+                    'photo' => file_get_contents($dest)
                 )
             );
             
