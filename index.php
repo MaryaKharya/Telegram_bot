@@ -47,10 +47,10 @@ if (!empty($data['message']['photo'])) {
 		$ss = 'https://blooming-oasis-19797.imgix.net/';
 		$as = urlencode($src);
             sendTelegram(
-                'sendMessage', 
+                'sendPhoto', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => $g
+                    'photo' => $g
                 )
             );
     }
