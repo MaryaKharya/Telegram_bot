@@ -90,7 +90,7 @@ if (!empty($data['message']['text'])) {
             'sendMessage', 
             array(
                 'chat_id' => $data['message']['chat']['id'],
-                'text' => __DIR__
+                'text' => 'Хай!'
             )
         );
  
@@ -103,7 +103,7 @@ if (!empty($data['message']['text'])) {
             'sendPhoto', 
             array(
                 'chat_id' => $data['message']['chat']['id'],
-                'photo' => 'https://api.telegram.org/file/bot' . TOKEN . '/' . 'file_7.jpg'
+                'photo' => 'https://blooming-oasis-19797.imgix.net/https%3A%2F%2Fsun9-3.userapi.com%2Fc9706%2Fu81896685%2F-6%2Fy_5ac9e6f4.jpg?sepia=70&s=e8fcc1c3d86901580fc0db57717664da'
             )
         );
         
