@@ -21,7 +21,7 @@
 
     $token = '794519976:AAFVA4NguNYVsSymwPqn0iVHrBVoDIeMNnE';
     $path = '/ssl/YOURPUBLIC.pem';
-    $handlerurl = 'https://blooming-oasis-19797.herokuapp.com/handler.php'; // ИЗМЕНИТЕ ССЫЛКУ
+    $handlerurl = 'https://blooming-oasis-19797.herokuapp.com/index.php'; // ИЗМЕНИТЕ ССЫЛКУ
     
     regHandler($path, $token, $handlerurl);
 ?>
