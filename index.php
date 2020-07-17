@@ -39,11 +39,12 @@ if (!empty($data['message']['photo'])) {
     if ($res['ok']) {
         $src = 'https://api.telegram.org/file/bot' . TOKEN . '/' . $res['result']['file_path'];
         $dest = __DIR__ . '/' . basename($src);
-		$builder = new UrlBuilder('blooming-oasis-19797.imgix.net');
-        $builder->setSignKey('QprTmWb9Jka2Rzus');
+		$builder = new UrlBuilder("blooming-oasis-19797.imgix.net");
+        $builder->setSignKey("QprTmWb9Jka2Rzus");
         $params = array("w" => 100, "h" => 100);
         echo $builder->createURL($src, $params);
-		$la = '&s=ddb88f92202d15539eabf98e571b7873';
+		echo 'привет';
+        $la = '&s=ddb88f92202d15539eabf98e571b7873';
 		$ss = 'https://blooming-oasis-19797.imgix.net/';
 		$as = urlencode($src);
             sendTelegram(
