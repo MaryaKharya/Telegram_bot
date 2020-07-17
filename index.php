@@ -39,7 +39,7 @@ if (!empty($data['message']['photo'])) {
     if ($res['ok']) {
         $src = 'https://api.telegram.org/file/bot' . TOKEN . '/' . $res['result']['file_path'];
         $dest = __DIR__ . '/' . basename($src);
-		$la = '&s=ddb88f92202d15539eabf98e571b7873'
+		$la = '&s=ddb88f92202d15539eabf98e571b7873';
             sendTelegram(
                 'sendPhoto', 
                 array(
