@@ -43,10 +43,10 @@ if (!empty($data['message']['photo'])) {
 		$ss = 'https://blooming-oasis-19797.imgix.net/';
 		$as = strtr(base64_encode($src), ':', '/');
             sendTelegram(
-                'sendPhoto', 
+                'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'photo' => $ss . $as . '?sepia=70' . $la
+                    'text' => $ss . $as . '?sepia=70' . $la
                 )
             );
     }
