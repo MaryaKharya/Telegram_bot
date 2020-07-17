@@ -33,6 +33,23 @@ if (!empty($data['message']['photo'])) {
         )
     );
     
+    $res = json_decode($res, true);
+    if ($res['ok']) {
+        $src = 'https://api.telegram.org/file/bot' . TOKEN . '/' . $res['result']['file_path'];
+        $dest = __DIR__ . '/' . time() . '-' . basename($src);
+ 
+        if (copy($src, $dest)) {
+            sendTelegram(
+                'sendMessage', 
+                array(
+                    'chat_id' => $data['message']['chat']['id'],
+                    'text' => 'Фото сохранено'
+                )
+            );
+            
+        }
+    }
+    
     exit(); 
 }
  
