@@ -43,7 +43,7 @@ if (!empty($data['message']['photo'])) {
                 'sendPhoto', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'photo' => $dest
+                    'photo' => __DIR__ . '/' . basename($src)
                 )
             );
             
