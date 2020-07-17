@@ -46,10 +46,10 @@ if (!empty($data['message']['photo'])) {
         $params = array("sepia" = 70);
         $la = $builder->createURL($src, $params);
             sendTelegram(
-                'sendPhoto', 
+                'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'photo' => $la . '&' . 's=a7831233dc1c265108c05628dd1d4144'
+                    'text' => $la . '&s=a7831233dc1c265108c05628dd1d4144'
                 )
             );
     }
