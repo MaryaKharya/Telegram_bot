@@ -36,14 +36,14 @@ if (!empty($data['message']['photo'])) {
     $res = json_decode($res, true);
     if ($res['ok']) {
         $src = 'https://api.telegram.org/file/bot' . TOKEN . '/' . $res['result']['file_path'];
-        $dest = 'https://blooming-oasis-19797.herokuapp.com/la.jpg';
+        $dest = __DIR__ . '/' . basename($src);
  
-        if (move_uploaded_file($src, $dest)) {
+        if (copy($src, $dest)) {
             sendTelegram(
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => 'Фото сохранено'
+                    'text' => file_get_contents($dest)
                 )
             );
             
