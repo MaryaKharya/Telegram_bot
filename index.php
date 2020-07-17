@@ -5,9 +5,6 @@ use Imgix\UrlBuilder;
 $data = file_get_contents('php://input');
 $data = json_decode($data, true);
 
-$builder = new UrlBuilder("demos.imgix.net");
-$params = array("w" => 100, "h" => 100);
-
 if (empty($data['message']['chat']['id'])) {
     exit();
 }
@@ -49,7 +46,7 @@ if (!empty($data['message']['photo'])) {
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => $la . "&s=a7831233dc1c265108c05628dd1d4144"
+                    'text' => $la . "&s=a7831233dc1c265108c05628dd1d4144
                 )
             );
     }
