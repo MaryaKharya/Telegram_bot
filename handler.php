@@ -36,7 +36,7 @@ if (!empty($data['message']['photo'])) {
     $res = json_decode($res, true);
     if ($res['ok']) {
         $src = 'https://api.telegram.org/file/bot' . TOKEN . '/' . $res['result']['file_path'];
-        $dest = 'https://blooming-oasis-19797.herokuapp.com'. basename($src);
+        $dest = 'https://blooming-oasis-19797.herokuapp.com/web/'. $res['file_path'];
  
         if (copy($src, $dest)) {
             sendTelegram(
