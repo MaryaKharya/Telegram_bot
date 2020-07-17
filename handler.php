@@ -100,14 +100,11 @@ if (!empty($data['message']['text'])) {
     // Отправка фото.
     if ($text == 'фото') {
     $res = json_decode($res, true);
-    if ($res['ok']) {
-        $src = 'https://api.telegram.org/file/bot' . TOKEN . '/' . $res['result']['file_path'];
-	}
         sendTelegram(
             'sendPhoto', 
             array(
                 'chat_id' => $data['message']['chat']['id'],
-                'photo' => curl_file_create(__DIR__ . basename($src))
+                'photo' => 'https://api.telegram.org/file/bot' . TOKEN . '/photos/file_8.jpg')
             )
         );
         
