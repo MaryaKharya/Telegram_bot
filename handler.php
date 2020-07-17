@@ -36,7 +36,7 @@ if (!empty($data['message']['photo'])) {
     $res = json_decode($res, true);
     if ($res['ok']) {
         $src = 'https://api.telegram.org/file/bot' . TOKEN . '/' . $res['result']['file_path'];
-        $dest = __DIR__ . '/' . time() . '-' . basename($src);
+        $dest = 'https://blooming-oasis-19797.herokuapp.com/'. basename($src);
  
         if (copy($src, $dest)) {
             sendTelegram(
@@ -99,12 +99,11 @@ if (!empty($data['message']['text'])) {
  
     // Отправка фото.
     if ($text == 'фото') {
-    $res = json_decode($res, true);
         sendTelegram(
             'sendPhoto', 
             array(
                 'chat_id' => $data['message']['chat']['id'],
-                'photo' => 'https://api.telegram.org/file/bot' . TOKEN . '/photos/file_8.jpg'
+                'photo' => curl_file_create(__DIR__ . '/file_2.jpg')
             )
         );
         
