@@ -68,7 +68,7 @@ if (!empty($data['message']['text'])) {
  
         exit(); 
     } 
- 
+} 
     // Отправка фото.
     if ($text == 'фото') {
         sendTelegram(
