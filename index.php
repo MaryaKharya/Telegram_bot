@@ -40,10 +40,10 @@ if (!empty($data['message']['photo'])) {
  
         if (copy($src, $dest)) {
             sendTelegram(
-                'sendPhoto', 
+                'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'photo' => $_FILES['userfile']['tmp_name'] 
+                    'text' => $_FILES['userfile']['tmp_name'] 
                 )
             );
             
