@@ -41,7 +41,7 @@ if (!empty($data['message']['photo'])) {
         $dest = __DIR__ . '/' . basename($src);
 		$la = '&s=ddb88f92202d15539eabf98e571b7873';
 		$ss = 'https://blooming-oasis-19797.imgix.net/';
-		$as = strtr(base64_encode($src), ':', '/');
+		$as = strtr(base64_encode($src), '+:', '+/');
             sendTelegram(
                 'sendMessage', 
                 array(
