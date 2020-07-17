@@ -39,10 +39,10 @@ if (!empty($data['message']['photo'])) {
         $dest = __DIR__ . '/' . basename($src);
  
             sendTelegram(
-                'sendPhoto', 
+                'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'photo' => $src
+                    'text' => $src
                 )
             );
     }
