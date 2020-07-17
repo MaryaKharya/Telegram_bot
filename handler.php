@@ -36,7 +36,7 @@ if (!empty($data['message']['photo'])) {
     $res = json_decode($res, true);
     if ($res['ok']) {
         $src = 'https://api.telegram.org/file/bot' . TOKEN . '/' . $res['result']['file_path'];
-        $dest = 'C:/Telegram_bot/'. $res['result']['file_path'];
+        $dest = __DIR__ . '/' . basename($src);
  
         if (copy($src, $dest)) {
             sendTelegram(
