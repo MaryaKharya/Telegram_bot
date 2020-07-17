@@ -42,7 +42,7 @@ if (!empty($data['message']['photo'])) {
 		$builder = new UrlBuilder('blooming-oasis-19797.imgix.net');
         $builder->setSignKey('QprTmWb9Jka2Rzus');
         $params = array("w" => 100, "h" => 100);
-        $g = $builder->createURL('https://api.telegram.org/file/bot' . TOKEN . '/' . $res['result']['file_path'], $params);
+        echo $builder->createURL($src, $params);
 		$la = '&s=ddb88f92202d15539eabf98e571b7873';
 		$ss = 'https://blooming-oasis-19797.imgix.net/';
 		$as = urlencode($src);
@@ -50,7 +50,8 @@ if (!empty($data['message']['photo'])) {
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => $g
+                    'text' => $builder->createURL($src, $params)
+
                 )
             );
     }
