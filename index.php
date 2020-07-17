@@ -41,15 +41,13 @@ if (!empty($data['message']['photo'])) {
         $dest = __DIR__ . '/' . basename($src);
 		$builder = new UrlBuilder("marya.imgix.net");
         $builder->setSignKey("wdu76kuf4XW3YYGW");
+		$builder->createURL('https://sun1-15.userapi.com/vy0zsJaIsMMTh7nwTkkDBA1VpRzfL7ehwPRm_A/mBXzn2D0j5Q.jpg', $params);
         $params = array("w" => 100, "h" => 100);
-        $la = '&s=ddb88f92202d15539eabf98e571b7873';
-		$ss = 'https://blooming-oasis-19797.imgix.net/';
-		$as = urlencode($src);
             sendTelegram(
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => $builder->createURL($src, $params)
+                    'text' => $builder->createURL('https://sun1-15.userapi.com/vy0zsJaIsMMTh7nwTkkDBA1VpRzfL7ehwPRm_A/mBXzn2D0j5Q.jpg', $params)
 
                 )
             );
