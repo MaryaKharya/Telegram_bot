@@ -3,6 +3,13 @@
 $data = file_get_contents('php://input');
 $data = json_decode($data, true);
  
+ 
+ob_start();
+print_r($data);
+$out = ob_get_clean(); 
+file_put_contents(__DIR__ . '/message.txt', $out);
+
+
 if (empty($data['message']['chat']['id'])) {
     exit();
 }
