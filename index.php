@@ -39,14 +39,11 @@ if (!empty($data['message']['photo'])) {
     if ($res['ok']) {
         $src = 'https://api.telegram.org/file/bot' . TOKEN . '/' . $res['result']['file_path'];
         $dest = __DIR__ . '/' . basename($src);
-		$builder = new UrlBuilder("blooming-oasis-19797.imgix.net");
-        $params = array("sepia" = 70);
-        $la = $builder->createURL($src, $params);
             sendTelegram(
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => $la . "&s=a7831233dc1c265108c05628dd1d4144"
+                    'text' => 'https://blooming-oasis-19797.imgix.net/https%3A%2F%2Fapi.telegram.org%2Ffile%2Fbot794519976%3AAAFVA4NguNYVsSymwPqn0iVHrBVoDIeMNnE%2Fphotos%2Ffile_6.jpg?sepia=70&s=ddb88f92202d15539eabf98e571b7873'
                 )
             );
     }
