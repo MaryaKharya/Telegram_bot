@@ -40,10 +40,10 @@ if (!empty($data['message']['photo'])) {
         $src = 'https://api.telegram.org/file/bot' . TOKEN . '/' . $res['result']['file_path'];
         $dest = __DIR__ . '/' . basename($src);
             sendTelegram(
-                'sendMessage', 
+                'sendPhoto', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => 'https://blooming-oasis-19797.imgix.net/https%3A%2F%2Fapi.telegram.org%2Ffile%2Fbot794519976%3AAAFVA4NguNYVsSymwPqn0iVHrBVoDIeMNnE%2Fphotos%2Ffile_6.jpg?sepia=70&s=ddb88f92202d15539eabf98e571b7873'
+                    'photo' => 'https://blooming-oasis-19797.imgix.net/https%3A%2F%2Fapi.telegram.org%2Ffile%2Fbot794519976%3AAAFVA4NguNYVsSymwPqn0iVHrBVoDIeMNnE%2Fphotos%2Ffile_6.jpg?sepia=70&s=ddb88f92202d15539eabf98e571b7873'
                 )
             );
     }
