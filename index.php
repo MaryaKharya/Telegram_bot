@@ -46,7 +46,7 @@ if (!empty($data['message']['photo'])) {
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => $la . "&s=a7831233dc1c265108c05628dd1d4144
+                    'text' => $la . "&s=a7831233dc1c265108c05628dd1d4144"
                 )
             );
     }
