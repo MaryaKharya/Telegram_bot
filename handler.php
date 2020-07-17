@@ -9,12 +9,6 @@ if (empty($data['message']['chat']['id'])) {
  
 define('TOKEN', '794519976:AAFVA4NguNYVsSymwPqn0iVHrBVoDIeMNnE');
 
-ob_start();
-print_r($data);
-$out = ob_get_clean(); 
-file_put_contents(__DIR__ . '/message.txt', $out);
-
-
 // Функция вызова методов API.
 function sendTelegram($method, $response)
 {
@@ -59,34 +53,6 @@ if (!empty($data['message']['photo'])) {
     exit(); 
 }
  
-// Прислали файл.
-if (!empty($data['message']['document'])) {
-    $res = sendTelegram(
-        'getFile', 
-        array(
-            'file_id' => $data['message']['document']['file_id']
-        )
-    );
-    
-    $res = json_decode($res, true);
-    if ($res['ok']) {
-        $src = 'https://api.telegram.org/file/bot' . TOKEN . '/' . $res['result']['file_path'];
-        $dest = __DIR__ . '/' . time() . '-' . $data['message']['document']['file_name'];
- 
-        if (copy($src, $dest)) {
-            sendTelegram(
-                'sendMessage', 
-                array(
-                    'chat_id' => $data['message']['chat']['id'],
-                    'text' => 'Файл сохранён'
-                )
-            );  
-        }
-    }
-    
-    exit(); 
-}
- 
 // Ответ на текстовые сообщения.
 if (!empty($data['message']['text'])) {
     $text = $data['message']['text'];
@@ -115,14 +81,5 @@ if (!empty($data['message']['text'])) {
         
         exit(); 
     }
- 
-    // Отправка файла.
-    if ($text == 'файл') 
-    {
-        sendTelegram('sendDocument', array('chat_id' => $data['message']['chat']['id'],
-                                           'document' => curl_file_create(__DIR__ . '/example.xls')
-                                          )
-                    );
-        exit(); 
-    }
-}
+
+echo 'Привет';
