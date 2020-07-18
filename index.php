@@ -1,8 +1,7 @@
 <?php
 
-header('Content-Type: text/html; charset=utf-8')
-
 require_once ('vendor/autoload.php');
+require_once ('vendor/imgix/imgix-php/src/autoload.php');
 
 use Imgix\UrlBuilder;
 
@@ -46,7 +45,6 @@ if (!empty($data['message']['photo'])) {
         $dest = __DIR__ . '/' . basename($src);
 		$builder = new UrlBuilder("marya.imgix.net");
         $a = $builder->setSignKey("wdu76kuf4XW3YYGW");
-		$la = '&s=ddb88f92202d15539eabf98e571b7873';
 		$ss = 'https://maryaharya.imgix.net/';
             sendTelegram(
                 'sendMessage', 
