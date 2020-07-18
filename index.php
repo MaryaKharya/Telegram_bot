@@ -47,7 +47,7 @@ $response = $client->request('POST', 'http://api.convertio.co/convert', [
         'outputformat' => 'png'
 ]);
 
-echo $response->getStatusCode();;
+echo $response->getStatusCode();
             sendTelegram(
                 'sendMessage', 
                 array(
