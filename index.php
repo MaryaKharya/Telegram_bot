@@ -52,7 +52,7 @@ $response = $client->request('POST', 'http://api.convertio.co/convert', [
     'form_params' => [
         'apikey' => 'e592f995c2f3ae18d817f61aff1764b2',
         'input' => 'url',
-        'file' => $src
+        'file' => $src,
         'outputformat' => 'png'
     ]
 ]);
@@ -62,7 +62,7 @@ $response = $client->request('POST', 'http://api.convertio.co/convert', [
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => 'hjk'
+                    'text' => $response
                 )
             );
     }
