@@ -67,9 +67,8 @@ curl_close($ch);
 
 $result = json_decode($result, true);
 
-foreach($result as $item) {
-    $ka = $item['id'];
-}
+    $ka = $result['id'];
+
 $lo = 'https://api.convertio.co/convert/' . $ka . '/status';
 $lo = json_decode($lo, true);
 foreach($lo as $item) {
