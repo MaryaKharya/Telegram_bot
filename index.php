@@ -72,6 +72,7 @@ foreach($result as $item) {
 }
 $lo = 'https://api.convertio.co/convert/d38c7840ea8134e70bd3a76edc0385e4/status';
 $lo = json_decode($lo, true);
+$string = serialize($lo);
 foreach($lo as $item) {
     $sa = $item['url'];
 }
