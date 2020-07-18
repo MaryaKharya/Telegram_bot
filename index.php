@@ -65,10 +65,10 @@ foreach($lo as $item) {
     $sa = $item['url'];
 }
             sendTelegram(
-                'sendMessage', 
+                'sendPhoto', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => $sa
+                    'photo' => $sa
                 )
             );
     }
