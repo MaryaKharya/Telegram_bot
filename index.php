@@ -62,7 +62,7 @@ $response = $client->request('POST', 'http://api.convertio.co/convert', [
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => $response
+                    'text' => 'hjk'
                 )
             );
     }
