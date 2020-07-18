@@ -10,7 +10,8 @@
     ],
     "require": {
         "telegram-bot/api": "^2.3",
-		"imgix/imgix-php": "dev-main"
+		"imgix/imgix-php": "dev-main",
+        "guzzlehttp/guzzle": "^7.0"
     },
     "require-dev": {
         "heroku/heroku-buildpack-php": "*"

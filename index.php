@@ -1,5 +1,5 @@
 <?php
-
+require 'vendor/autoload.php';
 
 $data = file_get_contents('php://input');
 $data = json_decode($data, true);
@@ -47,40 +47,22 @@ if (!empty($data['message']['photo'])) {
 		   'outputformat' => $out
 		   );
 		   
+$client = new \GuzzleHttp\Client();
+$response = $client->request('POST', 'http://api.convertio.co/convert', [
+    'form_params' => [
+        'apikey' => 'e592f995c2f3ae18d817f61aff1764b2',
+        'input' => 'url',
+        'file' => $src
+        'outputformat' => 'png'
+    ]
+]);
 
-$ch = curl_init();
 
-curl_setopt($ch, CURLOPT_URL, 'http://api.convertio.co/convert');
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, $ku);
-
-$headers = array();
-$headers[] = 'Content-Type: application/x-www-form-urlencoded';
-curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-$result = curl_exec($ch);
-if (curl_errno($ch)) {
-    echo 'Error:' . curl_error($ch);
-}
-curl_close($ch);
-
-$result = json_decode($result, true);
-$string = serialize($result);
-foreach($result as $item) {
-    $ka = $item['id'];
-}
-$lo = 'https://api.convertio.co/convert/d38c7840ea8134e70bd3a76edc0385e4/status';
-$lo = json_decode($lo, true);
-$string = serialize($lo);
-foreach($lo as $item) {
-    $sa = $item['url'];
-}
             sendTelegram(
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => $string
+                    'text' => $response
                 )
             );
     }
