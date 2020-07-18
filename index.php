@@ -66,7 +66,7 @@ curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
 
 //execute post
 $result = curl_exec($ch);
-$u = json_decode('{"code":200,"status":"ok","data":{"id":"40e01b0a2a5ad3d546d1341ca0714bf1","minutes":15}}',true);
+$u = json_decode($result,true);
 
 
             sendTelegram(
