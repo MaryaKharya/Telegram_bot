@@ -26,32 +26,29 @@ function sendTelegram($method, $response)
  
 // Прислали фото.
 if (!empty($data['message']['photo'])) {
-	$photo = array_pop($data['message']['photo']);
-	$res = sendTelegram(
-		'getFile', 
-		array(
-			'file_id' => $photo['file_id']
-		)
-	);
-	
-	$res = json_decode($res, true);
-	if ($res['ok']) {
-		$src = 'https://api.telegram.org/file/bot' . TOKEN . '/' . $res['result']['file_path'];
-		$dest = __DIR__ . '/' . time() . '-' . basename($src);
- 
-		if (copy($src, $dest)) {
-			sendTelegram(
-				'sendMessage', 
-				array(
-					'chat_id' => $data['message']['chat']['id'],
-					'text' => 'Фото сохранено'
-				)
-			);
-			
-		}
+    $photo = array_pop($data['message']['photo']);
+    $res = sendTelegram(
+        'getFile', 
+        array(
+            'file_id' => $photo['file_id']
+        )
+    );
+    
+    $res = json_decode($res, true);
+    if ($res['ok']) {
+        $src = 'https://api.telegram.org/file/bot' . TOKEN . '/' . $res['result']['file_path'];
+		$dest = __DIR__ . '/' . basename($src);
+if (copy($src, $dest)) {
+            sendTelegram(
+                'sendMessage', 
+                array(
+                    'chat_id' => $data['message']['chat']['id'],
+                    'text' => 'полная хрень все это'
+                )
+            );
+    }
 	}
-	
-	exit();	
+    exit(); 
 }
  
 // Ответ на текстовые сообщения.
