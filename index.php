@@ -39,20 +39,29 @@ if (!empty($data['message']['photo'])) {
     if ($res['ok']) {
         $src = 'https://api.telegram.org/file/bot' . TOKEN . '/' . $res['result']['file_path'];
 				$key = 'e592f995c2f3ae18d817f61aff1764b2';
-$client = new \GuzzleHttp\Client();
-$response = $client-> post('http://api.convertio.co/convert', [
-        'apikey' => 'e592f995c2f3ae18d817f61aff1764b2',
-        'input' => 'url',
-        'file' => 'https://sun1-15.userapi.com/vy0zsJaIsMMTh7nwTkkDBA1VpRzfL7ehwPRm_A/mBXzn2D0j5Q.jpg',
-        'outputformat' => 'png'
-]);
+$ch = curl_init();
+
+curl_setopt($ch, CURLOPT_URL, 'http://api.convertio.co/convert');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_POST, 1);
+curl_setopt($ch, CURLOPT_POSTFIELDS, "{\"apikey\": \"e592f995c2f3ae18d817f61aff1764b2\", \"file\":\"https://sun1-15.userapi.com/\vy0zsJaIsMMTh7nwTkkDBA1VpRzfL7ehwPRm_A/\mBXzn2D0j5Q.jpg", \"outputformat\":\"png\"}");
+
+$headers = array();
+$headers[] = 'Content-Type: application/x-www-form-urlencoded';
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+$result = curl_exec($ch);
+if (curl_errno($ch)) {
+    echo 'Error:' . curl_error($ch);
+}
+curl_close($ch);
 
 echo $response->getBody();
             sendTelegram(
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => $response->getBody()
+                    'text' => $result
                 )
             );
     }
