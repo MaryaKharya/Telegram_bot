@@ -54,7 +54,7 @@ echo $response->getBody();
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => $response->getBody();
+                    'text' => $response->getBody()
                 )
             );
     }
