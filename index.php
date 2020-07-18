@@ -69,13 +69,13 @@ $result = curl_exec($ch);
 $u = json_decode($result, true);
 $s = 'https://api.convertio.co/convert/' . $u['data']['id'] . '/status';
 $out = file_get_contents('https://api.convertio.co/convert/' . $u['data']['id'] . '/status');
-$u = json_decode($out, true);
+$response = $client->request('GET', 'https://api.convertio.co/convert/' . $u['data']['id'] . '/status');
 
             sendTelegram(
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => $u['data']['output']['url']
+                    'text' => $response->getBody();
                 )
             );
     }
