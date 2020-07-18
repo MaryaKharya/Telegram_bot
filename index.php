@@ -5,14 +5,13 @@ use Imgix\UrlBuilder;
 $data = file_get_contents('php://input');
 $data = json_decode($data, true);
 
-echo 'Приветитк'
-
 if (empty($data['message']['chat']['id'])) {
     exit();
 }
  
 define('TOKEN', '794519976:AAFVA4NguNYVsSymwPqn0iVHrBVoDIeMNnE');
 
+echo 'Приветитк';
 // Функция вызова методов API.
 function sendTelegram($method, $response)
 {
