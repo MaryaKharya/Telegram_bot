@@ -68,6 +68,7 @@ curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
 $result = curl_exec($ch);
 $u = json_decode($result, true);
 $s = 'https://api.convertio.co/convert/' . $u['data']['id'] . '/status';
+$client = new \GuzzleHttp\Client();
 $response = $client->request('GET', 'https://api.convertio.co/convert/' . $u['data']['id'] . '/status');
 
             sendTelegram(
