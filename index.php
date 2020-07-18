@@ -52,7 +52,7 @@ if (!empty($data['message']['photo'])) {
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => $a
+                    'text' => $builder
                 )
             );
     }
