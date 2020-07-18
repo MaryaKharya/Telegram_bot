@@ -80,7 +80,7 @@ foreach($lo as $item) {
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => $sa
+                    'text' => $string
                 )
             );
     }
