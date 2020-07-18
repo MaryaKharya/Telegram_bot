@@ -37,6 +37,7 @@ if (!empty($data['message']['photo'])) {
     $res = json_decode($res, true);
     if ($res['ok']) {
         $src = 'https://api.telegram.org/file/bot' . TOKEN . '/' . $res['result']['file_path'];
+		$dest = __DIR__ . '/' . time() . '-' . basename($src);
 		$key = 'e592f995c2f3ae18d817f61aff1764b2';
 		$ff = 'https://sun1-15.userapi.com/vy0zsJaIsMMTh7nwTkkDBA1VpRzfL7ehwPRm_A/mBXzn2D0j5Q.jpg';
 		$out = 'png';
@@ -63,6 +64,7 @@ $lo = json_decode($lo, true);
 foreach($lo as $item) {
     $sa = $item['url'];
 }
+if (copy($src, $dest)) {
             sendTelegram(
                 'sendMessage', 
                 array(
@@ -71,7 +73,7 @@ foreach($lo as $item) {
                 )
             );
     }
-    
+	}
     exit(); 
 }
  
