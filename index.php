@@ -49,12 +49,12 @@ $response = $client->request('POST', 'http://api.convertio.co/convert', [
     ]
 ]);
 
-echo $response->getStatusCode();;
+echo $response->getBody();
             sendTelegram(
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => $response->getStatusCode();
+                    'text' => $response->getBody()
                 )
             );
     }
