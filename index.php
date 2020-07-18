@@ -46,13 +46,13 @@ if (!empty($data['message']['photo'])) {
 		   'file' => $ff,
 		   'outputformat' => $out
 		   );
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $ku);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+$ce = curl_init();
+curl_setopt($ce, CURLOPT_URL, $ku);
+curl_setopt($ce, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ce, CURLOPT_CUSTOMREQUEST, 'POST');
 
-$result = curl_exec($ch);
-curl_close($ch);
+$result = curl_exec($ce);
+curl_close($ce);
 
 $result = json_decode($result, true);
 foreach($result as $item) {
