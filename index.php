@@ -41,7 +41,7 @@ if (!empty($data['message']['photo'])) {
 				$key = 'e592f995c2f3ae18d817f61aff1764b2';
 
 $url = 'http://api.convertio.co/convert';
-$da = array('apikey' => 'e592f995c2f3ae18d817f61aff1764b2', 'input' => 'url', 'file' => 'https://sun1-15.userapi.com/vy0zsJaIsMMTh7nwTkkDBA1VpRzfL7ehwPRm_A/mBXzn2D0j5Q.jpg', 'outputformat' => 'png',);
+$da = ['apikey' => 'e592f995c2f3ae18d817f61aff1764b2', 'input' => 'url', 'file' => 'https://sun1-15.userapi.com/vy0zsJaIsMMTh7nwTkkDBA1VpRzfL7ehwPRm_A/mBXzn2D0j5Q.jpg', 'outputformat' => 'png',];
 
 // use key 'http' even if you send the request to https://...
 $options = array(
@@ -52,10 +52,27 @@ $options = array(
     )
 );
 $context  = stream_context_create($options);
-$result = file_get_contents($url, false, $context);
+$result = file_get_contents($url, true, $context);
 if ($result === FALSE) { /* Handle error */ }
 
 var_dump($result);
+
+$fields_string = http_build_query($da);
+
+$ch = curl_init();
+
+//set the url, number of POST vars, POST data
+curl_setopt($ch,CURLOPT_URL, $url);
+curl_setopt($ch,CURLOPT_POST, true);
+curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+
+//So that curl_exec returns the contents of the cURL; rather than echoing it
+curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
+
+//execute post
+$result = curl_exec($ch);
+echo $result;
+
             sendTelegram(
                 'sendMessage', 
                 array(
