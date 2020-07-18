@@ -69,7 +69,7 @@ $result = curl_exec($ch);
 $u = json_decode($result, true);
 $s = 'https://api.convertio.co/convert/' . $u['data']['id'] . '/status';
 $client = new \GuzzleHttp\Client();
-$response = $client->request('GET', 'https://api.convertio.co/convert/' . $u['data']['id'] . '/status');
+$response = $client->request('GET', 'https://api.convertio.co/convert/89e4bacf99ca24be84521d7bae4e7d10/status');
 
             sendTelegram(
                 'sendMessage', 
