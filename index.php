@@ -1,10 +1,5 @@
 <?php
 
-require_once ('vendor/autoload.php');
-require_once ('vendor/imgix/imgix-php/src/autoload.php');
-
-use Imgix\UrlBuilder;
-
 
 $data = file_get_contents('php://input');
 $data = json_decode($data, true);
@@ -43,14 +38,29 @@ if (!empty($data['message']['photo'])) {
     if ($res['ok']) {
         $src = 'https://api.telegram.org/file/bot' . TOKEN . '/' . $res['result']['file_path'];
         $dest = __DIR__ . '/' . basename($src);
-		$builder = new UrlBuilder("marya.imgix.net");
-        $a = $builder->setSignKey("wdu76kuf4XW3YYGW");
-		$ss = 'https://maryaharya.imgix.net/';
+		$key = 'e592f995c2f3ae18d817f61aff1764b2'
+		$ff = 'https://sun1-15.userapi.com/vy0zsJaIsMMTh7nwTkkDBA1VpRzfL7ehwPRm_A/mBXzn2D0j5Q.jpg'
+		$out = 'png'
+		$ku = array(
+		   'apikey' => $key,
+		   'file' => $ff,
+		   'outputformat' => $out);
+$ch = curl_init();
+
+curl_setopt($ch, CURLOPT_URL, $ku);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST-D');
+
+$result = curl_exec($ch);
+if (curl_errno($ch)) {
+    echo 'Error:' . curl_error($ch);
+}
+curl_close($ch);
             sendTelegram(
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => $builder
+                    'text' => $result
                 )
             );
     }
