@@ -75,7 +75,7 @@ $response = $client->request('GET', 'https://api.convertio.co/convert/' . $u['da
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => $response->getBody();
+                    'text' => $response->getBody()
                 )
             );
     }
