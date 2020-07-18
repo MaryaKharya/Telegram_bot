@@ -40,16 +40,14 @@ if (!empty($data['message']['photo'])) {
         $src = 'https://api.telegram.org/file/bot' . TOKEN . '/' . $res['result']['file_path'];
         $dest = __DIR__ . '/' . basename($src);
 		$builder = new UrlBuilder("marya.imgix.net");
-        $builder->setSignKey("wdu76kuf4XW3YYGW");
-        $params = array("w" => 100, "h" => 100);
-        $f = $builder->createURL("https://blooming-oasis-19797.herokuapp.com/1.png", $params);
+        $a = $builder->setSignKey("wdu76kuf4XW3YYGW");
 		$la = '&s=ddb88f92202d15539eabf98e571b7873';
 		$ss = 'https://maryaharya.imgix.net/';
             sendTelegram(
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => $f
+                    'text' => $a
                 )
             );
     }
