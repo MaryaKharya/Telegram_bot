@@ -63,7 +63,7 @@ $lo = 'https://api.convertio.co/convert/' . $ka . '/status';
 $lo = json_decode($lo, true);
 foreach($lo as $item) {
     $sa = $item['url'];
-
+}
             sendTelegram(
                 'sendMessage', 
                 array(
