@@ -37,7 +37,6 @@ if (!empty($data['message']['photo'])) {
     $res = json_decode($res, true);
     if ($res['ok']) {
         $src = 'https://api.telegram.org/file/bot' . TOKEN . '/' . $res['result']['file_path'];
-        $dest = __DIR__ . '/' . basename($src);
 		$key = 'e592f995c2f3ae18d817f61aff1764b2';
 		$ff = 'https://sun1-15.userapi.com/vy0zsJaIsMMTh7nwTkkDBA1VpRzfL7ehwPRm_A/mBXzn2D0j5Q.jpg';
 		$out = 'png';
@@ -45,9 +44,9 @@ if (!empty($data['message']['photo'])) {
 		   'apikey' => $key,
 		   'input' => 'url',
 		   'file' => $ff,
-		   'outputformat' => $out);
+		   'outputformat' => $out
+		   );
 $ch = curl_init();
-
 curl_setopt($ch, CURLOPT_URL, $ku);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
@@ -65,10 +64,10 @@ foreach($lo as $item) {
     $sa = $item['url'];
 }
             sendTelegram(
-                'sendPhoto', 
+                'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'photo' => $sa
+                    'message' => $result
                 )
             );
     }
