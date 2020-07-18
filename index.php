@@ -68,11 +68,12 @@ curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
 $result = curl_exec($ch);
 echo $result;
 
+
             sendTelegram(
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => $result
+                    'text' => $result['id']
                 )
             );
     }
