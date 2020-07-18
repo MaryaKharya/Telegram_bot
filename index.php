@@ -66,6 +66,7 @@ curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
 
 //execute post
 $result = curl_exec($ch);
+$u = var_dump(json_decode($result));
 echo $result;
 
 
@@ -73,7 +74,7 @@ echo $result;
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => $result['id']
+                    'text' => $u['id']
                 )
             );
     }
