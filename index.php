@@ -66,7 +66,7 @@ curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
 
 //execute post
 $result = curl_exec($ch);
-$u = json_decode(htmlspecialchars_decode($result,true);
+$u = json_decode(htmlspecialchars_decode($result,true));
 
 
             sendTelegram(
