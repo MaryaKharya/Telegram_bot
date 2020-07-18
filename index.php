@@ -41,7 +41,7 @@ if (!empty($data['message']['photo'])) {
 				$key = 'e592f995c2f3ae18d817f61aff1764b2';
 
 $url = 'http://api.convertio.co/convert';
-$da = ['apikey' => 'e592f995c2f3ae18d817f61aff1764b2', 'input' => 'url', 'file' => 'https://sun1-15.userapi.com/vy0zsJaIsMMTh7nwTkkDBA1VpRzfL7ehwPRm_A/mBXzn2D0j5Q.jpg', 'outputformat' => 'png',];
+$da = ["apikey" => "e592f995c2f3ae18d817f61aff1764b2", "input" => "url", "file" => "https://sun1-15.userapi.com/vy0zsJaIsMMTh7nwTkkDBA1VpRzfL7ehwPRm_A/mBXzn2D0j5Q.jpg", "outputformat" => "png",];
 
 // use key 'http' even if you send the request to https://...
 $options = array(
