@@ -1,4 +1,5 @@
 <?php
+header('Content-Type: application/json');
 
 require 'vendor/autoload.php';
 
@@ -43,15 +44,6 @@ if (!empty($data['message']['photo'])) {
 $url = 'http://api.convertio.co/convert';
 $da = ["apikey" => "e592f995c2f3ae18d817f61aff1764b2", "input" => "url", "file" => "https://sun1-15.userapi.com/vy0zsJaIsMMTh7nwTkkDBA1VpRzfL7ehwPRm_A/mBXzn2D0j5Q.jpg", "outputformat" => "png",];
 
-// use key 'http' even if you send the request to https://...
-$options = array(
-    'http' => array(
-        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-        'method'  => 'POST',
-        'content' => http_build_query($da)
-    )
-);
-
 $fields_string = json_encode($da);
 
 $ch = curl_init();
@@ -68,14 +60,13 @@ curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
 $result = curl_exec($ch);
 $u = json_decode($result, true);
 $s = 'https://api.convertio.co/convert/' . $u['data']['id'] . '/status';
-$client = new \GuzzleHttp\Client();
-$response = $client->request('GET', 'https://api.convertio.co/convert/89e4bacf99ca24be84521d7bae4e7d10/status');
+
 
             sendTelegram(
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => $response->getBody()
+                    'text' => $out
                 )
             );
     }
@@ -100,11 +91,16 @@ if (!empty($data['message']['text'])) {
 } 
     // Отправка фото.
     if ($text == 'фото') {
+		$curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $s);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
+    $out = curl_exec($curl);
+    curl_close($curl);
         sendTelegram(
-            'sendPhoto', 
+            'sendMessage', 
             array(
                 'chat_id' => $data['message']['chat']['id'],
-                'photo' => 'https://blooming-oasis-19797.imgix.net/https%3A%2F%2Fsun9-3.userapi.com%2Fc9706%2Fu81896685%2F-6%2Fy_5ac9e6f4.jpg?sepia=70&s=e8fcc1c3d86901580fc0db57717664da'
+                'photo' => $out
             )
         );
         
