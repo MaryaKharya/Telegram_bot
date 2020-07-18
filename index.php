@@ -66,9 +66,10 @@ if (curl_errno($ch)) {
 curl_close($ch);
 
 $result = json_decode($result, true);
-
-    $ka = $result['id'];
-
+$string = serialize($result);
+foreach($result as $item) {
+    $ka = $item['id'];
+}
 $lo = 'https://api.convertio.co/convert/' . $ka . '/status';
 $lo = json_decode($lo, true);
 foreach($lo as $item) {
@@ -78,7 +79,7 @@ foreach($lo as $item) {
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => $ka
+                    'text' => $string
                 )
             );
     }
