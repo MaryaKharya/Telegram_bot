@@ -56,7 +56,6 @@ if (curl_errno($ch)) {
 }
 curl_close($ch);
 
-echo $response->getBody();
             sendTelegram(
                 'sendMessage', 
                 array(
