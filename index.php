@@ -67,13 +67,13 @@ curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
 //execute post
 $result = curl_exec($ch);
 $u = json_decode($result, true);
-
+$result = json_encode($u);
 
             sendTelegram(
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => 'https://api.convertio.co/convert/' . $u . '/status'
+                    'text' => 'https://api.convertio.co/convert/' . $result . '/status'
                 )
             );
     }
