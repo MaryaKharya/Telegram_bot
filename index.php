@@ -43,7 +43,7 @@ if (copy($src, $dest)) {
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'message' => 'полная хрень все это'
+                    'text' => 'полная хрень все это'
                 )
             );
     }
