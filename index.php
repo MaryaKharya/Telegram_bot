@@ -41,20 +41,32 @@ if (!empty($data['message']['photo'])) {
 		$ff = 'https://sun1-15.userapi.com/vy0zsJaIsMMTh7nwTkkDBA1VpRzfL7ehwPRm_A/mBXzn2D0j5Q.jpg';
 		$out = 'png';
 		$ku = array(
-		   'apikey' => $key,
+		   'apikey' => 'e592f995c2f3ae18d817f61aff1764b2',
 		   'input' => 'url',
 		   'file' => $ff,
 		   'outputformat' => $out
 		   );
-$ce = curl_init();
-curl_setopt($ce, CURLOPT_URL, $ku);
-curl_setopt($ce, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ce, CURLOPT_CUSTOMREQUEST, 'POST');
+		   
 
-$result = curl_exec($ce);
-curl_close($ce);
+$ch = curl_init();
+
+curl_setopt($ch, CURLOPT_URL, 'http://api.convertio.co/convert');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_POST, 1);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $ku);
+
+$headers = array();
+$headers[] = 'Content-Type: application/x-www-form-urlencoded';
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+$result = curl_exec($ch);
+if (curl_errno($ch)) {
+    echo 'Error:' . curl_error($ch);
+}
+curl_close($ch);
 
 $result = json_decode($result, true);
+
 foreach($result as $item) {
     $ka = $item['id'];
 }
