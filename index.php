@@ -55,6 +55,14 @@ if ($response == $client->request('POST', 'http://api.convertio.co/convert', [
                 )
             );
 }
+else
+{            sendTelegram(
+                'sendMessage', 
+                array(
+                    'chat_id' => $data['message']['chat']['id'],
+                    'text' => 'исправляй дальше'
+                )
+            );}
     }
     exit(); 
 }
