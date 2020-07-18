@@ -67,7 +67,7 @@ curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
 //execute post
 $result = curl_exec($ch);
 $result = str_replace("\xEF\xBB\xBF",'',$result);
-$u = json_decode($result,true);
+$u = json_decode($result, true);
 
 
             sendTelegram(
