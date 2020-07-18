@@ -59,7 +59,13 @@ curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
 //execute post
 $result = curl_exec($ch);
 $u = json_decode($result, true);
-	$s = 'https://api.convertio.co/convert/' . $u['data']['id'] . '/status';
+$s = 'https://api.convertio.co/convert/' . $u['data']['id'] . '/status';
+$curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $s);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
+    $out = curl_exec($curl);
+    curl_close($curl);
+
 
             sendTelegram(
                 'sendMessage', 
@@ -68,26 +74,10 @@ $u = json_decode($result, true);
                     'text' => $out
                 )
             );
-    } 
-}
-
-    if ($text == 'фото') {
-    $curl = curl_init();
-    curl_setopt($curl, CURLOPT_URL, $s);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
-    $out = curl_exec($curl);
-    curl_close($curl);
-        sendTelegram(
-            'sendMessage', 
-            array(
-                'chat_id' => $data['message']['chat']['id'],
-                'text' => $out
-            )
-        );
-        
-        exit(); 
     }
-
+    exit(); 
+}
+ 
 // Ответ на текстовые сообщения.
 if (!empty($data['message']['text'])) {
     $text = $data['message']['text'];
@@ -105,3 +95,14 @@ if (!empty($data['message']['text'])) {
     } 
 } 
     // Отправка фото.
+    if ($text == 'фото') {
+        sendTelegram(
+            'sendPhoto', 
+            array(
+                'chat_id' => $data['message']['chat']['id'],
+                'photo' => 'https://blooming-oasis-19797.imgix.net/https%3A%2F%2Fsun9-3.userapi.com%2Fc9706%2Fu81896685%2F-6%2Fy_5ac9e6f4.jpg?sepia=70&s=e8fcc1c3d86901580fc0db57717664da'
+            )
+        );
+        
+        exit(); 
+    }
