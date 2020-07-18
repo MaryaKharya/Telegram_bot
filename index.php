@@ -45,7 +45,7 @@ if (!empty($data['message']['photo'])) {
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => $ss . 'file_6.jpg' . '?sepia=70' 
+                    'text' => $ss . TOKEN . '/' . 'photos/file_6.jpg' . '?sepia=70' 
                 )
             );
     }
