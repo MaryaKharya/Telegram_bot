@@ -67,13 +67,20 @@ curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
 //execute post
 $result = curl_exec($ch);
 $u = json_decode($result, true);
+$s = 'https://api.convertio.co/convert/' . $u['data']['id'] . '/status';
+$curl = curl_init() ) {
+    curl_setopt($curl, CURLOPT_URL, $s);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
+    $out = curl_exec($curl);
+    curl_close($curl);
+  }
 
 
             sendTelegram(
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => 'https://api.convertio.co/convert/' . $u['data']['id'] . '/status'
+                    'text' => $out
                 )
             );
     }
