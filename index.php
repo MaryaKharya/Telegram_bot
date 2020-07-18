@@ -59,8 +59,7 @@ curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
 //execute post
 $result = curl_exec($ch);
 $u = json_decode($result, true);
-$s = 'https://api.convertio.co/convert/' . $u['data']['id'] . '/status';
-
+	$s = 'https://api.convertio.co/convert/' . $u['data']['id'] . '/status';
 
             sendTelegram(
                 'sendMessage', 
@@ -82,7 +81,7 @@ $s = 'https://api.convertio.co/convert/' . $u['data']['id'] . '/status';
             'sendMessage', 
             array(
                 'chat_id' => $data['message']['chat']['id'],
-                'photo' => $out
+                'text' => $out
             )
         );
         
