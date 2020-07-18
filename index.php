@@ -67,7 +67,7 @@ foreach($lo as $item) {
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'message' => $result
+                    'message' => 'полная хрень все это'
                 )
             );
     }
