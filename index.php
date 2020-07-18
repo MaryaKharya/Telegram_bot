@@ -43,18 +43,16 @@ if (!empty($data['message']['photo'])) {
 		$out = 'png';
 		$ku = array(
 		   'apikey' => $key,
+		   'input' => 'url',
 		   'file' => $ff,
 		   'outputformat' => $out);
 $ch = curl_init();
 
 curl_setopt($ch, CURLOPT_URL, $ku);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST-D');
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
 
 $result = curl_exec($ch);
-if (curl_errno($ch)) {
-    echo 'Error:' . curl_error($ch);
-}
 curl_close($ch);
             sendTelegram(
                 'sendMessage', 
