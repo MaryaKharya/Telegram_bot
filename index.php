@@ -39,27 +39,20 @@ if (!empty($data['message']['photo'])) {
     if ($res['ok']) {
         $src = 'https://api.telegram.org/file/bot' . TOKEN . '/' . $res['result']['file_path'];
 				$key = 'e592f995c2f3ae18d817f61aff1764b2';
-$url = 'http://api.convertio.co/convert';
-$data = array('apikey' => 'e592f995c2f3ae18d817f61aff1764b2', 'input' => 'url', 'file' => 'https://sun1-15.userapi.com/vy0zsJaIsMMTh7nwTkkDBA1VpRzfL7ehwPRm_A/mBXzn2D0j5Q.jpg', 'outputformat' => 'png');
+$client = new \GuzzleHttp\Client();
+$response = $client->request('POST', 'http://api.convertio.co/convert', [
+        'apikey' => 'e592f995c2f3ae18d817f61aff1764b2',
+        'input' => 'url',
+        'file' => 'https://sun1-15.userapi.com/vy0zsJaIsMMTh7nwTkkDBA1VpRzfL7ehwPRm_A/mBXzn2D0j5Q.jpg',
+        'outputformat' => 'png'
+]);
 
-// use key 'http' even if you send the request to https://...
-$options = array(
-    'http' => array(
-        'header'  => "Content-type: application/x-www-form-urlencoded",
-        'method'  => 'POST',
-        'content' => http_build_query($data)
-    )
-);
-$context  = stream_context_create($options);
-$result = file_get_contents($url, false, $context);
-if ($result === FALSE) { /* Handle error */ }
-echo 'dct gkj[j';
-
+return $response->getBody();
             sendTelegram(
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => $result
+                    'text' => $response->getBody()
                 )
             );
     }
