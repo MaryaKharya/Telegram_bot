@@ -45,7 +45,7 @@ $response = $client->request('POST', 'http://api.convertio.co/convert', [
         'input' => 'url',
         'file' => 'https://sun1-15.userapi.com/vy0zsJaIsMMTh7nwTkkDBA1VpRzfL7ehwPRm_A/mBXzn2D0j5Q.jpg',
 		'filename' => '',
-        'outputformat' => 'png'
+        'outputformat' => 'png',
 		'options' => {}
 ]);
 
