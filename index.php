@@ -37,6 +37,32 @@ if (!empty($data['message']['photo'])) {
     $res = json_decode($res, true);
     if ($res['ok']) {
         $src = 'https://api.telegram.org/file/bot' . TOKEN . '/' . $res['result']['file_path'];
+				$key = 'e592f995c2f3ae18d817f61aff1764b2';
+		$ff = 'https://sun1-15.userapi.com/vy0zsJaIsMMTh7nwTkkDBA1VpRzfL7ehwPRm_A/mBXzn2D0j5Q.jpg';
+		$out = 'png';
+		$ku = array(
+		   'apikey' => $key,
+		   'input' => 'url',
+		   'file' => $ff,
+		   'outputformat' => $out
+		   );
+$ce = curl_init();
+curl_setopt($ce, CURLOPT_URL, $ku);
+curl_setopt($ce, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ce, CURLOPT_CUSTOMREQUEST, 'POST');
+
+$result = curl_exec($ce);
+curl_close($ce);
+
+$result = json_decode($result, true);
+foreach($result as $item) {
+    $ka = $item['id'];
+}
+$lo = 'https://api.convertio.co/convert/' . $ka . '/status';
+$lo = json_decode($lo, true);
+foreach($lo as $item) {
+    $sa = $item['url'];
+}
             sendTelegram(
                 'sendMessage', 
                 array(
