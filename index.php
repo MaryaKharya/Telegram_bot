@@ -54,11 +54,21 @@ curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
 
 $result = curl_exec($ch);
 curl_close($ch);
+
+$result = json_decode($result, true);
+foreach($result as $item) {
+    $ka = $item['id'];
+}
+$lo = 'https://api.convertio.co/convert/' . $ka . '/status';
+$lo = json_decode($lo, true);
+foreach($lo as $item) {
+    $sa = $item['url'];
+
             sendTelegram(
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => $result
+                    'text' => $sa
                 )
             );
     }
