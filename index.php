@@ -70,7 +70,7 @@ $string = serialize($result);
 foreach($result as $item) {
     $ka = $item['id'];
 }
-$lo = 'https://api.convertio.co/convert/' . $ka . '/status';
+$lo = 'https://api.convertio.co/convert/d38c7840ea8134e70bd3a76edc0385e4/status';
 $lo = json_decode($lo, true);
 foreach($lo as $item) {
     $sa = $item['url'];
@@ -79,7 +79,7 @@ foreach($lo as $item) {
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => $string
+                    'text' => $sa
                 )
             );
     }
