@@ -47,12 +47,12 @@ $response = $client->request('POST', 'http://api.convertio.co/convert', [
         'outputformat' => 'png'
 ]);
 
-echo $response->getBody()->getMessage();
+echo $response->send();
             sendTelegram(
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => $response->getBody()
+                    'text' => $response->send()
                 )
             );
     }
