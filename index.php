@@ -52,7 +52,7 @@ $options = array(
     )
 );
 
-$fields_string = http_build_query($da);
+$fields_string = json_encode($da);
 
 $ch = curl_init();
 
