@@ -40,14 +40,21 @@ if (!empty($data['message']['photo'])) {
         $src = 'https://api.telegram.org/file/bot' . TOKEN . '/' . $res['result']['file_path'];
 				$key = 'e592f995c2f3ae18d817f61aff1764b2';
 $client = new \GuzzleHttp\Client();
+$response = $client->request('POST', 'http://api.convertio.co/convert', [
+    'form_params' => [
+        'apikey' => 'e592f995c2f3ae18d817f61aff1764b2',
+        'input' => 'url',
+        'file' => $src,
+        'outputformat' => 'png'
+    ]
+]);
 
-$response = $client->request('GET', 'http://api.convertio.co/convert/d38c7840ea8134e70bd3a76edc0385e4/status');
 echo $response->getBody();
             sendTelegram(
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => $response->getBody()
+                    'text' => $response->getBody();
                 )
             );
     }
