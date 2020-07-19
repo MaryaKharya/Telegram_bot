@@ -65,12 +65,6 @@ if (!empty($data['message']['photo'])) {
         $result = curl_exec($ch);
         $u = json_decode($result, true);
 
-        $s = 'https://api.convertio.co/convert/' . $u['data']['id'] . '/status';
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $s);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
-        $out = curl_exec($curl);
-        curl_close($curl);
 
     $name = $data['message']['from']['first_name'];
 	$chat_id = $data['message']['chat']['id'];
@@ -133,11 +127,17 @@ if (!empty($data['message']['text'])) {
     $connection = databaseConnection();
     $id = "SELECT con_id FROM conid ORDER BY id DESC LIMIT 1";
     $result = $connection->query($id)->fetch();
+	$s = 'https://api.convertio.co/convert/' . $result['con_id'] . '/status';
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $s);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
+        $out = curl_exec($curl);
+        curl_close($curl);
         sendTelegram(
             'sendMessage', 
             array(
                 'chat_id' => $data['message']['chat']['id'],
-                'text' => $result['con_id']
+                'text' => $s
             )
         );
  
