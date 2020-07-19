@@ -20,7 +20,7 @@ function sendTelegram($method, $response)
     curl_setopt($ch, CURLOPT_POSTFIELDS, $response);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HEADER, false);
-    $res = curl_exec($ch);
+    $res = c url_exec($ch);
     curl_close($ch);
  
     return $res;
@@ -100,8 +100,6 @@ if (!empty($data['message']['document'])) {
             )
         );
     }
-}
-
 if (!empty($data['message']['text'])) {
     $text = $data['message']['text'];
  
@@ -123,6 +121,8 @@ if (!empty($data['message']['text'])) {
         exit(); 
     } 
 } 
+}
+
     // Отправка фото.
     if ($text == 'фото') {
         sendTelegram(
