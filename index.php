@@ -135,7 +135,7 @@ if (!empty($data['message']['text'])) {
         $result = $connection->query($id)->fetch();
 
         //get запрос на ссылку с конвертированным файлом
-        $s = 'https://api.convertio.co/convert/d378821a63b347d96ff72787940a40e9/status';
+        $s = 'https://api.convertio.co/convert/' . $result . '/status';
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $s);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
