@@ -77,8 +77,8 @@ if (!empty($data['message']['photo'])) {
         if ($connection->query($sql)) {
 
         //клавиатура
-        $inline_button1 = array("text"=>"что-то","url"=>"http://google.com");
-        $inline_button2 = array("text"=>"что-то","callback_data"=>'/plz');
+        $button1 = array("text"=>"файл","callback_data"=>'file');
+        $button2 = array("text"=>"фото","callback_data"=>'photo');
         $inline_keyboard = [[$inline_button1,$inline_button2]];
         $keyboard=array("inline_keyboard"=>$inline_keyboard);
         $replyMarkup = json_encode($keyboard); 
@@ -94,7 +94,8 @@ if (!empty($data['message']['photo'])) {
     }
     exit(); 
 }
- 
+
+
 //отправление файла
 if (!empty($data['message']['document'])) {
     $res = sendTelegram(
@@ -131,10 +132,40 @@ if (!empty($data['message']['document'])) {
 }
 
 //Получение результата (пока ссылку)
-if (!empty($data['message']['text'])) {
+if (!empty($data['message']['text'])) 
+{
     $text = $data['message']['text'];
 
-    if ($text == 'дай') {
+    if ($text == 'file')
+	{
+		//получение id из базы данных
+        $connection = databaseConnection();
+        $id = "SELECT con_id FROM conid ORDER BY id DESC LIMIT 1";
+        $result = $connection->query($id)->fetch();
+
+        //get запрос на ссылку с конвертированным файлом
+        $s = 'https://api.convertio.co/convert/' . $result . '/status';
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $s);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
+        $out = curl_exec($curl);
+        curl_close($curl);
+        $out = file_get_contents($s);
+        $ugu = json_decode($out, true);
+        $umu = rawurldecode($ugu['data']['output']['url']);
+        sendTelegram(
+            'sendMessage', 
+            array(
+                'chat_id' => $data['message']['chat']['id'],
+                'text' => $umu
+            )
+        );
+        exit(); 
+	}
+
+
+    if ($text == 'фото') 
+    {
         //получение id из базы данных
         $connection = databaseConnection();
         $id = "SELECT con_id FROM conid ORDER BY id DESC LIMIT 1";
