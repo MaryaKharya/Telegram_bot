@@ -57,7 +57,7 @@ if (!empty($data['message']['photo'])) {
         // отправка post запроса для получения id
         $key = 'e592f995c2f3ae18d817f61aff1764b2';
         $url = 'http://api.convertio.co/convert';
-        $da = ["apikey" => "e592f995c2f3ae18d817f61aff1764b2", "input" => "url", "file" => $src, "outputformat" => "png",];
+        $da = ["apikey" => "e592f995c2f3ae18d817f61aff1764b2", "input" => "url", "file" => $src, "outputformat" => "png"];
         $fields_string = json_encode($da);
 
         $ch = curl_init();
