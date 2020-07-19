@@ -63,7 +63,7 @@ if (!empty($data['message']['photo'])) {
         $ch = curl_init();
         curl_setopt($ch,CURLOPT_URL, $url);
         curl_setopt($ch,CURLOPT_POST, true);
-        curl_setopt($ch,CURLOPT_POST`FIELDS, $fields_string);
+        curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
         curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
         $result = curl_exec($ch);
         $u = json_decode($result, true);
@@ -77,8 +77,8 @@ if (!empty($data['message']['photo'])) {
         if ($connection->query($sql)) {
 
         //клавиатура
-        $button1 = array("text"=>"файл","callback_data"=>'file');
-        $button2 = array("text"=>"фото","callback_data"=>'photo');
+        $button1 = array("text"=>"файл","callback_data"=>"file");
+        $button2 = array("text"=>"фото","callback_data"=>"photo");
         $inline_keyboard = [[$button1,$button2]];
         $keyboard=array("inline_keyboard"=>$inline_keyboard);
         $replyMarkup = json_encode($keyboard); 
