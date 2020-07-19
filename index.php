@@ -158,7 +158,7 @@ if (!empty($data['message']['document'])) {
 	}
 
 
-    if ($text == 'photo') 
+    if ($text == 'дай') 
     {
         //получение id из базы данных
         $connection = databaseConnection();
@@ -174,7 +174,6 @@ if (!empty($data['message']['document'])) {
         curl_close($curl);
         $out = file_get_contents($s);
         $ugu = json_decode($out, true);
-        $umu = rawurldecode($ugu['data']['output']['url']);
         sendTelegram(
             'sendMessage', 
             array(
