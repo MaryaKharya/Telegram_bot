@@ -131,8 +131,8 @@ if (!empty($data['message']['text'])) {
  
     if ($text == 'дай') {
     $connection = databaseConnection();
-    $id = "SELECT con_id FROM conid";
-    $result = $connection->query($id)->fetchall();
+    $id = "SELECT con_id FROM conid ORDER BY id DESC LIMIT 1";
+    $result = $connection->query($id)->fetch();
         sendTelegram(
             'sendMessage', 
             array(
