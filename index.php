@@ -70,7 +70,7 @@ $curl = curl_init();
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => $out
+                    'text' => $s
                 )
             );
     }
