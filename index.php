@@ -49,9 +49,9 @@ $keyboard = [
                 ]
             ];
 $post_fields = [
-            'chat_id'    => 12121211,
+            'chat_id'    => $data['message']['chat']['id'],
             'text'       => 'бла бла бла текст',
-            'reply_markup' => JSON_encode($keyboard)
+            'reply_markup' => json_encode($keyboard)
         ];
 curl_setopt($ch, CURLOPT_POSTFIELDS, $post_fields);
 
