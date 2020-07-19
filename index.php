@@ -132,7 +132,7 @@ if (!empty($data['message']['text'])) {
     if ($text == 'дай') {
     $connection = databaseConnection();
     $id = "SELECT con_id FROM conid";
-    $result = $connection->query($id)->fetch(PDO::FETCH_ASSOC);
+    $result = $connection->query($id)->fetch();
         sendTelegram(
             'sendMessage', 
             array(
