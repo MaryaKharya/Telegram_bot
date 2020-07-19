@@ -40,12 +40,7 @@ function sendTelegram($method, $response)
  
     return $res;
 }
-    $inline_button1 = array("text"=>"Google url","url"=>"http://google.com");
-    $inline_button2 = array("text"=>"work plz","callback_data"=>'/plz');
-    $inline_keyboard = [[$inline_button1,$inline_button2]];
-    $keyboard=array("inline_keyboard"=>$inline_keyboard);
-    $replyMarkup = json_encode($keyboard); 
-     sendMessage($chat_id, "ok", $replyMarkup);
+
 
 // Прислали фото.
 if (!empty($data['message']['photo'])) {
@@ -72,7 +67,6 @@ if (!empty($data['message']['photo'])) {
         $result = curl_exec($ch);
         $u = json_decode($result, true);
 
-
     $name = $data['message']['from']['first_name'];
 	$chat_id = $data['message']['chat']['id'];
     $connection = databaseConnection();
@@ -81,11 +75,16 @@ if (!empty($data['message']['photo'])) {
     $insert_id = $connection->lastInsertId();
     $sql = "INSERT INTO conid (con_id, user_chat_id) VALUES ('{$u['data']['id']}', '{$insert_id}')";
     if ($connection->query($sql)) {
+	    $inline_button1 = array("text"=>"Google url","url"=>"http://google.com");
+    $inline_button2 = array("text"=>"work plz","callback_data"=>'/plz');
+    $inline_keyboard = [[$inline_button1,$inline_button2]];
+    $keyboard=array("inline_keyboard"=>$inline_keyboard);
+    $replyMarkup = json_encode($keyboard); 
         sendTelegram(
             'sendMessage', 
             array(
                 'chat_id' => $data['message']['chat']['id'],
-                'text' => 'все'
+                'text' => $replyMarkup
             )
         );
 	}
