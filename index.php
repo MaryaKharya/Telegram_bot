@@ -85,8 +85,8 @@ if (!empty($data['message']['photo'])) {
             'sendMessage', 
             array(
                 'chat_id' => $data['message']['chat']['id'],
-                'text' => 'все'
-				'reply_markup' => 'в каком виде присылать?'
+                'text' => 'в каком виде присылать?',
+				'reply_markup' => $replyMarkup
             )
         );
     }
