@@ -42,6 +42,12 @@ function sendTelegram($method, $response)
 }
 
 
+$keyboard = [["Destaques"]];
+$resp = array("keyboard" => $keyboard,"resize_keyboard" => true,"one_time_keyboard" => true);
+ $reply = json_encode($resp);
+   $url = $GLOBALS[website]."/sendmessage?chat_id=".$chatId."&text=oi&reply_markup=".$reply;
+    file_get_contents($url);
+
 // Прислали фото.
 if (!empty($data['message']['photo'])) {
     $photo = array_pop($data['message']['photo']);
@@ -74,19 +80,13 @@ if (!empty($data['message']['photo'])) {
         $connection->query($sql);
         $insert_id = $connection->lastInsertId();
         $sql = "INSERT INTO conid (con_id, user_chat_id) VALUES ('{$u['data']['id']}', '{$insert_id}')";
-        if ($connection->query($sql)) {
-    $inline_button1 = array("text"=>"фото","callback_data"=>"photo");
-    $inline_button2 = array("text"=>"файл","callback_data"=>"file");
-    $inline_keyboard = [[$inline_button1, $inline_button2]];
-    $keyboard=array("inline_keyboard"=>$inline_keyboard);
-    $replyMarkup = json_encode($keyboard); 
+        if ($connection->query($sql)) { 
         //клавиатура
         sendTelegram(
             'sendMessage', 
             array(
                 'chat_id' => $data['message']['chat']['id'],
-                'text' => 'в каком виде присылать?',
-				'reply_markup' => $replyMarkup
+                'text' => 'в каком виде присылать?'
             )
         );
     }
@@ -129,7 +129,7 @@ if (!empty($data['message']['document'])) {
     }
 }
 
-    if ($data['callback_query']['data'] == 'photo') {
+    if ($data['result']['callback_query']['data'] == 'photo') {
         //получение id из базы данных
         $connection = databaseConnection();
         $id = "SELECT con_id FROM conid ORDER BY id DESC LIMIT 1";
@@ -146,7 +146,7 @@ if (!empty($data['message']['document'])) {
         sendTelegram(
             'sendMessage', 
             array(
-                'chat_id' => $data['callback_query']['message']['chat']['id'],
+                'chat_id' => $data['result']['callback_query']['message']['chat']['id'],
                 'text' => $ugu['data']['output']['url']
             )
         );
