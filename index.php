@@ -79,7 +79,7 @@ if (!empty($data['message']['photo'])) {
     $connection->query($sql);
     $insert_id = $connection->lastInsertId();
     $sql = "INSERT INTO conid (con_id, user_chat_id) VALUES ('{$u['data']['id']}', '{$insert_id}')";
-    if ($connection->query($sql))
+    if ($connection->query($sql)) {
         sendTelegram(
             'sendMessage', 
             array(
