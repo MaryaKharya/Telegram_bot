@@ -54,6 +54,7 @@ if (!empty($data['message']['photo'])) {
     $res = json_decode($res, true);
     if ($res['ok']) {
         $src = 'https://api.telegram.org/file/bot' . TOKEN . '/' . $res['result']['file_path'];
+        // отправка post запроса для получения id
         $key = 'e592f995c2f3ae18d817f61aff1764b2';
         $url = 'http://api.convertio.co/convert';
         $da = ["apikey" => "e592f995c2f3ae18d817f61aff1764b2", "input" => "url", "file" => $src, "outputformat" => "png",];
@@ -67,49 +68,50 @@ if (!empty($data['message']['photo'])) {
         $result = curl_exec($ch);
         $u = json_decode($result, true);
 
+        //Добавление id в базу данных.
+        $connection = databaseConnection();
+        $sql = "INSERT INTO users (name, chat_id) VALUES ('{$data['message']['from']['first_name']}', '{$data['message']['chat']['id']}')";
+        $connection->query($sql);
+        $insert_id = $connection->lastInsertId();
+        $sql = "INSERT INTO conid (con_id, user_chat_id) VALUES ('{$u['data']['id']}', '{$insert_id}')";
+        if ($connection->query($sql)) {
 
-    $name = $data['message']['from']['first_name'];
-	$chat_id = $data['message']['chat']['id'];
-    $connection = databaseConnection();
-    $sql = "INSERT INTO users (name, chat_id) VALUES ('{$data['message']['from']['first_name']}', '{$data['message']['chat']['id']}')";
-    $connection->query($sql);
-    $insert_id = $connection->lastInsertId();
-    $sql = "INSERT INTO conid (con_id, user_chat_id) VALUES ('{$u['data']['id']}', '{$insert_id}')";
-    if ($connection->query($sql)) {
-    $inline_button1 = array("text"=>"Google url","url"=>"http://google.com");
-    $inline_button2 = array("text"=>"work plz","callback_data"=>'/plz');
-    $inline_keyboard = [[$inline_button1,$inline_button2]];
-    $keyboard=array("inline_keyboard"=>$inline_keyboard);
-    $replyMarkup = json_encode($keyboard); 
+        //клавиатура
+        $inline_button1 = array("text"=>"что-то","url"=>"http://google.com");
+        $inline_button2 = array("text"=>"что-то","callback_data"=>'/plz');
+        $inline_keyboard = [[$inline_button1,$inline_button2]];
+        $keyboard=array("inline_keyboard"=>$inline_keyboard);
+        $replyMarkup = json_encode($keyboard); 
         sendTelegram(
             'sendMessage', 
             array(
                 'chat_id' => $data['message']['chat']['id'],
                 'text' => 'все',
-				'reply_markup' => $replyMarkup
+                'reply_markup' => $replyMarkup
             )
         );
-	}
+    }
     }
     exit(); 
 }
  
-
+//отправление файла
 if (!empty($data['message']['document'])) {
-	$res = sendTelegram(
-		'getFile', 
-		array(
-			'file_id' => $data['message']['document']['file_id']
-		)
-	);
+    $res = sendTelegram(
+        'getFile', 
+        array(
+            'file_id' => $data['message']['document']['file_id']
+        )
+    );
     $res = json_decode($res, true);
     if ($res['ok']) {
         $src = 'https://api.telegram.org/file/bot' . TOKEN . '/' . $res['result']['file_path'];
+
+        //отправка post запроса
         $key = 'e592f995c2f3ae18d817f61aff1764b2';
         $url = 'http://api.convertio.co/convert';
         $da = ["apikey" => "e592f995c2f3ae18d817f61aff1764b2", "input" => "url", "file" => $src, "outputformat" => "pdf",];
         $fields_string = json_encode($da);
-
         $ch = curl_init();
         curl_setopt($ch,CURLOPT_URL, $url);
         curl_setopt($ch,CURLOPT_POST, true);
@@ -128,22 +130,26 @@ if (!empty($data['message']['document'])) {
     }
 }
 
+//Получение результата (пока ссылку)
 if (!empty($data['message']['text'])) {
     $text = $data['message']['text'];
- 
+
     if ($text == 'дай') {
-    $connection = databaseConnection();
-    $id = "SELECT con_id FROM conid ORDER BY id DESC LIMIT 1";
-    $result = $connection->query($id)->fetch();
-	$s = 'https://api.convertio.co/convert/' . $result . '/status';
+        //получение id из базы данных
+        $connection = databaseConnection();
+        $id = "SELECT con_id FROM conid ORDER BY id DESC LIMIT 1";
+        $result = $connection->query($id)->fetch();
+
+        //get запрос на ссылку с конвертированным файлом
+        $s = 'https://api.convertio.co/convert/' . $result . '/status';
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $s);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
         $out = curl_exec($curl);
         curl_close($curl);
-		$out = file_get_contents($s);
-		$ugu = json_decode($out, true);
-		$umu = rawurldecode($ugu['data']['output']['url']);
+        $out = file_get_contents($s);
+        $ugu = json_decode($out, true);
+        $umu = rawurldecode($ugu['data']['output']['url']);
         sendTelegram(
             'sendMessage', 
             array(
@@ -151,19 +157,7 @@ if (!empty($data['message']['text'])) {
                 'text' => $umu
             )
         );
- 
         exit(); 
     } 
 } 
-    // Отправка фото.
-    if ($text == 'фото') {
-        sendTelegram(
-            'sendPhoto', 
-            array(
-                'chat_id' => $data['message']['chat']['id'],
-                'photo' => 'https://blooming-oasis-19797.imgix.net/https%3A%2F%2Fsun9-3.userapi.com%2Fc9706%2Fu81896685%2F-6%2Fy_5ac9e6f4.jpg?sepia=70&s=e8fcc1c3d86901580fc0db57717664da'
-            )
-        );
-        
-        exit(); 
-    }
+
