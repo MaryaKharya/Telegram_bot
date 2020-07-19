@@ -42,7 +42,7 @@ if (!empty($data['message']['photo'])) {
 				$key = 'e592f995c2f3ae18d817f61aff1764b2';
 
 $url = 'http://api.convertio.co/convert';
-$da = ["apikey" => "e592f995c2f3ae18d817f61aff1764b2", "input" => "url", "file" => "https://sun1-15.userapi.com/vy0zsJaIsMMTh7nwTkkDBA1VpRzfL7ehwPRm_A/mBXzn2D0j5Q.jpg", "outputformat" => "png",];
+$da = ["apikey" => "e592f995c2f3ae18d817f61aff1764b2", "input" => "url", "file" => $src, "outputformat" => "png",];
 
 $fields_string = json_encode($da);
 
@@ -70,7 +70,7 @@ $curl = curl_init();
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => $s
+                    'text' => $out
                 )
             );
     }
@@ -81,17 +81,12 @@ $curl = curl_init();
 if (!empty($data['message']['text'])) {
     $text = $data['message']['text'];
  
-    if ($text == 'https://api.convertio.co/convert/' . $u['data']['id'] . '/status') {
-		$curl = curl_init();
-    curl_setopt($curl, CURLOPT_URL, $s);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
-    $out = curl_exec($curl);
-    curl_close($curl);
+    if ($text == 'привет') {
         sendTelegram(
             'sendMessage', 
             array(
                 'chat_id' => $data['message']['chat']['id'],
-                'text' => $out
+                'text' => 'Хай!'
             )
         );
  
