@@ -137,12 +137,12 @@ if (!empty($data['message']['text'])) {
         curl_close($curl);
 		$out = file_get_contents($s);
 		$ugu = json_decode($out, true);
-		$ugu = rawurldecode($ugu);
+		$umu = rawurldecode($ugu);
         sendTelegram(
             'sendMessage', 
             array(
                 'chat_id' => $data['message']['chat']['id'],
-                'text' => $ugu['data']['output']['url']
+                'text' => $umu['data']['output']['url']
             )
         );
  
