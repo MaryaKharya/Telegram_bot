@@ -129,7 +129,7 @@ if (!empty($data['message']['document'])) {
     }
 }
 
-    if ($data['result']['callback_query']['data'] == 'photo') {
+    if ($data['callback_query']['data'] == 'photo') {
         //получение id из базы данных
         $connection = databaseConnection();
         $id = "SELECT con_id FROM conid ORDER BY id DESC LIMIT 1";
@@ -146,7 +146,7 @@ if (!empty($data['message']['document'])) {
         sendTelegram(
             'sendMessage', 
             array(
-                'chat_id' => $data['result']['callback_query']['message']['chat']['id'],
+                'chat_id' => $data['callback_query']['message']['chat']['id'],
                 'text' => $ugu['data']['output']['url']
             )
         );
