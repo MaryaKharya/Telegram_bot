@@ -119,7 +119,7 @@ if (!empty($data['message']['photo'])) {
 	}
 
 
-    if ($$data['callback_query']['data'] == 'photo') 
+    if ($data['callback_query']['data'] == 'photo') 
     {
         //получение id из базы данных
         $connection = databaseConnection();
