@@ -133,7 +133,7 @@ if (!empty($data['message']['document'])) {
 //Получение результата (пока ссылку)
 $callback_query = $output['callback_query'];
 $datata = $callback_query['data'];
-$chat_id_in = $callback_query['message']['chat']['id'];
+$chat_id_in = $callback_query['from']['id'];
     if ($datata == 'file')
 	{
 		//получение id из базы данных
