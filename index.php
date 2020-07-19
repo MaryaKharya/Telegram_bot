@@ -73,7 +73,7 @@ if (!empty($data['message']['photo'])) {
         curl_close($curl);
 
     $name = $data['message']['from']['first_name'];
-	$chat_id = ${data['message']['chat']['id'];
+	$chat_id = $data['message']['chat']['id'];
     $connection = databaseConnection();
     $sql = "INSERT INTO users (name, chat_id) VALUES ('{$data['message']['from']['first_name']}', '{$data['message']['chat']['id']}')";
     $connection->query($sql);
