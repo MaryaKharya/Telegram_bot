@@ -133,11 +133,12 @@ if (!empty($data['message']['text'])) {
     $connection = databaseConnection();
     $id = "SELECT con_id FROM conid";
     $result = $connection->query($id)->fetch(PDO::FETCH_ASSOC);
+    $ul = json_decode($result, true);
         sendTelegram(
             'sendMessage', 
             array(
                 'chat_id' => $data['message']['chat']['id'],
-                'text' => $result
+                'text' => $ul['con_id']
             )
         );
  
