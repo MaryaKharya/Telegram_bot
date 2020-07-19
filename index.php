@@ -77,8 +77,8 @@ if (!empty($data['message']['photo'])) {
         if ($connection->query($sql)) {
 
         //клавиатура
-        $button1 = array("text"=>"файл","callback_data"=>'file');
-        $button2 = array("text"=>"фото","callback_data"=>'photo');
+        $button1 = array("text"=>"файл","callback_data"=>"file");
+        $button2 = array("text"=>"фото","callback_data"=>"photo");
         $inline_keyboard = [[$button1,$button2]];
         $keyboard=array("inline_keyboard"=>$inline_keyboard);
         $replyMarkup = json_encode($keyboard); 
@@ -132,10 +132,6 @@ if (!empty($data['message']['document'])) {
 }
 
 //Получение результата (пока ссылку)
-if (!empty($data['message']['text'])) 
-{
-    $text = $data['message']['text'];
-
     if ($text == 'file')
 	{
 		//получение id из базы данных
@@ -164,7 +160,7 @@ if (!empty($data['message']['text']))
 	}
 
 
-    if ($text == 'фото') 
+    if ($text == 'photo') 
     {
         //получение id из базы данных
         $connection = databaseConnection();
@@ -190,5 +186,4 @@ if (!empty($data['message']['text']))
         );
         exit(); 
     } 
-} 
 
