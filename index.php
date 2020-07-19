@@ -76,11 +76,17 @@ if (!empty($data['message']['photo'])) {
     $insert_id = $connection->lastInsertId();
     $sql = "INSERT INTO conid (con_id, user_chat_id) VALUES ('{$u['data']['id']}', '{$insert_id}')";
     if ($connection->query($sql)) {
+    $inline_button1 = array("text"=>"Google url","url"=>"http://google.com");
+    $inline_button2 = array("text"=>"work plz","callback_data"=>'/plz');
+    $inline_keyboard = [[$inline_button1,$inline_button2]];
+    $keyboard=array("inline_keyboard"=>$inline_keyboard);
+    $replyMarkup = json_encode($keyboard); 
         sendTelegram(
             'sendMessage', 
             array(
                 'chat_id' => $data['message']['chat']['id'],
-                'text' => 'все'
+                'text' => 'все',
+				'reply_markup' => $replyMarkup
             )
         );
 	}
@@ -129,7 +135,7 @@ if (!empty($data['message']['text'])) {
     $connection = databaseConnection();
     $id = "SELECT con_id FROM conid ORDER BY id DESC LIMIT 1";
     $result = $connection->query($id)->fetch();
-	$s = 'https://api.convertio.co/convert/6eafdbcdad7b2277e54b22e1004f1a98/status';
+	$s = 'https://api.convertio.co/convert/' . $result . '/status';
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $s);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
