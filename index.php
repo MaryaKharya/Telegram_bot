@@ -83,7 +83,7 @@ if (!empty($data['message']['photo'])) {
             'sendMessage', 
             array(
                 'chat_id' => $data['message']['chat']['id'],
-                'text' => $connection->query($sql)
+                'text' => 'все'
             )
         );
 	}
