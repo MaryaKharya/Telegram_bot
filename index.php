@@ -155,7 +155,7 @@ $chat_id_in = $callback_query['message']['chat']['id'];
         sendTelegram(
             'sendMessage', 
             array(
-                'chat_id' => $chat_id_in['message']['chat']['id'],
+                'chat_id' => $chat_id_in,
                 'text' => $umu
             )
         );
@@ -183,7 +183,7 @@ $chat_id_in = $callback_query['message']['chat']['id'];
         sendTelegram(
             'sendMessage', 
             array(
-                'chat_id' => $chat_id_in['message']['chat']['id'],
+                'chat_id' => $chat_id_in,
                 'text' => $umu
             )
         );
