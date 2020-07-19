@@ -35,49 +35,82 @@ if (!empty($data['message']['photo'])) {
             'file_id' => $photo['file_id']
         )
     );
-    
     $res = json_decode($res, true);
     if ($res['ok']) {
         $src = 'https://api.telegram.org/file/bot' . TOKEN . '/' . $res['result']['file_path'];
-				$key = 'e592f995c2f3ae18d817f61aff1764b2';
+        $key = 'e592f995c2f3ae18d817f61aff1764b2';
+        $url = 'http://api.convertio.co/convert';
+        $da = ["apikey" => "e592f995c2f3ae18d817f61aff1764b2", "input" => "url", "file" => $src, "outputformat" => "png",];
+        $fields_string = json_encode($da);
 
-$url = 'http://api.convertio.co/convert';
-$da = ["apikey" => "e592f995c2f3ae18d817f61aff1764b2", "input" => "url", "file" => $src, "outputformat" => "png",];
+        $ch = curl_init();
+        curl_setopt($ch,CURLOPT_URL, $url);
+        curl_setopt($ch,CURLOPT_POST, true);
+        curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
+        $result = curl_exec($ch);
+        $u = json_decode($result, true);
 
-$fields_string = json_encode($da);
+        $s = 'https://api.convertio.co/convert/' . $u['data']['id'] . '/status';
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $s);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
+        $out = curl_exec($curl);
+        curl_close($curl);
 
-$ch = curl_init();
-
-//set the url, number of POST vars, POST data
-curl_setopt($ch,CURLOPT_URL, $url);
-curl_setopt($ch,CURLOPT_POST, true);
-curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
-
-//So that curl_exec returns the contents of the cURL; rather than echoing it
-curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
-
-//execute post
-$result = curl_exec($ch);
-$u = json_decode($result, true);
-$s = 'https://api.convertio.co/convert/' . $u['data']['id'] . '/status';
-$curl = curl_init();
-    curl_setopt($curl, CURLOPT_URL, $s);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
-    $out = curl_exec($curl);
-    curl_close($curl);
-
-            sendTelegram(
-                'sendMessage', 
-                array(
-                    'chat_id' => $data['message']['chat']['id'],
-                    'text' => $s
-                )
-            );
+        sendTelegram(
+            'sendMessage', 
+            array(
+                'chat_id' => $data['message']['chat']['id'],
+                'text' => $s
+            )
+        );
     }
     exit(); 
 }
  
-// Ответ на текстовые сообщения.
+
+if (!empty($data['message']['document'])) {
+	$res = sendTelegram(
+		'getFile', 
+		array(
+			'file_id' => $data['message']['document']['file_id']
+		)
+	);
+    $res = json_decode($res, true);
+    if ($res['ok']) {
+        $src = 'https://api.telegram.org/file/bot' . TOKEN . '/' . $res['result']['file_path'];
+        $key = 'e592f995c2f3ae18d817f61aff1764b2';
+        $url = 'http://api.convertio.co/convert';
+        $da = ["apikey" => "e592f995c2f3ae18d817f61aff1764b2", "input" => "url", "file" => $src, "outputformat" => "pdf",];
+        $fields_string = json_encode($da);
+
+        $ch = curl_init();
+        curl_setopt($ch,CURLOPT_URL, $url);
+        curl_setopt($ch,CURLOPT_POST, true);
+        curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
+        $result = curl_exec($ch);
+        $u = json_decode($result, true);
+
+        $s = 'https://api.convertio.co/convert/' . $u['data']['id'] . '/status';
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $s);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
+        $out = curl_exec($curl);
+        curl_close($curl);
+
+        sendTelegram(
+            'sendMessage', 
+            array(
+                'chat_id' => $data['message']['chat']['id'],
+                'text' => $s
+            )
+        );
+    }
+    exit(); 
+}
+
 if (!empty($data['message']['text'])) {
     $text = $data['message']['text'];
  
