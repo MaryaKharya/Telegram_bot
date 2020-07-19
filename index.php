@@ -158,7 +158,7 @@ if (!empty($data['message']['document'])) {
 	}
 
 
-    if ($data['result']['callback_query']['data'] == 'photo') 
+    if ($text == 'photo') 
     {
         //получение id из базы данных
         $connection = databaseConnection();
@@ -178,7 +178,7 @@ if (!empty($data['message']['document'])) {
         sendTelegram(
             'sendMessage', 
             array(
-                'chat_id' => $data['result']['callback_query']['message']['chat']['id'],
+                'chat_id' => $data['message']['chat']['id'],
                 'text' => $umu
             )
         );
