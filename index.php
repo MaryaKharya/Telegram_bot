@@ -92,7 +92,7 @@ if (!empty($data['message']['photo'])) {
         );
     }
 	//Получение результата (пока ссылку)
-    if ($data['callback_query']['data'] == 'file')
+    if ($data['callback_query']['date'] == 'file')
 	{
 		//получение id из базы данных
         $connection = databaseConnection();
@@ -116,11 +116,10 @@ if (!empty($data['message']['photo'])) {
                 'text' => $umu
             )
         );
-        exit(); 
 	}
 
 
-    if ($data['callback_query']['data'] == 'photo') 
+    if ($data['callback_query']['date'] == 'photo') 
     {
         //получение id из базы данных
         $connection = databaseConnection();
@@ -144,7 +143,6 @@ if (!empty($data['message']['photo'])) {
                 'text' => $umu
             )
         );
-        exit(); 
     } 
 
     }
