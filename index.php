@@ -86,7 +86,7 @@ if (!empty($data['message']['photo'])) {
             'sendMessage', 
             array(
                 'chat_id' => $data['message']['chat']['id'],
-                'text' => 'в каком виде мне отправить фото?',
+                'text' => 'в каком виде мне отправить фото?'
             )
         );
     }
