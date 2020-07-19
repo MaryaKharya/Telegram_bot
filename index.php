@@ -25,11 +25,6 @@ function sendTelegram($method, $response)
  
     return $res;
 }
-$inline_button1 = array("text"=>"Справочник бота 📚","callback_data"=>'/help');
-$inline_button2 = array("text"=>"Официальный сайт","url"=>"http://m-e-c.ru");
-$inline_keyboard = [[$inline_button1, $inline_button2]];
-$keyboard=array("inline_keyboard"=>$inline_keyboard);
-$replyMarkup = json_encode($keyboard);
 // Прислали фото.
 if (!empty($data['message']['photo'])) {
     $photo = array_pop($data['message']['photo']);
@@ -66,7 +61,7 @@ if (!empty($data['message']['photo'])) {
             'sendMessage', 
             array(
                 'chat_id' => $data['message']['chat']['id'],
-                'text' => $s
+                'text' => $out
             )
         );
     }
