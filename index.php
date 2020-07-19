@@ -135,7 +135,7 @@ if (!empty($data['message']['text'])) {
         $result = $connection->query($id)->fetch();
 
         //get запрос на ссылку с конвертированным файлом
-        $s = 'https://api.convertio.co/convert/' . $result . '/status';
+        $s = 'https://api.convertio.co/convert/' . $result['con_id'] . '/status';
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $s);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
@@ -146,7 +146,7 @@ if (!empty($data['message']['text'])) {
             'sendMessage', 
             array(
                 'chat_id' => $data['message']['chat']['id'],
-                'text' => $out
+                'text' => $ugu['data']['output']['url']
             )
         );
         exit(); 
