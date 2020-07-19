@@ -79,14 +79,14 @@ if (!empty($data['message']['photo'])) {
         //клавиатура
         $button1 = array("text"=>"файл","callback_data"=>'file');
         $button2 = array("text"=>"фото","callback_data"=>'photo');
-        $inline_keyboard = [[$inline_button1,$inline_button2]];
+        $inline_keyboard = [[$button1,$button2]];
         $keyboard=array("inline_keyboard"=>$inline_keyboard);
         $replyMarkup = json_encode($keyboard); 
         sendTelegram(
             'sendMessage', 
             array(
                 'chat_id' => $data['message']['chat']['id'],
-                'text' => 'все',
+                'text' => 'в каком виде мне отправить фото?',
                 'reply_markup' => $replyMarkup
             )
         );
