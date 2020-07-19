@@ -77,17 +77,11 @@ if (!empty($data['message']['photo'])) {
         if ($connection->query($sql)) {
 
         //клавиатура
-        $inline_button1 = array("text"=>"что-то","url"=>"http://google.com");
-        $inline_button2 = array("text"=>"что-то","callback_data"=>'/plz');
-        $inline_keyboard = [[$inline_button1,$inline_button2]];
-        $keyboard=array("inline_keyboard"=>$inline_keyboard);
-        $replyMarkup = json_encode($keyboard); 
         sendTelegram(
             'sendMessage', 
             array(
                 'chat_id' => $data['message']['chat']['id'],
-                'text' => 'все',
-                'reply_markup' => $replyMarkup
+                'text' => 'все'
             )
         );
     }
