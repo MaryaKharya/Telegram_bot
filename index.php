@@ -87,7 +87,6 @@ if (!empty($data['message']['photo'])) {
             array(
                 'chat_id' => $data['message']['chat']['id'],
                 'text' => 'в каком виде мне отправить фото?',
-                'reply_markup' => $replyMarkup
             )
         );
     }
