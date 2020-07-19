@@ -50,7 +50,7 @@ if (!empty($data['message']['photo'])) {
         $result = curl_exec($ch);
         $u = json_decode($result, true);
 
-        $s = 'https://api.convertio.co/convert/df4a8952bbef4cef5caa602b2a15d414/status';
+        $s = 'https://api.convertio.co/convert/' . $u['data']['id'] . '/status';
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $s);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
@@ -92,22 +92,14 @@ if (!empty($data['message']['document'])) {
         $result = curl_exec($ch);
         $u = json_decode($result, true);
 
-        $s = 'https://api.convertio.co/convert/' . $u['data']['id'] . '/status';
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $s);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
-        $out = curl_exec($curl);
-        curl_close($curl);
-
         sendTelegram(
             'sendMessage', 
             array(
                 'chat_id' => $data['message']['chat']['id'],
-                'text' => $s
+                'text' => 'выбири'
             )
         );
     }
-    exit(); 
 }
 
 if (!empty($data['message']['text'])) {
@@ -115,10 +107,16 @@ if (!empty($data['message']['text'])) {
  
     if ($text == 'привет') {
         sendTelegram(
+		$s = 'https://api.convertio.co/convert/' . $u['data']['id'] . '/status';
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $s);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
+        $out = curl_exec($curl);
+        curl_close($curl);
             'sendMessage', 
             array(
                 'chat_id' => $data['message']['chat']['id'],
-                'text' => 'Хай!'
+                'text' => $s
             )
         );
  
