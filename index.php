@@ -91,33 +91,7 @@ if (!empty($data['message']['photo'])) {
             )
         );
     }
-$callback_query = $output['callback_query'];
-$datata = $callback_query['data'];
-$chat_id_in = $callback_query['message']['chat']['id'];
-
-if ($datata === 'file')
-{
-        sendTelegram(
-            'sendMessage', 
-            array(
-                'chat_id' => $chat_id_in,
-                'text' => 'приветушки'
-            )
-        );
-}
-
-if ($datata === 'photo')
-{
-        sendTelegram(
-            'sendMessage', 
-            array(
-                'chat_id' => $chat_id_in,
-                'text' => 'покатушки'
-            )
-        );
-}
     }
-    exit(); 
 }
 
 
@@ -157,9 +131,10 @@ if (!empty($data['message']['document'])) {
 }
 
 //Получение результата (пока ссылку)
-
-
-    if ($text == 'file')
+$callback_query = $data['callback_query'];
+$datata = $callback_query['data'];
+$chat_id_in = $callback_query['message']['chat']['id'];
+    if ($datata == 'file')
 	{
 		//получение id из базы данных
         $connection = databaseConnection();
@@ -179,7 +154,7 @@ if (!empty($data['message']['document'])) {
         sendTelegram(
             'sendMessage', 
             array(
-                'chat_id' => $chat_id,
+                'chat_id' => $chat_id_in,
                 'text' => $umu
             )
         );
@@ -187,7 +162,7 @@ if (!empty($data['message']['document'])) {
 	}
 
 
-    if ($text == 'photo') 
+    if ($datata == 'photo') 
     {
         //получение id из базы данных
         $connection = databaseConnection();
@@ -207,7 +182,7 @@ if (!empty($data['message']['document'])) {
         sendTelegram(
             'sendMessage', 
             array(
-                'chat_id' => $chat_id,
+                'chat_id' => $chat_id_in,
                 'text' => $umu
             )
         );
