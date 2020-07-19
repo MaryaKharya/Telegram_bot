@@ -11,7 +11,8 @@
     "require": {
         "telegram-bot/api": "^2.3",
 		"imgix/imgix-php": "dev-main",
-        "guzzlehttp/guzzle": "^7.0"
+        "guzzlehttp/guzzle": "^7.0",
+        "csanquer/pdo-service-provider": "~1.1dev"
     },
     "require-dev": {
         "heroku/heroku-buildpack-php": "*"

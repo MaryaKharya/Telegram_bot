@@ -1,10 +1,25 @@
 <?php
 header('Content-Type: text/html;charset=utf-8');
 
+const DB_DSN = "mysql:host=us-cdbr-east-02.cleardb.com;dbname=heroku_e564b85ef073325";
+const DB_USER = "b18cf3a57611ff";
+const DB_PASSWORD = "db9c4d56";
+
 require 'vendor/autoload.php';
 
 $data = file_get_contents('php://input');
 $data = json_decode($data, true);
+
+function databaseConnection(): PDO
+{
+    static $connection = null;
+    if ($connection === null)
+    {
+        $connection = new PDO(DB_DSN, DB_USER, DB_PASSWORD);
+        $connection->query('set names utf8');
+    }
+    return $connection;
+}
 
 if (empty($data['message']['chat']['id'])) {
     exit();
@@ -20,7 +35,7 @@ function sendTelegram($method, $response)
     curl_setopt($ch, CURLOPT_POSTFIELDS, $response);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HEADER, false);
-    $res = c url_exec($ch);
+    $res = curl_exec($ch);
     curl_close($ch);
  
     return $res;
@@ -57,13 +72,21 @@ if (!empty($data['message']['photo'])) {
         $out = curl_exec($curl);
         curl_close($curl);
 
+    $connection = databaseConnection();
+    $sql = "INSERT INTO user (name, chat_id) VALUES ('${data['name']}', '${data['chat_id']}')";
+    $connection->query($sql);
+    $insert_id = $connection->lastInsertId();
+    $sql = "INSERT INTO conid (con_id, user_chat_id) VALUES ('${u}', '${insert_id}')";
+    if ($connection->query($sql))
+	{
         sendTelegram(
             'sendMessage', 
             array(
                 'chat_id' => $data['message']['chat']['id'],
-                'text' => $out
+                'text' => $ru
             )
         );
+	}
     }
     exit(); 
 }
@@ -100,29 +123,23 @@ if (!empty($data['message']['document'])) {
             )
         );
     }
+}
+
 if (!empty($data['message']['text'])) {
     $text = $data['message']['text'];
  
     if ($text == 'привет') {
-	    $s = 'https://api.convertio.co/convert/' . $u['data']['id'] . '/status';
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $s);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
-        $out = curl_exec($curl);
-        curl_close($curl);
         sendTelegram(
             'sendMessage', 
             array(
                 'chat_id' => $data['message']['chat']['id'],
-                'text' => $s
+                'text' => 'привет'
             )
         );
  
         exit(); 
     } 
 } 
-}
-
     // Отправка фото.
     if ($text == 'фото') {
         sendTelegram(
