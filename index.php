@@ -80,7 +80,6 @@ if (!empty($data['message']['photo'])) {
     $insert_id = $connection->lastInsertId();
     $sql = "INSERT INTO conid (con_id, user_chat_id) VALUES ('{$u['data']['id']}', '{$insert_id}')";
     if ($connection->query($sql))
-	{
         sendTelegram(
             'sendMessage', 
             array(
@@ -130,12 +129,15 @@ if (!empty($data['message']['document'])) {
 if (!empty($data['message']['text'])) {
     $text = $data['message']['text'];
  
-    if ($text == 'привет') {
+    if ($text == 'дай') {
+    $connection = databaseConnection();
+    $id = "SELECT con_id FROM conid";
+    $result = $connection->query($checking)->fetch(PDO::FETCH_ASSOC);
         sendTelegram(
             'sendMessage', 
             array(
                 'chat_id' => $data['message']['chat']['id'],
-                'text' => 'привет'
+                'text' => $result
             )
         );
  
