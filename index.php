@@ -63,7 +63,7 @@ if (!empty($data['message']['photo'])) {
         $ch = curl_init();
         curl_setopt($ch,CURLOPT_URL, $url);
         curl_setopt($ch,CURLOPT_POST, true);
-        curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+        curl_setopt($ch,CURLOPT_POST`FIELDS, $fields_string);
         curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
         $result = curl_exec($ch);
         $u = json_decode($result, true);
@@ -90,6 +90,61 @@ if (!empty($data['message']['photo'])) {
                 'reply_markup' => $replyMarkup
             )
         );
+		//Получение результата (пока ссылку)
+    if ($data['callback_query']['data'] == 'file')
+	{
+		//получение id из базы данных
+        $connection = databaseConnection();
+        $id = "SELECT con_id FROM conid ORDER BY id DESC LIMIT 1";
+        $result = $connection->query($id)->fetch();
+
+        //get запрос на ссылку с конвертированным файлом
+        $s = 'https://api.convertio.co/convert/' . $result . '/status';
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $s);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
+        $out = curl_exec($curl);
+        curl_close($curl);
+        $out = file_get_contents($s);
+        $ugu = json_decode($out, true);
+        $umu = rawurldecode($ugu['data']['output']['url']);
+        sendTelegram(
+            'sendMessage', 
+            array(
+                'chat_id' => $data['callback_query']['message']['chat']['id'],
+                'text' => $umu
+            )
+        );
+        exit(); 
+	}
+
+
+    if ($$data['callback_query']['data'] == 'photo') 
+    {
+        //получение id из базы данных
+        $connection = databaseConnection();
+        $id = "SELECT con_id FROM conid ORDER BY id DESC LIMIT 1";
+        $result = $connection->query($id)->fetch();
+
+        //get запрос на ссылку с конвертированным файлом
+        $s = 'https://api.convertio.co/convert/' . $result . '/status';
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $s);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
+        $out = curl_exec($curl);
+        curl_close($curl);
+        $out = file_get_contents($s);
+        $ugu = json_decode($out, true);
+        $umu = rawurldecode($ugu['data']['output']['url']);
+        sendTelegram(
+            'sendMessage', 
+            array(
+                'chat_id' => $data['callback_query']['message']['chat']['id'],
+                'text' => $umu
+            )
+        );
+        exit(); 
+    } 
     }
     }
 }
@@ -130,62 +185,4 @@ if (!empty($data['message']['document'])) {
     }
 }
 
-//Получение результата (пока ссылку)
-$callback_query = $data['callback_query'];
-$datata = $callback_query['data'];
-$chat_id_in = $callback_query['message']['chat']['id'];
-    if ($datata == 'file')
-	{
-		//получение id из базы данных
-        $connection = databaseConnection();
-        $id = "SELECT con_id FROM conid ORDER BY id DESC LIMIT 1";
-        $result = $connection->query($id)->fetch();
-
-        //get запрос на ссылку с конвертированным файлом
-        $s = 'https://api.convertio.co/convert/' . $result . '/status';
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $s);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
-        $out = curl_exec($curl);
-        curl_close($curl);
-        $out = file_get_contents($s);
-        $ugu = json_decode($out, true);
-        $umu = rawurldecode($ugu['data']['output']['url']);
-        sendTelegram(
-            'sendMessage', 
-            array(
-                'chat_id' => $chat_id_in,
-                'text' => $umu
-            )
-        );
-        exit(); 
-	}
-
-
-    if ($datata == 'photo') 
-    {
-        //получение id из базы данных
-        $connection = databaseConnection();
-        $id = "SELECT con_id FROM conid ORDER BY id DESC LIMIT 1";
-        $result = $connection->query($id)->fetch();
-
-        //get запрос на ссылку с конвертированным файлом
-        $s = 'https://api.convertio.co/convert/' . $result . '/status';
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $s);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
-        $out = curl_exec($curl);
-        curl_close($curl);
-        $out = file_get_contents($s);
-        $ugu = json_decode($out, true);
-        $umu = rawurldecode($ugu['data']['output']['url']);
-        sendTelegram(
-            'sendMessage', 
-            array(
-                'chat_id' => $chat_id_in,
-                'text' => $umu
-            )
-        );
-        exit(); 
-    } 
 
