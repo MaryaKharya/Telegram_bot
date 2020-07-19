@@ -142,10 +142,8 @@ if (!empty($data['message']['photo'])) {
                 'chat_id' => $data['callback_query']['message']['chat']['id'],
                 'text' => $umu
             )
-        );
-        exit(); 
+        ); 
     } 
-    }
     }
 }
 
