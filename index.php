@@ -42,11 +42,18 @@ function sendTelegram($method, $response)
 }
 
 
-$keyboard = [["Destaques"]];
-$resp = array("keyboard" => $keyboard,"resize_keyboard" => true,"one_time_keyboard" => true);
- $reply = json_encode($resp);
-   $url = $GLOBALS[website]."/sendmessage?chat_id=".$chatId."&text=oi&reply_markup=".$reply;
-    file_get_contents($url);
+$keyboard = [
+            'keyboard'=>[
+                [['text'=>'Кнопка 1'],['text'=>'Кнопка 2']] // Первый ряд кнопок
+                ,['Простая кнопка',['text'=>'Кнопка 4']] // Второй ряд кнопок
+                ]
+            ];
+$post_fields = [
+            'chat_id'    => 12121211,
+            'text'       => 'бла бла бла текст',
+            'reply_markup' => JSON_encode($keyboard)
+        ];
+curl_setopt($ch, CURLOPT_POSTFIELDS, $post_fields);
 
 // Прислали фото.
 if (!empty($data['message']['photo'])) {
