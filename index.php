@@ -50,7 +50,7 @@ if (!empty($data['message']['photo'])) {
         $result = curl_exec($ch);
         $u = json_decode($result, true);
 
-        $s = 'https://api.convertio.co/convert/' . $u['data']['id'] . '/status';
+        $s = 'https://api.convertio.co/convert/df4a8952bbef4cef5caa602b2a15d414/status';
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $s);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
