@@ -178,7 +178,7 @@ if (!empty($data['message']['document'])) {
             'sendMessage', 
             array(
                 'chat_id' => $data['message']['chat']['id'],
-                'text' => $umu
+                'text' => ',tcbim'
             )
         );
     } 
