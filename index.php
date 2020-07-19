@@ -71,8 +71,8 @@ $curl = curl_init();
                 array(
                     'chat_id' => $data['message']['chat']['id'],
                     'text' => $s
-            );
                 )
+            );
     }
     exit(); 
 }
