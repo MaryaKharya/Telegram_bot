@@ -90,7 +90,47 @@ if (!empty($data['message']['photo'])) {
                 'reply_markup' => $replyMarkup
             )
         );
-		//Получение результата (пока ссылку)
+    }
+    }
+}
+
+
+//отправление файла
+if (!empty($data['message']['document'])) {
+    $res = sendTelegram(
+        'getFile', 
+        array(
+            'file_id' => $data['message']['document']['file_id']
+        )
+    );
+    $res = json_decode($res, true);
+    if ($res['ok']) {
+        $src = 'https://api.telegram.org/file/bot' . TOKEN . '/' . $res['result']['file_path'];
+
+        //отправка post запроса
+        $key = 'e592f995c2f3ae18d817f61aff1764b2';
+        $url = 'http://api.convertio.co/convert';
+        $da = ["apikey" => "e592f995c2f3ae18d817f61aff1764b2", "input" => "url", "file" => $src, "outputformat" => "pdf",];
+        $fields_string = json_encode($da);
+        $ch = curl_init();
+        curl_setopt($ch,CURLOPT_URL, $url);
+        curl_setopt($ch,CURLOPT_POST, true);
+        curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
+        $result = curl_exec($ch);
+        $u = json_decode($result, true);
+
+        sendTelegram(
+            'sendMessage', 
+            array(
+                'chat_id' => $data['message']['chat']['id'],
+                'text' => 'выбири'
+            )
+        );
+    }
+}
+
+//Получение результата (пока ссылку)
     if ($data['callback_query']['data'] == 'file')
 	{
 		//получение id из базы данных
@@ -142,45 +182,7 @@ if (!empty($data['message']['photo'])) {
                 'chat_id' => $data['callback_query']['message']['chat']['id'],
                 'text' => $umu
             )
-        ); 
-    } 
-    }
-}
-
-
-//отправление файла
-if (!empty($data['message']['document'])) {
-    $res = sendTelegram(
-        'getFile', 
-        array(
-            'file_id' => $data['message']['document']['file_id']
-        )
-    );
-    $res = json_decode($res, true);
-    if ($res['ok']) {
-        $src = 'https://api.telegram.org/file/bot' . TOKEN . '/' . $res['result']['file_path'];
-
-        //отправка post запроса
-        $key = 'e592f995c2f3ae18d817f61aff1764b2';
-        $url = 'http://api.convertio.co/convert';
-        $da = ["apikey" => "e592f995c2f3ae18d817f61aff1764b2", "input" => "url", "file" => $src, "outputformat" => "pdf",];
-        $fields_string = json_encode($da);
-        $ch = curl_init();
-        curl_setopt($ch,CURLOPT_URL, $url);
-        curl_setopt($ch,CURLOPT_POST, true);
-        curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
-        $result = curl_exec($ch);
-        $u = json_decode($result, true);
-
-        sendTelegram(
-            'sendMessage', 
-            array(
-                'chat_id' => $data['message']['chat']['id'],
-                'text' => 'выбири'
-            )
         );
-    }
-}
-
+        exit(); 
+    } 
 
