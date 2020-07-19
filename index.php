@@ -1,5 +1,5 @@
 <?php
-header('Content-Type: application/json');
+header('Content-Type: text/html;charset=utf-8');
 
 require 'vendor/autoload.php';
 
@@ -65,15 +65,14 @@ $curl = curl_init();
     curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
     $out = curl_exec($curl);
     curl_close($curl);
-	$out = json_encode($out);
 
             sendTelegram(
                 'sendMessage', 
                 array(
                     'chat_id' => $data['message']['chat']['id'],
-                    'text' => $out
-                )
+                    'text' => $s
             );
+                )
     }
     exit(); 
 }
