@@ -127,7 +127,7 @@ if (!empty($data['message']['text'])) {
     $connection = databaseConnection();
     $id = "SELECT con_id FROM conid ORDER BY id DESC LIMIT 1";
     $result = $connection->query($id)->fetch();
-	$s = 'https://api.convertio.co/convert/' . $result['con_id'] . '/status';
+	$s = 'https://api.convertio.co/convert/6eafdbcdad7b2277e54b22e1004f1a98/status';
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $s);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
