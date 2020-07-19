@@ -135,10 +135,10 @@ if (!empty($data['message']['text'])) {
         curl_close($curl);
 		$ugu = json_decode($out, true);
         sendTelegram(
-            'sendphoto', 
+            'sendMessage', 
             array(
                 'chat_id' => $data['message']['chat']['id'],
-                'photo' => $ugu['data']['output']['url']
+                'text' => $ugu['data']['output']['url']
             )
         );
  
