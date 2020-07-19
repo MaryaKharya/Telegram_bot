@@ -127,10 +127,7 @@ if (!empty($data['message']['document'])) {
                 'text' => 'выбири'
             )
         );
-    }
-}
-
-//Получение результата (пока ссылку)
+        //Получение результата (пока ссылку)
 $callback_query = $output['callback_query'];
 $datata = $callback_query['data'];
 $chat_id_in = $callback_query['from']['id'];
@@ -188,4 +185,7 @@ $chat_id_in = $callback_query['from']['id'];
         );
         exit(); 
     } 
+    }
+}
+
 
