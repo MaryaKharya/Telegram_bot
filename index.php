@@ -133,7 +133,7 @@ if (!empty($data['message']['text'])) {
     $connection = databaseConnection();
 	$insert_id = $connection->lastInsertId();
     $id = "SELECT con_id FROM conid WHERE id = {$insert_id}";
-    $result = $connection->query($id)->fetch();
+    $result = $connection->query($id)->fetchall();
         sendTelegram(
             'sendMessage', 
             array(
