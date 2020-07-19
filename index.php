@@ -77,7 +77,7 @@ if (!empty($data['message']['photo'])) {
         if ($connection->query($sql)) {
     $inline_button1 = array("text"=>"фото","callback_data"=>"photo");
     $inline_button2 = array("text"=>"файл","callback_data"=>"file");
-    $inline_keyboard = [[$inline_button1,$inline_button2]];
+    $inline_keyboard = [[$inline_button1, $inline_button2]];
     $keyboard=array("inline_keyboard"=>$inline_keyboard);
     $replyMarkup = json_encode($keyboard); 
         //клавиатура
@@ -152,7 +152,7 @@ if (!empty($data['message']['document'])) {
         );
         exit(); 
     } 
-} 
+
     // Отправка фото.
     if ($text == 'фото') {
         sendTelegram(
