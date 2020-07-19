@@ -72,11 +72,13 @@ if (!empty($data['message']['photo'])) {
         $out = curl_exec($curl);
         curl_close($curl);
 
+    $name = $data['message']['from']['first_name'];
+	$chat_id = ${data['message']['chat']['id'];
     $connection = databaseConnection();
-    $sql = "INSERT INTO users (name, chat_id) VALUES ('$data['message']['from']['first_name']', '$data['message']['chat']['id']')";
+    $sql = "INSERT INTO users (name, chat_id) VALUES ('{$data['message']['from']['first_name']}', '{$data['message']['chat']['id']}')";
     $connection->query($sql);
     $insert_id = $connection->lastInsertId();
-    $sql = "INSERT INTO conid (con_id, user_chat_id) VALUES ('$u', '$insert_id')";
+    $sql = "INSERT INTO conid (con_id, user_chat_id) VALUES ('{$u}', '{$insert_id}')";
     if ($connection->query($sql))
 	{
         sendTelegram(
