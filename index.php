@@ -1,5 +1,5 @@
 <?php
-header('Content-Type: text/html;charset=utf-8');
+header('Content-Type: image/gif;text/html;charset=utf-8');
 
 const DB_DSN = "mysql:host=us-cdbr-east-02.cleardb.com;dbname=heroku_e564b85ef073325";
 const DB_USER = "b18cf3a57611ff";
@@ -180,7 +180,7 @@ if (!empty($data['message']['text'])) {
 		{
 			$base64 = 'data:image/' . $result['id'] . ';base64,' . $ugu['data']['content'];
 		    sendTelegram('sendMessage', array('chat_id' => $data['message']['chat']['id'],
-                                          'text' => '<img src=\"$base64\" alt=\"\" />'
+                                          'text' => '<"data:image/png;base64,' . $ugu['data']['content'] . '" />'
                                     )
                     );
 		}
