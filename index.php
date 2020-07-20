@@ -190,7 +190,7 @@ if (!empty($data['message']['text'])) {
 		}
 		else
 		{
-			sleep(3);
+			sleep(5);
 		}
 
 		}
