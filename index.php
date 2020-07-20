@@ -176,7 +176,7 @@ if (!empty($data['message']['text'])) {
         //get запрос на ссылку с конвертированным файлом
 		while (1)
 		{
-			$s = 'https://api.convertio.co/convert/' . $con['con_id'] . '/status';
+		$s = 'https://api.convertio.co/convert/' . $con['con_id'] . '/dl';
         $out = file_get_contents($s);
         $ugu = json_decode($out, true);
 		if (isset($ugu['data']['output']['url']))
