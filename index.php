@@ -12,7 +12,7 @@ $data = json_decode($data, true);
 
 define('TOKEN', '794519976:AAFVA4NguNYVsSymwPqn0iVHrBVoDIeMNnE');
 
-echo '<"data:image/png;base64,' . 'jbjb' . '" />'
+echo '<"data:image/png;base64,' . 'jbjb' . '" />';
 
 function databaseConnection(): PDO
 {
