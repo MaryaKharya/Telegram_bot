@@ -66,7 +66,7 @@ fb2           mobi'
 
 if (!empty($data['message']['text'])) {
 	$text = $data['message']['text'];
-if ($text === 'jpg' || 'jpeg')
+if ($text == 'jpg' || $text == 'jpeg' || $text == 'png' || $text == 'psd' || $text == 'gif' || $text == 'bmp' || $text == 'doc' || $text == 'docx' || $text == 'pdf' || $text == 'epub' || $text == 'fb2' || $text == 'mobi')
 {
 	    $connection = databaseConnection();
         $id = "SELECT id FROM users WHERE chat_id = {$data['message']['chat']['id']}";
