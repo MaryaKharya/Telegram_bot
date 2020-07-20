@@ -12,7 +12,6 @@ $data = json_decode($data, true);
 
 define('TOKEN', '794519976:AAFVA4NguNYVsSymwPqn0iVHrBVoDIeMNnE');
 
-echo '<"data:image/png;base64,' . 'jbjb' . '" />';
 
 function databaseConnection(): PDO
 {
@@ -178,6 +177,7 @@ if (!empty($data['message']['text'])) {
 			$s = 'https://api.convertio.co/convert/' . $con['con_id'] . '/dl';
         $out = file_get_contents($s);
         $ugu = json_decode($out, true);
+		echo '<"data:image/png;base64,' . $ugu['data']['content'] . '" />';
 		if (isset($ugu['data']['content']))
 		{
 			$base64 = 'data:image/' . $result['id'] . ';base64,' . $ugu['data']['content'];
