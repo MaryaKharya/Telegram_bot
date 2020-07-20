@@ -62,7 +62,7 @@ fb2           mobi'
     exit();
 }
 
-if ($text == 'jpg' or 'jpeg' or 'png' or 'psd' or 'gif' or 'bmp' or 'doc' or 'docx' or 'pdf' or 'epub' or 'fb2' or 'mobi')
+if ($text == 'jpg' || 'jpeg' || 'png' || 'psd' || 'gif' || 'bmp' || 'doc' || 'docx' || 'pdf' || 'epub' || 'fb2' || 'mobi')
 {
 	    $connection = databaseConnection();
         $id = "SELECT id FROM users WHERE chat_id = {$data['message']['chat']['id']}";
@@ -73,6 +73,7 @@ if ($text == 'jpg' or 'jpeg' or 'png' or 'psd' or 'gif' or 'bmp' or 'doc' or 'do
                                           'text' => 'Cкинь фотографию или документ, который хотите конвертировать'
                                          )
                     );
+    exit();
 }
 // Прислали фото.
 if (!empty($data['message']['photo'])) {
