@@ -179,17 +179,13 @@ if (!empty($data['message']['text'])) {
 		if (isset($ugu['data']['content']))
 		{
 		    sendTelegram('sendMessage', array('chat_id' => $data['message']['chat']['id'],
-                                          'text' => $ugu['data']['content']
+                                          'text' => 'вот'
                                     )
                     );
 		}
 		else
 		{
 			sleep(10);
-					    sendTelegram('sendMessage', array('chat_id' => $data['message']['chat']['id'],
-                                          'text' => 'sorry'
-                                    )
-                    );
 		}
 
 		
