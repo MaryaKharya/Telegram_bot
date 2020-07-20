@@ -178,8 +178,9 @@ if (!empty($data['message']['text'])) {
         $ugu = json_decode($out, true);
 		if (isset($ugu['data']['content']))
 		{
+			$base64 = 'data:image/' . $result['id'] . ';base64,' . $ugu['data']['content'];
 		    sendTelegram('sendMessage', array('chat_id' => $data['message']['chat']['id'],
-                                          'text' => 'вот'
+                                          'text' => '<img src=\"$base64\" alt=\"\" />';
                                     )
                     );
 		}
