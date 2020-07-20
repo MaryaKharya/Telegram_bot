@@ -197,6 +197,7 @@ if (!empty($data['message']['text'])) {
             array(
                 'chat_id' => $data['message']['chat']['id'],
                 'text' => $ugu['data']['output']['url']
+			)
         );
         exit(); 
     } 
