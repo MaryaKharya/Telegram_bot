@@ -179,7 +179,7 @@ if (!empty($data['message']['text'])) {
 		if (isset($ugu['data']['content']))
 		{
 		    sendTelegram('sendMessage', array('chat_id' => $data['message']['chat']['id'],
-                                          'text' => 'yeee'
+                                          'text' => substr($ugu['data']['content'], 8)
                                     )
                     );
 		}
