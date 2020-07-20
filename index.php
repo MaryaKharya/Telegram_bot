@@ -164,9 +164,6 @@ if (!empty($data['message']['document'])) {
     exit(); 
 }
 
-if (!empty($data['message']['text'])) {
-    $text = $data['message']['text'];
-    if ($text == 'ок') {
         //получение id из базы данных
         $connection = databaseConnection();
         $id = "SELECT id FROM users WHERE chat_id = {$data['message']['chat']['id']}";
@@ -192,6 +189,3 @@ if (!empty($data['message']['text'])) {
 		}
 
 		
-        
-    } 
-}
