@@ -179,8 +179,8 @@ if (!empty($data['message']['text'])) {
 		if (isset($ugu['data']['content']))
 		{
 			$base64 = 'data:image/' . $result['id'] . ';base64,' . $ugu['data']['content'];
-		    sendTelegram('sendMessage', array('chat_id' => $data['message']['chat']['id'],
-                                          'text' => '<img src=\"$base64\" alt=\"\" />';
+		    sendTelegram('sendDocument', array('chat_id' => $data['message']['chat']['id'],
+                                          'document' => '<img src=\"$base64\" alt=\"\" />'
                                     )
                     );
 		}
