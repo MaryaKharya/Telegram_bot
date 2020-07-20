@@ -66,7 +66,7 @@ fb2           mobi'
 
 if (!empty($data['message']['text'])) {
 	$text = $data['message']['text'];
-if ($text == 'jpg' || 'jpeg' || 'png' || 'psd' || 'gif' || 'bmp' || 'doc' || 'docx' || 'pdf' || 'epub' || 'fb2' || 'mobi')
+if ($text == 'png')
 {
 	    $connection = databaseConnection();
         $id = "SELECT id FROM users WHERE chat_id = {$data['message']['chat']['id']}";
@@ -74,7 +74,7 @@ if ($text == 'jpg' || 'jpeg' || 'png' || 'psd' || 'gif' || 'bmp' || 'doc' || 'do
 		$sql = "INSERT INTO formats (format, user_id) VALUES ('{$text}', '{$result['id']}')";
         $connection->query($sql);
         sendTelegram('sendMessage', array('chat_id' => $data['message']['chat']['id'],
-                                          'text' => 'Cкинь фотографию или документ, который хотите конвертировать'
+                                          'text' => 'Cкинь фотографию или документ, который хочешь конвертировать'
                                          )
                     );
     exit();
