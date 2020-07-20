@@ -48,7 +48,7 @@ if ($text == '/start')
 		$sql = "INSERT INTO users (name, chat_id) VALUES ('{$data['message']['from']['first_name']}', '{$data['message']['chat']['id']}')";
         $connection->query($sql);
         sendTelegram('sendMessage', array('chat_id' => $data['message']['chat']['id'],
-                                          'text' => 'Добро пожаловать, ' $data['message']['from']['first_name'] '. Я сконверирую все, что захочешь. 
+                                          'text' => 'Добро пожаловать! Я сконверирую все, что захочешь. 
 				                                     Для этого выбири формат, который хочешь получить в результате конвертирования.
                                                      Для фото:<br> jpg<br> jpeg<br> png<br> psd<br> gif<br> bmp<br>
 						                             Для документов:<br> doc<br> docx<br> pdf<br> epub<br> fb2<br> mobi<br>'
