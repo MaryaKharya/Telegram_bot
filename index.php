@@ -64,7 +64,7 @@ if ($text == 'jpg' or 'jpeg' or 'png' or 'psd' or 'gif' or 'bmp' or 'doc' or 'do
 		$sql = "INSERT INTO formats (format, user_id) VALUES ('{$text}', '{$result['id']}')";
         $connection->query($sql);
         sendTelegram('sendMessage', array('chat_id' => $data['message']['chat']['id'],
-                                          'text' => $data['message']['from']['first_name'] ', скинь фотографию или документ, который хотите конвертировать'
+                                          'text' => 'Cкинь фотографию или документ, который хотите конвертировать'
                                          )
                     );
 }
