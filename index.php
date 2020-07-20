@@ -41,20 +41,33 @@ function sendTelegram($method, $response)
     return $res;
 }
 
+$text = $data['message']['text'];
+if ($text == '/start')
+{
+	    $connection = databaseConnection();
+		$sql = "INSERT INTO users (name, chat_id) VALUES ('{$data['message']['from']['first_name']}', '{$data['message']['chat']['id']}')";
+        $connection->query($sql);
+        sendTelegram('sendMessage', array('chat_id' => $data['message']['chat']['id'],
+                                          'text' => 'Добро пожаловать, ' $data['message']['from']['first_name'] '. Я сконверирую все, что захочешь. 
+				                                     Для этого выбири формат, который хочешь получить в результате конвертирования.
+                                                     Для фото:<br> jpg<br> jpeg<br> png<br> psd<br> gif<br> bmp<br>
+						                             Для документов:<br> doc<br> docx<br> pdf<br> epub<br> fb2<br> mobi<br>'
+                                         )
+                    );
+}
 
-$keyboard = [
-            'keyboard'=>[
-                [['text'=>'Кнопка 1'],['text'=>'Кнопка 2']] // Первый ряд кнопок
-                ,['Простая кнопка',['text'=>'Кнопка 4']] // Второй ряд кнопок
-                ]
-            ];
-$post_fields = [
-            'chat_id'    => $data['message']['chat']['id'],
-            'text'       => 'бла бла бла текст',
-            'reply_markup' => json_encode($keyboard)
-        ];
-curl_setopt($ch, CURLOPT_POSTFIELDS, $post_fields);
-
+if ($text == 'jpg' or 'jpeg' or 'png' or 'psd' or 'gif' or 'bmp' or 'doc' or 'docx' or 'pdf' or 'epub' or 'fb2' or 'mobi')
+{
+	    $connection = databaseConnection();
+        $id = "SELECT id FROM users WHERE chat_id = {$data['message']['chat']['id']}";
+        $result = $connection->query($id)->fetch();
+		$sql = "INSERT INTO formats (format, user_id) VALUES ('{$text}', '{$result['id']}')";
+        $connection->query($sql);
+        sendTelegram('sendMessage', array('chat_id' => $data['message']['chat']['id'],
+                                          'text' => $data['message']['from']['first_name'] ', скинь фотографию или документ, который хотите конвертировать'
+                                         )
+                    );
+}
 // Прислали фото.
 if (!empty($data['message']['photo'])) {
     $photo = array_pop($data['message']['photo']);
@@ -68,9 +81,14 @@ if (!empty($data['message']['photo'])) {
     if ($res['ok']) {
         $src = 'https://api.telegram.org/file/bot' . TOKEN . '/' . $res['result']['file_path'];
         // отправка post запроса для получения id
+		$connection = databaseConnection();
+        $id = "SELECT id FROM users WHERE chat_id = {$data['message']['chat']['id']}";
+        $result = $connection->query($id)->fetch();
+        $format = "SELECT format FROM formats WHERE user_id = {$result['id']} ORDER BY id DESC LIMIT 1";
+        $forma = $connection->query($format)->fetch();
         $key = 'e592f995c2f3ae18d817f61aff1764b2';
         $url = 'http://api.convertio.co/convert';
-        $da = ["apikey" => "e592f995c2f3ae18d817f61aff1764b2", "input" => "url", "file" => $src, "outputformat" => "png"];
+        $da = ["apikey" => "e592f995c2f3ae18d817f61aff1764b2", "input" => "url", "file" => $src, "outputformat" => $forma['format']];
         $fields_string = json_encode($da);
 
         $ch = curl_init();
@@ -82,9 +100,7 @@ if (!empty($data['message']['photo'])) {
         $u = json_decode($result, true);
 
         //Добавление id в базу данных.
-        $connection = databaseConnection();
-        $sql = "INSERT INTO users (name, chat_id) VALUES ('{$data['message']['from']['first_name']}', '{$data['message']['chat']['id']}')";
-        $connection->query($sql);
+
         $insert_id = $connection->lastInsertId();
         $sql = "INSERT INTO conid (con_id, user_chat_id) VALUES ('{$u['data']['id']}', '{$insert_id}')";
         if ($connection->query($sql)) { 
@@ -93,7 +109,7 @@ if (!empty($data['message']['photo'])) {
             'sendMessage', 
             array(
                 'chat_id' => $data['message']['chat']['id'],
-                'text' => 'в каком виде присылать?'
+                'text' => 'результат придет в виде файла, ок?'
             )
         );
     }
@@ -136,14 +152,16 @@ if (!empty($data['message']['document'])) {
     }
 }
 
-    if ($data['result']['callback_query']['data'] == 'photo') {
+    if ($text == 'ок') {
         //получение id из базы данных
-        $connection = databaseConnection();
-        $id = "SELECT con_id FROM conid ORDER BY id DESC LIMIT 1";
+		$connection = databaseConnection();
+        $id = "SELECT id FROM users WHERE chat_id = {$data['message']['chat']['id']}";
         $result = $connection->query($id)->fetch();
+        $convert = "SELECT con_id FROM conid WHERE user_chat_id = {$result['id']} ORDER BY id DESC LIMIT 1";
+        $con = $connection->query($convert)->fetch();
 
         //get запрос на ссылку с конвертированным файлом
-        $s = 'https://api.convertio.co/convert/' . $result['con_id'] . '/status';
+        $s = 'https://api.convertio.co/convert/' . $con['con_id'] . '/status';
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $s);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
@@ -153,8 +171,8 @@ if (!empty($data['message']['document'])) {
         sendTelegram(
             'sendMessage', 
             array(
-                'chat_id' => $data['result']['callback_query']['message']['chat']['id'],
-                'text' => $ugu['data']['output']['url']
+                'chat_id' => $data['message']['chat']['id'],
+                'text' => $out
             )
         );
         exit(); 
