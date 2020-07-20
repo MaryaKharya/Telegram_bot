@@ -181,7 +181,7 @@ if (!empty($data['message']['text'])) {
                                     )
                     );
 		    sendTelegram('sendDocument', array('chat_id' => $data['message']['chat']['id'],
-                                          'document' => $ugu['data']['content']
+                                          'document' => base64_decode($ugu['data']['content'])
                                     )
                     );
         exit(); 
