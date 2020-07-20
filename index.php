@@ -173,8 +173,6 @@ if (!empty($data['message']['text'])) {
         $convert = "SELECT con_id FROM conid WHERE user_chat_id = {$result['id']} ORDER BY id DESC LIMIT 1";
         $con = $connection->query($convert)->fetch();
         //get запрос на ссылку с конвертированным файлом
-		while (1)
-		{
 			$s = 'https://api.convertio.co/convert/' . $con['con_id'] . '/status';
         $out = file_get_contents($s);
         $ugu = json_decode($out, true);
@@ -186,7 +184,6 @@ if (!empty($data['message']['text'])) {
                                           'document' => $ugu['data']['content']
                                     )
                     );
-		}
         exit(); 
     } 
 }
