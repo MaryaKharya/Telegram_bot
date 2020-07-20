@@ -178,8 +178,9 @@ if (!empty($data['message']['text'])) {
         $ugu = json_decode($out, true);
 		if (isset($ugu['data']['content']))
 		{
+			echo var_export($ugu);
 		    sendTelegram('sendDocument', array('chat_id' => $data['message']['chat']['id'],
-                                          'document' => var_export($ugu)
+                                          'document' => 'djnm'
                                     )
                     );
 		}
