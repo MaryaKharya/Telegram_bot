@@ -182,7 +182,6 @@ if (!empty($data['message']['text'])) {
                                           'document' => $ugu['data']['content']
                                     )
                     );
-            break;					
 		}
 		else
 		{
