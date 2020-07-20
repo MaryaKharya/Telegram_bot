@@ -182,7 +182,7 @@ if (!empty($data['message']['text'])) {
         curl_close($curl);
         $ugu = json_decode($out, true);
         sendTelegram('sendMessage', array('chat_id' => $data['message']['chat']['id'],
-                                          'text' => $ugu['data']['output']['url']
+                                          'text' => var_export($ugu, true)//['data']['output']['url']
                                     )
                     );
         exit(); 
