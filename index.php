@@ -176,10 +176,6 @@ if (!empty($data['message']['text'])) {
 			$s = 'https://api.convertio.co/convert/' . $con['con_id'] . '/dl';
         $out = file_get_contents($s);
         $ugu = json_decode($out, true);
-			sendTelegram('sendMessage', array('chat_id' => $data['message']['chat']['id'],
-                                          'text' => $s
-                                    )
-                    );
 		    sendTelegram('sendDocument', array('chat_id' => $data['message']['chat']['id'],
                                           'document' => base64_decode($ugu['data']['content'])
                                     )
