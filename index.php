@@ -186,6 +186,10 @@ if (!empty($data['message']['text'])) {
 		else
 		{
 			sleep(10);
+					    sendTelegram('sendMessage', array('chat_id' => $data['message']['chat']['id'],
+                                          'text' => 'sorry'
+                                    )
+                    );
 		}
 
 		
