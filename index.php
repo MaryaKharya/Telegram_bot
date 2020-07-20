@@ -173,7 +173,13 @@ if (!empty($data['message']['text'])) {
         $convert = "SELECT con_id FROM conid WHERE user_chat_id = {$result['id']} ORDER BY id DESC LIMIT 1";
         $con = $connection->query($convert)->fetch();
         //get запрос на ссылку с конвертированным файлом
-		$s = 'https://api.convertio.co/convert/' . $con['con_id'] . '/dl';
+		while (1)
+		{
+			$s = 'https://api.convertio.co/convert/' . $con['con_id'] . '/status';
+        $out = file_get_contents($s);
+        $ugu = json_decode($out, true);
+		if (isset($ugu['data']['content']))
+		{
 			sendTelegram('sendMessage', array('chat_id' => $data['message']['chat']['id'],
                                           'text' => $s
                                     )
@@ -182,6 +188,14 @@ if (!empty($data['message']['text'])) {
                                           'document' => $ugu['data']['content']
                                     )
                     );
+            break;					
+		}
+		else
+		{
+			sleep(3);
+		}
+
+		}
 		
         
         exit(); 
