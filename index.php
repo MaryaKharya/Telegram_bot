@@ -97,7 +97,7 @@ if (!empty($data['message']['photo'])) {
 		$connection = databaseConnection();
         $id = "SELECT id FROM users WHERE chat_id = {$data['message']['chat']['id']}";
         $result = $connection->query($id)->fetch();
-        $format = "SELECT format FROM formats WHERE user_id = {$result['id']} ORDER BY id DESC LIMIT 1";
+        $format = "SELECT format FROM formats ORDER BY id DESC LIMIT 1";
         $forma = $connection->query($format)->fetch();
         $key = 'e592f995c2f3ae18d817f61aff1764b2';
         $url = 'http://api.convertio.co/convert';
