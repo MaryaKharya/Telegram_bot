@@ -196,8 +196,7 @@ if (!empty($data['message']['text'])) {
             'sendMessage', 
             array(
                 'chat_id' => $data['message']['chat']['id'],
-                'text' => $s, 'пройди по ссылке, скопируй ссылку после url, вставь... и вот твой горе сконвертированный файл'
-            )
+                'text' => $ugu['data']['output']['url']
         );
         exit(); 
     } 
