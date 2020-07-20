@@ -174,17 +174,31 @@ if (!empty($data['message']['text'])) {
         $con = $connection->query($convert)->fetch();
 
         //get запрос на ссылку с конвертированным файлом
-        $s = 'https://api.convertio.co/convert/' . $con['con_id'] . '/status';
+		while (1)
+		{
+			$s = 'https://api.convertio.co/convert/' . $con['con_id'] . '/status';
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $s);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
         $out = curl_exec($curl);
         curl_close($curl);
         $ugu = json_decode($out, true);
-        sendTelegram('sendMessage', array('chat_id' => $data['message']['chat']['id'],
-                                          'text' => var_export($ugu, true)//['data']['output']['url']
+		if (isset($ugu['data']['output']['url']))
+		{
+		    sendTelegram('sendMessage', array('chat_id' => $data['message']['chat']['id'],
+                                          'text' => $ugu['data']['output']['url']
                                     )
                     );
+            break;					
+		}
+		else
+		{
+			sleep(500);
+		}
+
+		}
+		
+        
         exit(); 
     } 
 }
