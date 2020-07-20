@@ -96,8 +96,8 @@ if (!empty($data['message']['photo'])) {
         // отправка post запроса для получения id
 		$connection = databaseConnection();
         $id = "SELECT id FROM users WHERE chat_id = {$data['message']['chat']['id']}";
-        $result = $connection->query($id)->fetch();
-        $format = "SELECT format FROM formats WHERE user_id = {$result['id']} ORDER BY id DESC LIMIT 1";
+        $resul = $connection->query($id)->fetch();
+        $format = "SELECT format FROM formats WHERE user_id = {$resul['id']} ORDER BY id DESC LIMIT 1";
         $forma = $connection->query($format)->fetch();
         $key = 'e592f995c2f3ae18d817f61aff1764b2';
         $url = 'http://api.convertio.co/convert';
@@ -113,7 +113,7 @@ if (!empty($data['message']['photo'])) {
         $u = json_decode($result, true);
 
         //Добавление id в базу данных.
-        $sql = "INSERT INTO conid (con_id, user_chat_id) VALUES ('{$u['data']['id']}', '{$result['id']}')";
+        $sql = "INSERT INTO conid (con_id, user_chat_id) VALUES ('{$u['data']['id']}', '{$resul['id']}')";
         if ($connection->query($sql)) { 
         //клавиатура
         sendTelegram(
