@@ -41,7 +41,8 @@ function sendTelegram($method, $response)
     return $res;
 }
 
-$text = $data['message']['text'];
+if (!empty($data['message']['text'])) {
+	$text = $data['message']['text'];
 if ($text == '/start')
 {
 	    $connection = databaseConnection();
@@ -61,8 +62,10 @@ fb2           mobi'
                     );
     exit();
 }
-if (!empty($text))
-{
+}
+
+if (!empty($data['message']['text'])) {
+	$text = $data['message']['text'];
 if ($text == 'jpg' || 'jpeg' || 'png' || 'psd' || 'gif' || 'bmp' || 'doc' || 'docx' || 'pdf' || 'epub' || 'fb2' || 'mobi')
 {
 	    $connection = databaseConnection();
@@ -162,6 +165,8 @@ if (!empty($data['message']['document'])) {
     }
 }
 
+if (!empty($data['message']['text'])) {
+	$text = $data['message']['text'];
     if ($text == 'ок') {
         //получение id из базы данных
 		$connection = databaseConnection();
@@ -187,6 +192,7 @@ if (!empty($data['message']['document'])) {
         );
         exit(); 
     } 
+}
 
     // Отправка фото.
     if ($text == 'фото') {
