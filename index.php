@@ -193,6 +193,5 @@ if (!empty($data['message']['text'])) {
 
 		
         
-        exit(); 
     } 
 }
