@@ -78,6 +78,12 @@ if ($text === 'jpg' || 'jpeg' || 'png' || 'psd' || 'gif' || 'bmp' || 'doc' || 'd
                                          )
                     );
     exit();
+}else
+{
+        sendTelegram('sendMessage', array('chat_id' => $data['message']['chat']['id'],
+                                          'text' => 'такого формата нет'
+                                         )
+                    );
 }
 }
 
