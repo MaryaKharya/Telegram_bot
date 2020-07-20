@@ -172,7 +172,7 @@ if (!empty($data['message']['text'])) {
         $result = $connection->query($id)->fetch();
         $convert = "SELECT con_id FROM conid WHERE user_chat_id = {$result['id']} ORDER BY id DESC LIMIT 1";
         $con = $connection->query($convert)->fetch();
-
+        sleep(1000);
         //get запрос на ссылку с конвертированным файлом
 		while (1)
 		{
