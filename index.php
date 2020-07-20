@@ -66,7 +66,7 @@ fb2           mobi'
 
 if (!empty($data['message']['text'])) {
 	$text = $data['message']['text'];
-if ($text == 'png')
+if ($text == 'jpg' || 'jpeg' || 'png' || 'psd' || 'gif' || 'bmp' || 'doc' || 'docx' || 'pdf' || 'epub' || 'fb2' || 'mobi')
 {
 	    $connection = databaseConnection();
         $id = "SELECT id FROM users WHERE chat_id = {$data['message']['chat']['id']}";
@@ -120,7 +120,7 @@ if (!empty($data['message']['photo'])) {
             'sendMessage', 
             array(
                 'chat_id' => $data['message']['chat']['id'],
-                'text' => 'результат придет в виде файла, ок?'
+                'text' => 'результат придет в виде ссылки, ок?'
             )
         );
     }
@@ -139,12 +139,17 @@ if (!empty($data['message']['document'])) {
     $res = json_decode($res, true);
     if ($res['ok']) {
         $src = 'https://api.telegram.org/file/bot' . TOKEN . '/' . $res['result']['file_path'];
-
-        //отправка post запроса
+        // отправка post запроса для получения id
+		$connection = databaseConnection();
+        $id = "SELECT id FROM users WHERE chat_id = {$data['message']['chat']['id']}";
+        $resul = $connection->query($id)->fetch();
+        $format = "SELECT format FROM formats WHERE user_id = {$resul['id']} ORDER BY id DESC LIMIT 1";
+        $forma = $connection->query($format)->fetch();
         $key = 'e592f995c2f3ae18d817f61aff1764b2';
         $url = 'http://api.convertio.co/convert';
-        $da = ["apikey" => "e592f995c2f3ae18d817f61aff1764b2", "input" => "url", "file" => $src, "outputformat" => "pdf",];
+        $da = ["apikey" => "e592f995c2f3ae18d817f61aff1764b2", "input" => "url", "file" => $src, "outputformat" => $forma['format']];
         $fields_string = json_encode($da);
+
         $ch = curl_init();
         curl_setopt($ch,CURLOPT_URL, $url);
         curl_setopt($ch,CURLOPT_POST, true);
@@ -153,14 +158,20 @@ if (!empty($data['message']['document'])) {
         $result = curl_exec($ch);
         $u = json_decode($result, true);
 
+        //Добавление id в базу данных.
+        $sql = "INSERT INTO conid (con_id, user_chat_id) VALUES ('{$u['data']['id']}', '{$resul['id']}')";
+        if ($connection->query($sql)) { 
+        //клавиатура
         sendTelegram(
             'sendMessage', 
             array(
                 'chat_id' => $data['message']['chat']['id'],
-                'text' => 'выбири'
+                'text' => 'результат придет в виде ссылки, ок?'
             )
         );
     }
+    }
+    exit(); 
 }
 
 if (!empty($data['message']['text'])) {
@@ -185,22 +196,9 @@ if (!empty($data['message']['text'])) {
             'sendMessage', 
             array(
                 'chat_id' => $data['message']['chat']['id'],
-                'text' => $out
+                'text' => $s, 'пройди по ссылке, скопируй ссылку после url, вставь... и вот твой горе сконвертированный файл'
             )
         );
         exit(); 
     } 
 }
-
-    // Отправка фото.
-    if ($text == 'фото') {
-        sendTelegram(
-            'sendPhoto', 
-            array(
-                'chat_id' => $data['message']['chat']['id'],
-                'photo' => 'https://blooming-oasis-19797.imgix.net/https%3A%2F%2Fsun9-3.userapi.com%2Fc9706%2Fu81896685%2F-6%2Fy_5ac9e6f4.jpg?sepia=70&s=e8fcc1c3d86901580fc0db57717664da'
-            )
-        );
-        
-        exit(); 
-    }
