@@ -61,7 +61,8 @@ fb2           mobi'
                     );
     exit();
 }
-
+if (!empty($text))
+{
 if ($text == 'jpg' || 'jpeg' || 'png' || 'psd' || 'gif' || 'bmp' || 'doc' || 'docx' || 'pdf' || 'epub' || 'fb2' || 'mobi')
 {
 	    $connection = databaseConnection();
@@ -75,6 +76,8 @@ if ($text == 'jpg' || 'jpeg' || 'png' || 'psd' || 'gif' || 'bmp' || 'doc' || 'do
                     );
     exit();
 }
+}
+
 // Прислали фото.
 if (!empty($data['message']['photo'])) {
     $photo = array_pop($data['message']['photo']);
