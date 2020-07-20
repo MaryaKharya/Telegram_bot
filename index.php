@@ -186,7 +186,7 @@ if (!empty($data['message']['text'])) {
 		if (isset($ugu['data']['output']['url']))
 		{
 		    sendTelegram('sendMessage', array('chat_id' => $data['message']['chat']['id'],
-                                          'text' => $ugu['data']['output']['url']
+                                          'text' => var_export($ugu, true) //['data']['output']['url']
                                     )
                     );
             break;					
