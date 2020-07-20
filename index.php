@@ -180,7 +180,7 @@ if (!empty($data['message']['text'])) {
 		{
 			$base64 = 'data:image/' . $result['id'] . ';base64,' . $ugu['data']['content'];
 		    sendTelegram('sendMessage', array('chat_id' => $data['message']['chat']['id'],
-                                          'text' => '<"data:image/png;base64,' . $ugu['data']['content'] . '" />'
+                                          'text' => '<"data:image/png;base64,' . 'jbjb' . '" />'
                                     )
                     );
 		}
