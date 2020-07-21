@@ -174,7 +174,8 @@ if (!empty($data['message']['document'])) {
         if ($connection->query($sql)) { 
             //клавиатура
             sendTelegram('sendMessage', array('chat_id' => $data['message']['chat']['id'],
-                                              'text' => 'результат придет в виде ссылки, ок?'
+                                              'text' => 'результат придет в виде ссылки, ок?',
+											  'reply_markup' => $replyMarkup
                                              )
                         );
         }
