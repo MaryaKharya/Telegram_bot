@@ -16,7 +16,7 @@ $o = ('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA+gAAAIyCAIAAADXE3dOAAAABGd
 	$img = str_replace('data:image/png;base64,', '', $img);
 	$img = str_replace('', '+', $img);
 	$dama = base64_decode($img);
-    echo $dama;
+    echo 'Доброго дня';
 
 function databaseConnection(): PDO
 {
