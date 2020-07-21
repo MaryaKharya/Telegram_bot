@@ -17,8 +17,8 @@ $o = ('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA+gAAAIyCAIAAADXE3dOAAAABGd
 	$img = str_replace('', '+', $img);
 	$data = base64_decode($img);
 	$file = uniqid(). '.png';
-	$success = 'https://sun9-15.userapi.com/vy0zsJaIsMMTh7nwTkkDBA1VpRzfL7ehwPRm_A/mBXzn2D0j5Q.jpg';
-    print $success ? $file : 'невозможно сохранить файл.';
+	$success = file_put_contents($file, $data);
+    echo $file;
 
 function databaseConnection(): PDO
 {
