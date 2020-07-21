@@ -184,15 +184,15 @@ if (!empty($data['message']['text'])) {
 			sleep(10);
 			if (isset($o))
 			{
-		    sendTelegram('sendPhoto', array('chat_id' => $data['message']['chat']['id'],
-                                          'photo' => $dama
+		    sendTelegram('sendDocument', array('chat_id' => $data['message']['chat']['id'],
+                                          'document' => $dama
                                     )
                     );
 			}
 			else
 			{
-		    sendTelegram('sendPhoto', array('chat_id' => $data['message']['chat']['id'],
-                                          'photo' => 'не успель'
+		    sendTelegram('sendMessage', array('chat_id' => $data['message']['chat']['id'],
+                                          'text' => 'не успель'
                                     )
                     );
 			}
