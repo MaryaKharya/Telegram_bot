@@ -162,7 +162,6 @@ if (!empty($data['message']['document'])) {
         $sql = "INSERT INTO conid (con_id, user_chat_id) VALUES ('{$u['data']['id']}', '{$resul['id']}')";
         if ($connection->query($sql)) { 
             //клавиатура
-  }
             sendTelegram('sendMessage', array('chat_id' => $data['message']['chat']['id'],
                                               'text' => 'результат придет в виде ссылки, ок?',
 											  'reply_markup' => $replyMarkup
