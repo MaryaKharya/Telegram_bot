@@ -164,9 +164,10 @@ if (!empty($data['message']['document'])) {
         $result = curl_exec($ch);
         $u = json_decode($result, true);
 		
-		$inline_button = ["text"=>"файл", "callback_data"=>'/ok'];
-        $inline_keyboard = [[$inline_button]];
-        $keyboard=["inline_keyboard"=>$inline_keyboard];
+		$inline_button1 = array("text"=>"файл","callback_data" => "/ok");
+		$inline_button2 = array("text"=>"отмена","callback_data" => "/no");
+        $inline_keyboard = [[$inline_button1, $inline_button2]];
+        $keyboard=array("inline_keyboard"=>$inline_keyboard);
         $replyMarkup = json_encode($keyboard);
 
         //Добавление id в базу данных.
@@ -174,7 +175,7 @@ if (!empty($data['message']['document'])) {
         if ($connection->query($sql)) { 
             //клавиатура
             sendTelegram('sendMessage', array('chat_id' => $data['message']['chat']['id'],
-                                              'text' => 'результат придет в виде ссылки, ок?',
+                                              'text' => 'результат придет в виде ссылки, ок?'
 											  'reply_markup' => $replyMarkup
                                              )
                         );
