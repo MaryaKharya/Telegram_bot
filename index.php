@@ -180,11 +180,14 @@ if (!empty($data['message']['text'])) {
 		{
 			$o = stripslashes($ugu['data']['content']);
 	        $img= 'data:image/png;base64, ' . $o;
-	        $dama = base64_decode($o);
+	        $dama = base64_decode($img);
+			if (isset($dama))
+			{
 		    sendTelegram('sendPhoto', array('chat_id' => $data['message']['chat']['id'],
                                           'photo' => $dama
                                     )
                     );
+			}
 		}
 		else
 		{
