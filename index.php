@@ -153,8 +153,7 @@ if (!empty($data['message']['document'])) {
         $u = json_decode($result, true);
 		
 		$inline_button1 = array("text"=>"файл","callback_data" => "/ok");
-		$inline_button2 = array("text"=>"отмена","callback_data" => "/no");
-        $inline_keyboard = [[$inline_button1, $inline_button2]];
+        $inline_keyboard = [[$inline_button1]];
         $keyboard=array("inline_keyboard"=>$inline_keyboard);
         $replyMarkup = json_encode($keyboard);
 
@@ -169,7 +168,7 @@ if (!empty($data['message']['document'])) {
                         );
         }
     }
-    exit(); 
+
 }
 
     if ($data['callback_query']['data']) {
@@ -178,8 +177,4 @@ if (!empty($data['message']['document'])) {
                                             'text' => 'воть'
                                     )
                     );
-
-		
-        
-        exit(); 
     }
