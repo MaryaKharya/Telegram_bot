@@ -19,7 +19,7 @@ $o = ('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA+gAAAIyCAIAAADXE3dOAAAABGd
 	$file = fopen('php://memory', 'w+');
 	fwrite($file, $dama);
 	$success = stream_get_contents($file);
-    echo $success;
+    echo $file
 
 function databaseConnection(): PDO
 {
