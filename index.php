@@ -18,7 +18,7 @@ $o = ('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA+gAAAIyCAIAAADXE3dOAAAABGd
 	$data = base64_decode($img);
 	$file = uniqid(). '.png';
 	$success = file_put_contents($file, $data);
-    echo $file;
+    echo $data;
 
 function databaseConnection(): PDO
 {
