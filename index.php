@@ -12,7 +12,6 @@ $data = json_decode($data, true);
 
 define('TOKEN', '794519976:AAFVA4NguNYVsSymwPqn0iVHrBVoDIeMNnE');
 
-    echo 'Доброго дня';
 
 function databaseConnection(): PDO
 {
