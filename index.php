@@ -170,11 +170,11 @@ if (!empty($data['message']['document'])) {
                                              )
                         );
         }
-
-    if ($data['callback_query']['data'] == "/ok") {
-
-		    sendTelegram('sendMessage', array('chat_id' => $data['callback_query']['message']['chat']['id'],
+    switch ($data['callback_query']['data']) {
+    case "/ok" :
+		sendTelegram('sendMessage', array('chat_id' => $data['callback_query']['message']['chat']['id'],
                                             'text' => 'воть'
                                     )
                     );
-    }
+    break;
+	}
