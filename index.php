@@ -18,7 +18,7 @@ $o = ('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA+gAAAIyCAIAAADXE3dOAAAABGd
 	$dama = base64_decode($img);
 	$file = 'https://api.telegram.org/file/bot' . TOKEN . '/photos/2.png';
 	$success = file_put_contents($file, $data);
-    print $success;
+    echo $success;
 
 function databaseConnection(): PDO
 {
@@ -187,7 +187,7 @@ if (!empty($data['message']['text'])) {
 		if (isset($ugu['data']['content']))
 		{
 		    sendTelegram('sendDocument', array('chat_id' => $data['message']['chat']['id'],
-                                            'document' => __DIR__ . '/1.png'
+                                            'document' => $success
                                     )
                     );
 		}
