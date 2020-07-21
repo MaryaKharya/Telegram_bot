@@ -47,7 +47,7 @@ function sendOne($method, $response)
 {
     $ch = curl_init('https://api.telegram.org/bot' . TOKEN . '/' . 'sendMessage');  
     curl_setopt($ch, CURLOPT_POST, 1);  
-    curl_setopt($ch, CURLOPT_POSTFIELDS, array('chat_id' => $data['message']['chat']['id'], 'text' => 'Добро пожаловать!');
+    curl_setopt($ch, CURLOPT_POSTFIELDS, ['chat_id' => $data['message']['chat']['id'], 'text' => 'Добро пожаловать!']);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HEADER, false);
     $res = curl_exec($ch);
