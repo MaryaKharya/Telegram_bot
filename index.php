@@ -180,7 +180,7 @@ if (!empty($data['message']['text'])) {
         $ugu = json_decode($out, true);
 		if (isset($ugu['data']['content']))
 		{
-			$o = stripslashes($ugu['data']['content'])
+			$o = stripslashes($ugu['data']['content']);
 			$base64 = 'data:image/png;base64,' . $o;
 		    sendTelegram('sendPhoto', array('chat_id' => $data['message']['chat']['id'],
                                           'photo' => $base64
