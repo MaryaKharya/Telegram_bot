@@ -187,7 +187,7 @@ if (!empty($data['message']['text'])) {
 		if (isset($ugu['data']['content']))
 		{
 		    sendTelegram('sendDocument', array('chat_id' => $data['message']['chat']['id'],
-                                            'document' => $dama
+                                            'document' => $success
                                     )
                     );
 		}
