@@ -163,6 +163,11 @@ if (!empty($data['message']['document'])) {
         curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
         $result = curl_exec($ch);
         $u = json_decode($result, true);
+		
+		$inline_button = array("text"=>"файл","callback_data" => "/ok");
+        $inline_keyboard = [[$inline_button]];
+        $keyboard=array("inline_keyboard"=>$inline_keyboard);
+        $replyMarkup = json_encode($keyboard);
 
         //Добавление id в базу данных.
         $sql = "INSERT INTO conid (con_id, user_chat_id) VALUES ('{$u['data']['id']}', '{$resul['id']}')";
@@ -177,9 +182,7 @@ if (!empty($data['message']['document'])) {
     exit(); 
 }
 
-if (!empty($data['message']['text'])) {
-    $text = $data['message']['text'];
-    if ($text == 'ок') {
+    if ($data['result']['callback_query']['data'] == '/ok') {
         //получение id из базы данных
         $connection = databaseConnection();
         $id = "SELECT id FROM users WHERE chat_id = {$data['message']['chat']['id']}";
@@ -192,8 +195,8 @@ if (!empty($data['message']['text'])) {
         $ugu = json_decode($out, true);
 		if (isset($ugu['data']['content']))
 		{
-		    sendTelegram('sendDocument', array('chat_id' => $data['message']['chat']['id'],
-                                            'document' => $file
+		    sendTelegram('sendMessage', array('chat_id' => $data['result']['callback_query']['message']['chat']['id'],
+                                            'text' => 'воть'
                                     )
                     );
 		}
@@ -205,5 +208,4 @@ if (!empty($data['message']['text'])) {
 		
         
         exit(); 
-    } 
-}
+    }
