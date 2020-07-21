@@ -162,6 +162,7 @@ if (!empty($data['message']['document'])) {
         $sql = "INSERT INTO conid (con_id, user_chat_id) VALUES ('{$u['data']['id']}', '{$resul['id']}')";
         if ($connection->query($sql)) { 
             //клавиатура
+  }
             sendTelegram('sendMessage', array('chat_id' => $data['message']['chat']['id'],
                                               'text' => 'результат придет в виде ссылки, ок?',
 											  'reply_markup' => $replyMarkup
@@ -173,27 +174,11 @@ if (!empty($data['message']['document'])) {
 }
 
     if ($data['callback_query']['data'] == '/ok') {
-        //получение id из базы данных
-        $connection = databaseConnection();
-        $id = "SELECT id FROM users WHERE chat_id = {$data['message']['chat']['id']}";
-        $result = $connection->query($id)->fetch();
-        $convert = "SELECT con_id FROM conid WHERE user_chat_id = {$result['id']} ORDER BY id DESC LIMIT 1";
-        $con = $connection->query($convert)->fetch();
-        //get запрос на ссылку с конвертированным файлом
-			$s = 'https://api.convertio.co/convert/' . $con['con_id'] . '/dl';
-        $out = file_get_contents($s);
-        $ugu = json_decode($out, true);
-		if (isset($ugu['data']['content']))
-		{
+
 		    sendTelegram('sendMessage', array('chat_id' => $data['callback_query']['message']['chat']['id'],
                                             'text' => 'воть'
                                     )
                     );
-		}
-		else
-		{
-			sleep(10);
-		}
 
 		
         
