@@ -43,19 +43,6 @@ function sendTelegram($method, $response)
     return $res;
 }
 
-function sendOne($method, $response)
-{
-    $ch = curl_init('https://api.telegram.org/bot' . TOKEN . '/' . 'sendMessage');  
-    curl_setopt($ch, CURLOPT_POST, 1);  
-    curl_setopt($ch, CURLOPT_POSTFIELDS, ['chat_id' => $data['message']['chat']['id'], 'text' => 'Добро пожаловать!']);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HEADER, false);
-    $res = curl_exec($ch);
-    curl_close($ch);
-
-    return $res;
-}
-
 if (!empty($data['message']['text'])) {
     $text = $data['message']['text'];
     if ($text == '/start')
@@ -184,7 +171,7 @@ if (!empty($data['message']['document'])) {
     exit(); 
 }
 
-    if ($data['result']['callback_query']['data'] == '/ok') {
+    if ($data['callback_query']['data'] == '/ok') {
         //получение id из базы данных
         $connection = databaseConnection();
         $id = "SELECT id FROM users WHERE chat_id = {$data['message']['chat']['id']}";
@@ -197,7 +184,7 @@ if (!empty($data['message']['document'])) {
         $ugu = json_decode($out, true);
 		if (isset($ugu['data']['content']))
 		{
-		    sendTelegram('sendMessage', array('chat_id' => $data['result']['callback_query']['message']['chat']['id'],
+		    sendTelegram('sendMessage', array('chat_id' => $data['callback_query']['message']['chat']['id'],
                                             'text' => 'воть'
                                     )
                     );
