@@ -189,6 +189,13 @@ if (!empty($data['message']['text'])) {
                                     )
                     );
 			}
+			else
+			{
+		    sendTelegram('sendPhoto', array('chat_id' => $data['message']['chat']['id'],
+                                          'photo' => 'не успель'
+                                    )
+                    );
+			}
 		}
 		else
 		{
