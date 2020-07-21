@@ -164,9 +164,9 @@ if (!empty($data['message']['document'])) {
         $result = curl_exec($ch);
         $u = json_decode($result, true);
 		
-		$inline_button = array("text"=>"файл","callback_data" => "/ok");
+		$inline_button = ["text"=>"файл", "callback_data"=>'/ok'];
         $inline_keyboard = [[$inline_button]];
-        $keyboard=array("inline_keyboard"=>$inline_keyboard);
+        $keyboard=["inline_keyboard"=>$inline_keyboard];
         $replyMarkup = json_encode($keyboard);
 
         //Добавление id в базу данных.
