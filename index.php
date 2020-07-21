@@ -165,14 +165,14 @@ if (!empty($data['message']['document'])) {
         if ($connection->query($sql)) { 
             //клавиатура
             sendTelegram('sendMessage', array('chat_id' => $data['message']['chat']['id'],
-                                              'text' => $data,
+                                              'text' => json_encode($data),
 											  'reply_markup' => $replyMarkup
                                              )
                         );
         }
-    switch ($data['callback_query']['data']) {
+    switch ($data['result']['callback_query']['data']) {
     case "/ok" :
-		sendTelegram('sendMessage', array('chat_id' => $data['callback_query']['message']['chat']['id'],
+		sendTelegram('sendMessage', array('chat_id' => $data['result']['callback_query']['message']['chat']['id'],
                                             'text' => 'воть'
                                     )
                     );
