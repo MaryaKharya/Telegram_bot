@@ -172,7 +172,7 @@ if (!empty($data['message']['document'])) {
     exit(); 
 }
 
-    if ($data['callback_query']['data'] == '/ok') {
+    if ($data['callback_query']['data']) {
 
 		    sendTelegram('sendMessage', array('chat_id' => $data['callback_query']['message']['chat']['id'],
                                             'text' => 'воть'
