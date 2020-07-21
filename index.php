@@ -182,12 +182,9 @@ if (!empty($data['message']['text'])) {
 		{
 			$o = stripslashes($ugu['data']['content']);
 	$img= str_replace('data:image/png;base64,','', $o);
-	$img= str_replace( '' ,'+', $img);
-	$data = base64_decode($img);
+	$dama = base64_decode($img);
 	$file = UPLOAD_DIR . uniqid(). '.png';
-	$success= file_put_contents( $file, $data);
-	print $success ? $file : 'Unable to save the file.';
-			$base64 = 'data:image/png;base64,' . $o;
+	$success= file_put_contents( $file, $dama);
 		    sendTelegram('sendPhoto', array('chat_id' => $data['message']['chat']['id'],
                                           'photo' => $success
                                     )
