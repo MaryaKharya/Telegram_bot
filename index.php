@@ -16,9 +16,10 @@ $o = ('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA+gAAAIyCAIAAADXE3dOAAAABGd
 	$img = str_replace('data:image/png;base64,', '', $img);
 	$img = str_replace('', '+', $img);
 	$dama = base64_decode($img);
-	$file = tempnam('/tmp', 'FOO');
+	$file = fopen('php://memory', 'w+');
 	fwrite($file, $dama);
-    echo $file;
+	$success = stream_get_contents($file);
+    echo $success;
 
 function databaseConnection(): PDO
 {
