@@ -51,9 +51,6 @@ function sendTelegram($method, $response)
     return $res;
 }
 
-sendTelegram('sendMessage', array('chat_id' => $data['message']['chat']['id'],
-                                          'text' => 'Добро пожаловать! Я сконверирую все, что захочешь. Для этого выбири формат, который хочешь получить в результате конвертирования.'))
-
 if (!empty($data['message']['text'])) {
     $text = $data['message']['text'];
     if ($text == '/start')
