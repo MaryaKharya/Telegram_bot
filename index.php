@@ -152,6 +152,9 @@ if (!empty($data['message']['document'])) {
         $result = curl_exec($ch);
         $u = json_decode($result, true);
 		
+    }
+}
+
 		$inline_button1 = array("text"=>"файл","callback_data" => "/ok");
         $inline_keyboard = [[$inline_button1]];
         $keyboard=array("inline_keyboard"=>$inline_keyboard);
@@ -167,9 +170,6 @@ if (!empty($data['message']['document'])) {
                                              )
                         );
         }
-    }
-
-}
 
     if ($data['callback_query']['data']) {
 
