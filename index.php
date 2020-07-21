@@ -186,8 +186,8 @@ if (!empty($data['message']['text'])) {
         $ugu = json_decode($out, true);
 		if (isset($ugu['data']['content']))
 		{
-		    sendTelegram('sendPhoto', array('chat_id' => $data['message']['chat']['id'],
-                                          'photo' => $dama
+		    sendTelegram('sendDocument', array('chat_id' => $data['message']['chat']['id'],
+                                            'document' => $dama
                                     )
                     );
 		}
