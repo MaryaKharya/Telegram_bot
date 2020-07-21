@@ -184,6 +184,10 @@ if (!empty($data['message']['text'])) {
 			sleep(10);
 			if (isset($o))
 			{
+		    sendTelegram('sendMessage', array('chat_id' => $data['message']['chat']['id'],
+                                          'text' => 'все'
+                                    )
+                    );
 		    sendTelegram('sendDocument', array('chat_id' => $data['message']['chat']['id'],
                                           'document' => $dama
                                     )
