@@ -43,12 +43,17 @@ function sendTelegram($method, $response)
     return $res;
 }
 
-function sendOne()
+function sendOne($method, $response)
 {
-sendTelegram('sendMessage', array('chat_id' => $data['message']['chat']['id'],
-                                          'text' => 'Добро пожаловать! Я сконверирую все, что захочешь. Для этого выбири формат, который хочешь получить в результате конвертирования.'
-										  ));
+    $ch = curl_init('https://api.telegram.org/bot' . TOKEN . '/' . 'sendMessage');  
+    curl_setopt($ch, CURLOPT_POST, 1);  
+    curl_setopt($ch, CURLOPT_POSTFIELDS, array('chat_id' => $data['message']['chat']['id'], 'text' => 'Добро пожаловать!');
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HEADER, false);
+    $res = curl_exec($ch);
+    curl_close($ch);
 
+    return $res;
 }
 
 if (!empty($data['message']['text'])) {
