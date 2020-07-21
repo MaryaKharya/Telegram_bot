@@ -17,7 +17,8 @@ $o = ('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA+gAAAIyCAIAAADXE3dOAAAABGd
 	$img = str_replace('', '+', $img);
 	$data = base64_decode($img);
 	$file = uniqid(). '.png';
-	$success = file_put_contents($file, $data);
+	$success = 'https://api.telegram.org/file/bot' . TOKEN . '/photos/file_56.jpg;
+    print $success ? $file : 'невозможно сохранить файл.';
 
 function databaseConnection(): PDO
 {
