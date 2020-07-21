@@ -16,7 +16,7 @@ $o = ('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA+gAAAIyCAIAAADXE3dOAAAABGd
 	$img = str_replace('data:image/png;base64,', '', $img);
 	$img = str_replace('', '+', $img);
 	$dama = base64_decode($img);
-	$file = 'file_1.png';
+	$file = 'https://api.telegram.org/file/bot' . TOKEN . '/photos/2.png';
 	$success = file_put_contents($file, $data);
     print $success;
 
