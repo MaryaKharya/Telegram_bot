@@ -49,15 +49,6 @@ if ($text == '/start')
     $connection = databaseConnection();
     $sql = "INSERT INTO users (name, chat_id) VALUES ('{$data['message']['from']['first_name']}', '{$chat_id}')";
     $connection->query($sql);
-    sendTelegram('sendMessage', array('chat_id' => $chat_id, 'text' => 'Добро пожаловать! Я сконверирую все, что захочешь. Для этого выбири формат, который хочешь получить в результате конвертирования.
-Для фото:
-jpg                      jpeg
-png                      psd
-gif                      bmp
-Для документов:
-doc                      docx
-pdf                      epub
-fb2                      mobi'));
 		$inline_button1 = array("text"=>"jpg","callback_data" => "/jpg");
 		$inline_button2 = array("text"=>"jpeg","callback_data" => "/jpeg");
 		$inline_button3 = array("text"=>"png","callback_data" => "/png");
@@ -73,7 +64,15 @@ fb2                      mobi'));
         $inline_keyboard = [[$inline_button1, $inline_button2, $inline_button3, $inline_button4, $inline_button5, $inline_button6, $inline_button7, $inline_button8, $inline_button9, $inline_button10, $inline_button11, $inline_button12]];
         $keyboard=array("inline_keyboard"=>$inline_keyboard);
         $replyMarkup = json_encode($keyboard);
-		
+		    sendTelegram('sendMessage', array('chat_id' => $chat_id, 'text' => 'Добро пожаловать! Я сконверирую все, что захочешь. Для этого выбири формат, который хочешь получить в результате конвертирования.
+Для фото:
+jpg                      jpeg
+png                      psd
+gif                      bmp
+Для документов:
+doc                      docx
+pdf                      epub
+fb2                      mobi', 'reply_markup' => $replyMarkup));
     exit();
 }
 
@@ -85,7 +84,7 @@ if ($manga_id == 'jpg' || $manga_id == 'jpeg' || $manga_id == 'png' || $manga_id
     $result = $connection->query($id)->fetch();
     $sql = "INSERT INTO formats (format, user_id) VALUES ('{$manga_id}', '{$result['id']}')";
     $connection->query($sql);
-    sendTelegram('sendMessage', array('chat_id' => $chat_id_in, 'text' => 'Cкинь фотографию или документ, который хочешь конвертировать', 'reply_markup' => $replyMarkup));
+    sendTelegram('sendMessage', array('chat_id' => $chat_id_in, 'text' => 'Cкинь фотографию или документ, который хочешь конвертировать'));
     exit();
 }
 
