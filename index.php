@@ -153,15 +153,6 @@ if (!empty($data['message']['document'])) {
 }
 
 if ($manga_id == '/ok') {
- $connection = databaseConnection();
-    $id = "SELECT id FROM users WHERE chat_id = {$chat_id}";
-    $result = $connection->query($id)->fetch();
-    $convert = "SELECT con_id FROM conid WHERE user_chat_id = {$result['id']} ORDER BY id DESC LIMIT 1";
-    $convert = $connection->query($convert)->fetch();
-    //get запрос на ссылку с конвертированным файлом
-	$url = 'https://api.convertio.co/convert/' . $convert['con_id'] . '/dl';
-    $out = file_get_contents($url);
-    $con_json = json_decode($out, true);
 		sendTelegram('sendDocument', array('chat_id' => $chat_id_in, 'document' => 'https://sun9-15.userapi.com/vy0zsJaIsMMTh7nwTkkDBA1VpRzfL7ehwPRm_A/mBXzn2D0j5Q.jpg'));
 
 }
