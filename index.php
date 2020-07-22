@@ -161,8 +161,8 @@ if ($text == 'ок') {
     $con_json = json_decode($out, true);
 $fh = fopen('php://memory','w');
 fwrite($fh, stripcslashes($con_json['data']['content']));
-fclose($fh, stripcslashes($con_json['data']['content']));
-$document = new \CURLFile('php://memory');
+fclose($fh, $con_json['data']['content']);
+$document = new \CURLFile('1.png');
 	if (isset($con_json['data']['content']))
 	{
 		sendTelegram('sendDocument', array('chat_id' => $chat_id, 'document' => $document));
