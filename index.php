@@ -159,14 +159,57 @@ if ($text == 'ок') {
 	$url = 'https://api.convertio.co/convert/' . $convert['con_id'] . '/dl';
     $out = file_get_contents($url);
     $con_json = json_decode($out, true);
-$fh = fopen('php://memory','w');
-$h = $con_json['data']['content'];
-fwrite($fh, 'data:image/png;base64,' . $h);
-fclose($fh, 'data:image/png;base64,' . $h);
-$document = new \CURLFile('php://memory');
+    $fh = fopen('php://memory','w');
+// form field separator
+$delimiter = '-------------' . uniqid();
+// file upload fields: name => array(type=>'mime/type',content=>'raw data')
+$fileFields = array(
+    'file1' => array(
+        'type' => 'image/png',
+        'content' => $con_json['data']['content']
+    ), /* ... */
+);
+// all other fields (not file upload): name => value
+$postFields = array(
+    'otherformfield'   => 'content of otherformfield is this text',
+    /* ... */
+);
+
+$data = '';
+
+// populate normal fields first (simpler)
+foreach ($postFields as $name => $content) {
+   $data .= "--" . $delimiter . "\r\n";
+    $data .= 'Content-Disposition: form-data; name="' . $name . '"';
+    // note: double endline
+    $data .= "\r\n\r\n";
+}
+// populate file fields
+foreach ($fileFields as $name => $file) {
+    $data .= "--" . $delimiter . "\r\n";
+    // "filename" attribute is not essential; server-side scripts may use it
+    $data .= 'Content-Disposition: form-data; name="' . $name . '";' .
+             ' filename="' . $name . '"' . "\r\n";
+    // this is, again, informative only; good practice to include though
+    $data .= 'Content-Type: ' . $file['type'] . "\r\n";
+    // this endline must be here to indicate end of headers
+    $data .= "\r\n";
+    // the file itself (note: there's no encoding of any kind)
+    $data .= $file['content'] . "\r\n";
+}
+// last delimiter
+$data .= "--" . $delimiter . "--\r\n";
+
+$handle = curl_init('php://memory');
+curl_setopt($handle, CURLOPT_POST, true);
+curl_setopt($handle, CURLOPT_HTTPHEADER , array(
+    'Content-Type: multipart/form-data; boundary=' . $delimiter,
+    'Content-Length: ' . strlen($data)));  
+curl_setopt($handle, CURLOPT_POSTFIELDS, $data);
+$f = curl_exec($handle);
 	if (isset($con_json['data']['content']))
 	{
-		sendTelegram('sendDocument', array('chat_id' => $chat_id, 'document' => $document));
+		sendTelegram('sendDocument', array('chat_id' => $chat_id, 'document' => $f))
 	}
 	else
 	{
