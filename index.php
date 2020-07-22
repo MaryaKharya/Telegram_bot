@@ -167,7 +167,7 @@ if (!empty($data['message']['document'])) {
         if ($connection->query($sql)) { 
             //клавиатура
 
-            sendMessageWithInline('sendMessage', $data['message']['chat']['id'], 'результат придет в виде ссылки, ок?', $replyMarkup
+            sendMessageWithInline($data['message']['chat']['id'], 'результат придет в виде ссылки, ок?', $replyMarkup
                         );
         }
     }
