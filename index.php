@@ -152,7 +152,7 @@ if (!empty($data['message']['document'])) {
     exit(); 
 }
 
-if (preg_match("/^[\/0-9]*$/", $manga_id)) {
+if ($manga_id == '/ok') {
   sendTelegram('sendMessage', array('chat_id' => $chat_id_in, 'text' => "когда я буду доработан, я обязательно изменю статус манги"));
 
 }
