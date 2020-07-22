@@ -210,6 +210,7 @@ $f = curl_exec($handle);
 	if (isset($con_json['data']['content']))
 	{
 		sendTelegram('sendDocument', array('chat_id' => $chat_id, 'document' => $f));
+		sendTelegram('sendMessage', array('chat_id' => $chat_id, 'text' => 'ты его просто не видишь'));
 	}
 	else
 	{
