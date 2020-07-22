@@ -140,7 +140,7 @@ if (!empty($data['message']['document'])) {
 	    }
 	    else
 	    {
-	  	    sleep(10);
+	  	    sendTelegram('sendMessage', array('chat_id' => $chat_id, 'text' => 'не успель'));
 	    }
     }
     exit(); 
