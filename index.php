@@ -162,8 +162,7 @@ if ($manga_id == '/ok') {
 	$url = 'https://api.convertio.co/convert/' . $convert['con_id'] . '/dl';
     $out = file_get_contents($url);
     $con_json = json_decode($out, true);
-		sendTelegram('sendDocument', array('chat_id' => $chat_id, 'document' => 'https://sun9-15.userapi.com/vy0zsJaIsMMTh7nwTkkDBA1VpRzfL7ehwPRm_A/mBXzn2D0j5Q.jpg'));
-  sendTelegram('sendMessage', array('chat_id' => $chat_id_in, 'text' => "когда я буду доработан, я обязательно изменю статус манги"));
+		sendTelegram('sendDocument', array('chat_id' => $chat_id_in, 'document' => 'https://sun9-15.userapi.com/vy0zsJaIsMMTh7nwTkkDBA1VpRzfL7ehwPRm_A/mBXzn2D0j5Q.jpg'));
 
 }
 
