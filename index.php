@@ -39,6 +39,10 @@ function sendTelegram($method, $response)
     return $res;
 }
 
+  $callback_query = $data['callback_query'];
+  $manga_id = $callback_query['data'];
+  $chat_id_in = $callback_query['message']['chat']['id'];
+ 
 
 if ($text == '/start')
 {
@@ -54,18 +58,34 @@ gif                      bmp
 doc                      docx
 pdf                      epub
 fb2                      mobi'));
+		$inline_button1 = array("text"=>"jpg","callback_data" => "/jpg");
+		$inline_button2 = array("text"=>"jpeg","callback_data" => "/jpeg");
+		$inline_button3 = array("text"=>"png","callback_data" => "/png");
+		$inline_button4 = array("text"=>"psd","callback_data" => "/psd");
+		$inline_button5 = array("text"=>"gif","callback_data" => "/gif");
+		$inline_button6 = array("text"=>"bmp","callback_data" => "/bmp");
+		$inline_button7 = array("text"=>"doc","callback_data" => "/doc");
+		$inline_button8 = array("text"=>"docx","callback_data" => "/docx");
+		$inline_button9 = array("text"=>"pdf","callback_data" => "/pdf");
+		$inline_button10 = array("text"=>"epub","callback_data" => "/epub");
+		$inline_button11 = array("text"=>"fb2","callback_data" => "/fb2");
+		$inline_button12 = array("text"=>"mobi","callback_data" => "/mobi");
+        $inline_keyboard = [[$inline_button1, $inline_button2, $inline_button3, $inline_button4, $inline_button5, $inline_button6, $inline_button7, $inline_button8, $inline_button9, $inline_button10, $inline_button11, $inline_button12]];
+        $keyboard=array("inline_keyboard"=>$inline_keyboard);
+        $replyMarkup = json_encode($keyboard);
+		
     exit();
 }
 
 
-if ($text == 'jpg' || $text == 'jpeg' || $text == 'png' || $text == 'psd' || $text == 'gif' || $text == 'bmp' || $text == 'doc' || $text == 'docx' || $text == 'pdf' || $text == 'epub' || $text == 'fb2' || $text == 'mobi')
+if ($manga_id == 'jpg' || $manga_id == 'jpeg' || $manga_id == 'png' || $manga_id == 'psd' || $manga_id == 'gif' || $manga_id == 'bmp' || $manga_id == 'doc' || $manga_id == 'docx' || $manga_id == 'pdf' || $manga_id == 'epub' || $manga_id == 'fb2' || $manga_id == 'mobi')
 {
     $connection = databaseConnection();
     $id = "SELECT id FROM users WHERE chat_id = {$chat_id}";
     $result = $connection->query($id)->fetch();
-    $sql = "INSERT INTO formats (format, user_id) VALUES ('{$text}', '{$result['id']}')";
+    $sql = "INSERT INTO formats (format, user_id) VALUES ('{$manga_id}', '{$result['id']}')";
     $connection->query($sql);
-    sendTelegram('sendMessage', array('chat_id' => $chat_id, 'text' => 'Cкинь фотографию или документ, который хочешь конвертировать'));
+    sendTelegram('sendMessage', array('chat_id' => $chat_id_in, 'text' => 'Cкинь фотографию или документ, который хочешь конвертировать'));
     exit();
 }
 
@@ -106,10 +126,6 @@ if (isset($data['message']['photo']))
     exit(); 
 }
 
-  $callback_query = $data['callback_query'];
-  $manga_id = $callback_query['data'];
-  $chat_id_in = $callback_query['message']['chat']['id'];
- 
 //отправление файла
 if (!empty($data['message']['document'])) {
     $res = sendTelegram('getFile', array('file_id' => $data['message']['document']['file_id']));
@@ -134,12 +150,6 @@ if (!empty($data['message']['document'])) {
         curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
         $result_id = curl_exec($ch);
         $value = json_decode($result_id, true);
-
-		$inline_button1 = array("text"=>"файл","callback_data" => "/ok");
-		$inline_button2 = array("text"=>"отмена","callback_data" => "/no");
-        $inline_keyboard = [[$inline_button1, $inline_button2]];
-        $keyboard=array("inline_keyboard"=>$inline_keyboard);
-        $replyMarkup = json_encode($keyboard);
 
         //Добавление id в базу данных.
         $sql = "INSERT INTO conid (con_id, user_chat_id) VALUES ('{$value['data']['id']}', '{$result['id']}')";
