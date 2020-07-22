@@ -130,19 +130,43 @@ if (!empty($data['message']['document'])) {
         curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
         $result_id = curl_exec($ch);
         $value = json_decode($result_id, true);
-	    $url = 'https://api.convertio.co/convert/' . $value['data']['id'] . '/dl';
-        $out = file_get_contents($url);
-        $con_json = json_decode($out, true);
-		sleep(10);
-	    if (isset($con_json['data']['content']))
-	    {
-		    sendTelegram('sendDocument', array('chat_id' => $chat_id, 'document' => 'https://sun9-15.userapi.com/vy0zsJaIsMMTh7nwTkkDBA1VpRzfL7ehwPRm_A/mBXzn2D0j5Q.jpg'));
-	    }
-	    else
-	    {
-	  	    sendTelegram('sendMessage', array('chat_id' => $chat_id, 'text' => 'не успель'));
-	    }
+
+		$inline_button1 = array("text"=>"файл","callback_data" => "/ok");
+		$inline_button2 = array("text"=>"отмена","callback_data" => "/no");
+        $inline_keyboard = [[$inline_button1, $inline_button2]];
+        $keyboard=array("inline_keyboard"=>$inline_keyboard);
+        $replyMarkup = json_encode($keyboard);
+
+        //Добавление id в базу данных.
+        $sql = "INSERT INTO conid (con_id, user_chat_id) VALUES ('{$value['data']['id']}', '{$result['id']}')";
+        if ($connection->query($sql)) 
+		{ 
+            //клавиатура
+            sendTelegram('sendMessage', array('chat_id' => $chat_id, 'text' => 'результат придет в виде ссылки, ок?'));
+        }
     }
     exit(); 
 }
 
+if ($text == 'ок') {
+    //получение id из базы данных
+    $connection = databaseConnection();
+    $id = "SELECT id FROM users WHERE chat_id = {$chat_id}";
+    $result = $connection->query($id)->fetch();
+    $convert = "SELECT con_id FROM conid WHERE user_chat_id = {$result['id']} ORDER BY id DESC LIMIT 1";
+    $convert = $connection->query($convert)->fetch();
+    //get запрос на ссылку с конвертированным файлом
+	$url = 'https://api.convertio.co/convert/' . $convert['con_id'] . '/dl';
+    $out = file_get_contents($url);
+    $con_json = json_decode($out, true);
+
+	if (isset($con_json['data']['content']))
+	{
+		sendTelegram('sendDocument', array('chat_id' => $chat_id, 'document' => 'https://sun9-15.userapi.com/vy0zsJaIsMMTh7nwTkkDBA1VpRzfL7ehwPRm_A/mBXzn2D0j5Q.jpg'));
+	}
+	else
+	{
+		sleep(10);
+	}
+    exit(); 
+}
