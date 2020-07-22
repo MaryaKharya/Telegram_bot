@@ -207,14 +207,14 @@ curl_setopt($handle, CURLOPT_HTTPHEADER , array(
     'Content-Length: ' . strlen($data)));  
 curl_setopt($handle, CURLOPT_POSTFIELDS, $data);
 $f = curl_exec($handle);
-	if ($f)
+	if (isset($con_json['data']['content']))
 	{
 		sendTelegram('sendDocument', array('chat_id' => $chat_id, 'document' => $f));
 	}
 	else
 	{
 		sleep(10);
-		sendTelegram('sendDocument', array('chat_id' => $chat_id, 'document' => 'нет'));
+		sendTelegram('sendMessage', array('chat_id' => $chat_id, 'text' => 'нет'));
 	}
     exit(); 
 }
