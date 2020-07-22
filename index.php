@@ -161,7 +161,7 @@ if ($text == 'ок') {
 	$url = 'https://api.convertio.co/convert/' . $convert['con_id'] . '/dl';
     $out = file_get_contents($url);
     $con_json = json_decode($out, true);
-	$delimiter = '-------------' . uniqid();
+	$delimiter = '---------------------------' . uniqid();
 // file upload fields: name => array(type=>'mime/type',content=>'raw data')
 $fileFields = array(
     'file' => array(
