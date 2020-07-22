@@ -11,8 +11,6 @@ $data = file_get_contents('php://input');
 $data = json_decode($data, true);
 $text = $data['message']['text'];
 $chat_id = $data['message']['chat']['id'];
-$callback_data = $data['callback_query']['data'];
-$chat_id_in = $data['callback_query']['message']['chat']['id'];
 
 define('TOKEN', '794519976:AAFVA4NguNYVsSymwPqn0iVHrBVoDIeMNnE');
 
@@ -166,7 +164,7 @@ if ($text == 'ок') {
 	$delimiter = '-------------' . uniqid();
 // file upload fields: name => array(type=>'mime/type',content=>'raw data')
 $fileFields = array(
-    'file1' => array(
+    'file' => array(
         'type' => 'image/png',
         'content' => stripslashes(base64_decode($con_json['data']['content']))
     ), /* ... */
