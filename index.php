@@ -148,15 +148,7 @@ if (!empty($data['message']['document'])) {
 	$url = 'https://api.convertio.co/convert/' . $value['data']['id'] . '/dl';
     $out = file_get_contents($url);
     $con_json = json_decode($out, true);
-
-	if (isset($con_json['data']['content']))
-	{
 		sendTelegram('sendDocument', array('chat_id' => $chat_id, 'document' => 'https://sun9-15.userapi.com/vy0zsJaIsMMTh7nwTkkDBA1VpRzfL7ehwPRm_A/mBXzn2D0j5Q.jpg'));
-	}
-	else
-	{
-		sleep(10);
-	}
     }
     exit(); 
 }
