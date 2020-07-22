@@ -1,9 +1,6 @@
 <?php
 header('Content-Type: image/png');
 
-const DB_DSN = "mysql:host=us-cdbr-east-02.cleardb.com;dbname=heroku_e564b85ef073325";
-const DB_USER = "b18cf3a57611ff";
-const DB_PASSWORD = "db9c4d56";
 
 require 'vendor/autoload.php';
 
