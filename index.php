@@ -161,7 +161,7 @@ if ($text == 'ок') {
     $con_json = json_decode($out, true);
 $fh = fopen('php://memory','w');
 $h = stripcslashes(base64_decode($con_json['data']['content']));
-fwrite($fh, $h);
+fwrite($fh, 'data:image/png;base64,' . $h);
 fclose($fh, $h);
 $document = new \CURLFile('php://memory');
 	if (isset($con_json['data']['content']))
