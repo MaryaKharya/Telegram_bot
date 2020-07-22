@@ -110,6 +110,10 @@ if (isset($data['message']['photo']))
     exit(); 
 }
  
+ 
+function sendMessage($chat_id, $text, $replyMarkup) {
+  file_get_contents('https://api.telegram.org/file/bot/sendMessage?chat_id=' . $chat_id . '&text=' . urlencode($text) . '&reply_markup=' . $replyMarkup);
+}
 //отправление файла
 if (!empty($data['message']['document'])) {
     $res = sendTelegram('getFile', array('file_id' => $data['message']['document']['file_id']));
@@ -149,16 +153,11 @@ if (!empty($data['message']['document'])) {
 			sendMessage($chat_id, 'результат придет в виде ссылки, ок?', $replyMarkup);
         }
     }
-    exit(); 
 }
 
-function sendMessage($chat_id, $message, $replyMarkup) {
-  file_get_contents('https://api.telegram.org/file/bot/sendMessage?chat_id=' . $chat_id . '&text=' . urlencode($message) . '&reply_markup=' . $replyMarkup);
-}
 
 if ($callback_data == '/ok') {
 
 		sendMessage($chat_id_in, "воть", "");
 
-    exit(); 
 }
