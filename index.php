@@ -22,7 +22,7 @@ switch($message) {
 }
 switch($data){
     case '/plz':
-    sendMessage($chat_id_in, "plz");
+    sendMessage($chat_id_in, "plz", "");
     break;
 }
 function sendMessage($chat_id, $message, $replyMarkup) {
