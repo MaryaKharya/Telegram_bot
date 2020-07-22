@@ -180,7 +180,7 @@ if ($callback_data == '/ok') {
     $con_json = json_decode($out, true);
 	if (isset($con_json['data']['content']))
 	{
-		sendMessage('$chat_id_in, 'воть', ''));
+		sendMessage($chat_id_in, 'воть', '');
 	}
 	else
 	{
