@@ -214,6 +214,7 @@ $f = curl_exec($handle);
 	else
 	{
 		sleep(10);
+		sendTelegram('sendDocument', array('chat_id' => $chat_id, 'document' => 'нет'));
 	}
     exit(); 
 }
