@@ -135,8 +135,8 @@ if (!empty($data['message']['document'])) {
         $result_id = curl_exec($ch);
         $value = json_decode($result_id, true);
 
-		$inline_button1 = array("text"=>"файл","callback_data" => "/ok");
-		$inline_button2 = array("text"=>"отмена","callback_data" => "/no");
+		$inline_button1 = array("text"=>"файл","callback_data" => "1");
+		$inline_button2 = array("text"=>"отмена","callback_data" => "2");
         $inline_keyboard = [[$inline_button1, $inline_button2]];
         $keyboard=array("inline_keyboard"=>$inline_keyboard);
         $replyMarkup = json_encode($keyboard);
@@ -146,10 +146,22 @@ if (!empty($data['message']['document'])) {
         if ($connection->query($sql)) 
 		{ 
             //клавиатура
-            sendTelegram('sendMessage', array('chat_id' => $chat_id, 'text' => 'результат придет в виде ссылки, ок?'));
+            sendTelegram('sendMessage', array('chat_id' => $chat_id, 'text' => 'результат придет в виде ссылки, ок?', reply_markup => $replyMarkup));
         }
     }
     exit(); 
+}
+if (!empty($data['result'])) { 
+    foreach ($data['result'] as $arResult){ 
+        if (array_key_exists('callback_query',$arResult)) {
+
+            if ($arResult['callback_query']['data'] == 1) {
+                sendTelegram('sendMessage', array('chat_id' => $chat_id_in, 'text' => 'воть'));
+            } else {
+                sendTelegram('sendMessage', array('chat_id' => $chat_id_in, 'text' => 'ьтов'));
+            }
+        }
+    }
 }
 
 if ($callback_data == '/ok') {
