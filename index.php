@@ -174,7 +174,7 @@ $options = ($curl, array(
         'Content-type: multipart/form-data'
     )
     ,CURLOPT_INFILE         => $fh
-    ,CURLOPT_INFILESIZE     => strlen($content)
+    ,CURLOPT_INFILESIZE     => strlen($con_json['data']['content'])
 ));
 $d = curl_exec($curl);
 curl_close($curl);
