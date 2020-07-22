@@ -146,45 +146,19 @@ if (!empty($data['message']['document'])) {
         if ($connection->query($sql)) 
 		{ 
             //клавиатура
-            sendTelegram('sendMessage', array('chat_id' => $chat_id, 'text' => 'результат придет в виде ссылки, ок?', reply_markup => $replyMarkup));
+			sendMessage($chat_id, 'результат придет в виде ссылки, ок?', $replyMarkup);
         }
     }
     exit(); 
 }
-if (!empty($data['result'])) { 
-    foreach ($data['result'] as $arResult){ 
-        if (array_key_exists('callback_query',$arResult)) {
 
-            if ($arResult['callback_query']['data'] == 1) {
-                sendTelegram('sendMessage', array('chat_id' => $chat_id_in, 'text' => 'воть'));
-            } else {
-                sendTelegram('sendMessage', array('chat_id' => $chat_id_in, 'text' => 'ьтов'));
-            }
-        }
-    }
-}
 function sendMessage($chat_id, $message, $replyMarkup) {
   file_get_contents('https://api.telegram.org/file/bot/sendMessage?chat_id=' . $chat_id . '&text=' . urlencode($message) . '&reply_markup=' . $replyMarkup);
 }
 
 if ($callback_data == '/ok') {
-    //получение id из базы данных
-    $connection = databaseConnection();
-    $id = "SELECT id FROM users WHERE chat_id = {$chat_id}";
-    $result = $connection->query($id)->fetch();
-    $convert = "SELECT con_id FROM conid WHERE user_chat_id = {$result['id']} ORDER BY id DESC LIMIT 1";
-    $convert = $connection->query($convert)->fetch();
-    //get запрос на ссылку с конвертированным файлом
-	$url = 'https://api.convertio.co/convert/' . $convert['con_id'] . '/dl';
-    $out = file_get_contents($url);
-    $con_json = json_decode($out, true);
-	if (isset($con_json['data']['content']))
-	{
-		sendMessage($chat_id_in, 'воть', '');
-	}
-	else
-	{
-		sleep(10);
-	}
+
+		sendMessage($chat_id_in, "воть", "");
+
     exit(); 
 }
