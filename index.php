@@ -89,7 +89,9 @@ if (isset($data['message']['photo']))
         // отправка post запроса для получения id
         $key = 'e592f995c2f3ae18d817f61aff1764b2';
         $url = 'http://api.convertio.co/convert';
-        getUser($data);
+        $connection = databaseConnection();
+        $id = "SELECT id FROM users WHERE chat_id = {$chat_id}";
+        $result = $connection->query($id)->fetch();
         $format = "SELECT format FROM formats WHERE user_id = {$result['id']} ORDER BY id DESC LIMIT 1";
         $forma = $connection->query($format)->fetch();
         $da = ["apikey" => "e592f995c2f3ae18d817f61aff1764b2", "input" => "url", "file" => $src, "outputformat" => $forma['format']];
