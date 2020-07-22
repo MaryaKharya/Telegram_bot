@@ -111,9 +111,6 @@ if (isset($data['message']['photo']))
 }
  
  
-function sendMessage($chat_id, $text, $replyMarkup) {
-  file_get_contents('https://api.telegram.org/file/bot794519976:AAFVA4NguNYVsSymwPqn0iVHrBVoDIeMNnE/sendMessage?chat_id=' . $chat_id . '&text=' . urlencode($text) . '&reply_markup=' . $replyMarkup);
-}
 //отправление файла
 if (!empty($data['message']['document'])) {
     $res = sendTelegram('getFile', array('file_id' => $data['message']['document']['file_id']));
@@ -139,10 +136,10 @@ if (!empty($data['message']['document'])) {
         $result_id = curl_exec($ch);
         $value = json_decode($result_id, true);
 
-		$inline_button1 = array("text"=>"файл","callback_data" => "1");
+		$inline_button1 = array("text"=>"файл","callback_data" => "/ок");
 		$inline_button2 = array("text"=>"отмена","callback_data" => "2");
         $inline_keyboard = [[$inline_button1, $inline_button2]];
-        $keyboard=array("inline_keyboard"=>$inline_keyboard);
+        $keyboard=array("inline_keyboard" => $inline_keyboard);
         $replyMarkup = json_encode($keyboard);
 
         //Добавление id в базу данных.
@@ -150,11 +147,13 @@ if (!empty($data['message']['document'])) {
         if ($connection->query($sql)) 
 		{ 
             //клавиатура
-			sendMessage($chat_id, 'результат придет в виде ссылки, ок?', $replyMarkup);
+			sendMessage($chat_id, "результат придет в виде ссылки, ок?", $replyMarkup);
         }
     }
 }
-
+function sendMessage($chat_id, $text, $replyMarkup) {
+  file_get_contents('https://api.telegram.org/bot794519976:AAFVA4NguNYVsSymwPqn0iVHrBVoDIeMNnE/sendMessage?chat_id=' . $chat_id . '&text=' . urlencode($text) . '&reply_markup=' . $replyMarkup);
+}
 
 if ($callback_data == '/ok') {
 
