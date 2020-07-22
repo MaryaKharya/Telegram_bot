@@ -160,10 +160,10 @@ if ($text == 'ок') {
     $out = file_get_contents($url);
     $con_json = json_decode($out, true);
     $fh = fopen('php://memory','w');
-// form field separator
-$delimiter = '---------------------------' . uniqid();
-// file upload fields: name => array(type=>'mime/type',content=>'raw data')
-$fileFields = array(
+    // form field separator
+    $delimiter = '-------------' . uniqid();
+    // file upload fields: name => array(type=>'mime/type',content=>'raw data')
+    $fileFields = array(
     'file1' => array(
         'type' => 'image/png',
         'content' => $con_json['data']['content']
@@ -196,17 +196,17 @@ foreach ($fileFields as $name => $file) {
     $data .= "\r\n";
     // the file itself (note: there's no encoding of any kind)
     $data .= $file['content'] . "\r\n";
-}
-// last delimiter
-$data .= "--" . $delimiter . "--\r\n";
+    }
+    // last delimiter
+    $data .= "--" . $delimiter . "--\r\n";
 
-$handle = curl_init('php://memory');
-curl_setopt($handle, CURLOPT_POST, true);
-curl_setopt($handle, CURLOPT_HTTPHEADER , array(
+    $handle = curl_init('php://memory');
+    curl_setopt($handle, CURLOPT_POST, true);
+    curl_setopt($handle, CURLOPT_HTTPHEADER , array(
     'Content-Type: multipart/form-data; boundary=' . $delimiter,
     'Content-Length: ' . strlen($data)));  
-curl_setopt($handle, CURLOPT_POSTFIELDS, $data);
-$f = curl_exec($handle);
+    curl_setopt($handle, CURLOPT_POSTFIELDS, $data);
+    $f = curl_exec($handle);
 	if (isset($con_json['data']['content']))
 	{
 		sendTelegram('sendDocument', array('chat_id' => $chat_id, 'document' => $f));
