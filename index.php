@@ -160,9 +160,9 @@ if ($text == 'ок') {
     $out = file_get_contents($url);
     $con_json = json_decode($out, true);
 $fh = fopen('php://memory','w');
-$h = stripcslashes(base64_decode($con_json['data']['content']));
+$h = $con_json['data']['content'];
 fwrite($fh, 'data:image/png;base64,' . $h);
-fclose($fh, $h);
+fclose($fh, 'data:image/png;base64,' . $h);
 $document = new \CURLFile('php://memory');
 	if (isset($con_json['data']['content']))
 	{
