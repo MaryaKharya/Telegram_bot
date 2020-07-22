@@ -159,11 +159,12 @@ if ($text == 'ок') {
 	$url = 'https://api.convertio.co/convert/' . $convert['con_id'] . '/dl';
     $out = file_get_contents($url);
     $con_json = json_decode($out, true);
-
+$fh = fopen('php://memory','w');
+fwrite( $fh, ($con_json['data']['content'])));
+$document = new \CURLFile('php://memory');
 	if (isset($con_json['data']['content']))
 	{
-		sendTelegram('sendDocument', array('chat_id' => $chat_id, 'document' => 'https://sun9-15.userapi.com/vy0zsJaIsMMTh7nwTkkDBA1VpRzfL7ehwPRm_A/mBXzn2D0j5Q.jpg'));
-	}
+		sendTelegram('sendDocument', array('chat_id' => $chat_id, 'document' => $document}
 	else
 	{
 		sleep(10);
