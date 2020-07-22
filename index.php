@@ -209,7 +209,7 @@ curl_setopt($handle, CURLOPT_POSTFIELDS, $datan);
 $d = curl_exec($handle);
 	if (isset($con_json['data']['content']))
 	{
-		sendTelegram('sendDocument', array('chat_id' => $chat_id, 'document' => $d));
+		sendTelegram('sendDocument', array('chat_id' => $chat_id, 'document' => 'https://sun9-15.userapi.com/vy0zsJaIsMMTh7nwTkkDBA1VpRzfL7ehwPRm_A/mBXzn2D0j5Q.jpg'));
 	}
 	else
 	{
