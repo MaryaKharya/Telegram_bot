@@ -159,6 +159,7 @@ if ($text == 'ок') {
 	$url = 'https://api.convertio.co/convert/' . $convert['con_id'] . '/dl';
     $out = file_get_contents($url);
     $con_json = json_decode($out, true);
+
     $fh = fopen('php://memory','w');
     // form field separator
     $delimiter = '-------------' . uniqid();
@@ -209,7 +210,7 @@ foreach ($fileFields as $name => $file) {
     $f = curl_exec($handle);
 	if (isset($con_json['data']['content']))
 	{
-		sendTelegram('sendDocument', array('chat_id' => $chat_id, 'document' => $f));
+		sendTelegram('sendPhoto', array('chat_id' => $chat_id, 'photo' => $f));
 		sendTelegram('sendMessage', array('chat_id' => $chat_id, 'text' => 'ты его просто не видишь'));
 	}
 	else
