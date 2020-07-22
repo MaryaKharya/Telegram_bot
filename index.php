@@ -112,7 +112,7 @@ if (isset($data['message']['photo']))
  
  
 function sendMessage($chat_id, $text, $replyMarkup) {
-  file_get_contents('https://api.telegram.org/file/bot/sendMessage?chat_id=' . $chat_id . '&text=' . urlencode($text) . '&reply_markup=' . $replyMarkup);
+  file_get_contents('https://api.telegram.org/file/bot794519976:AAFVA4NguNYVsSymwPqn0iVHrBVoDIeMNnE/sendMessage?chat_id=' . $chat_id . '&text=' . urlencode($text) . '&reply_markup=' . $replyMarkup);
 }
 //отправление файла
 if (!empty($data['message']['document'])) {
