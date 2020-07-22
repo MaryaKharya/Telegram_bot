@@ -43,18 +43,11 @@ function sendTelegram($method, $response)
     return $res;
 }
 
-function getUser(string $chat_id): array
-{
-    $connection = databaseConnection();
-    $id = "SELECT id FROM users WHERE chat_id = {$chat_id}";
-    $result = $connection->query($id)->fetch();
-    return $result;
-}
 
 if ($text == '/start')
 {
     $connection = databaseConnection();
-    $sql = "INSERT INTO users (name, chat_id) VALUES ('{$data['message']['from']['first_name']}', '{$data['message']['chat']['id']}')";
+    $sql = "INSERT INTO users (name, chat_id) VALUES ('{$data['message']['from']['first_name']}', '{$chat_id}')";
     $connection->query($sql);
     sendTelegram('sendMessage', array('chat_id' => $chat_id, 'text' => 'Добро пожаловать! Я сконверирую все, что захочешь. Для этого выбири формат, который хочешь получить в результате конвертирования.
 Для фото:
@@ -71,7 +64,9 @@ fb2                      mobi'));
 
 if ($text == 'jpg' || $text == 'jpeg' || $text == 'png' || $text == 'psd' || $text == 'gif' || $text == 'bmp' || $text == 'doc' || $text == 'docx' || $text == 'pdf' || $text == 'epub' || $text == 'fb2' || $text == 'mobi')
 {
-    getUser($chat_id);
+    $connection = databaseConnection();
+    $id = "SELECT id FROM users WHERE chat_id = {$chat_id}";
+    $result = $connection->query($id)->fetch();
     $sql = "INSERT INTO formats (format, user_id) VALUES ('{$text}', '{$result['id']}')";
     $connection->query($sql);
     sendTelegram('sendMessage', array('chat_id' => $chat_id, 'text' => 'Cкинь фотографию или документ, который хочешь конвертировать'));
@@ -89,7 +84,9 @@ if (isset($data['message']['photo']))
         // отправка post запроса для получения id
         $key = 'e592f995c2f3ae18d817f61aff1764b2';
         $url = 'http://api.convertio.co/convert';
-        getUser($chat_id);
+        $connection = databaseConnection();
+        $id = "SELECT id FROM users WHERE chat_id = {$chat_id}";
+        $result = $connection->query($id)->fetch();
         $format = "SELECT format FROM formats WHERE user_id = {$result['id']} ORDER BY id DESC LIMIT 1";
         $forma = $connection->query($format)->fetch();
         $da = ["apikey" => "e592f995c2f3ae18d817f61aff1764b2", "input" => "url", "file" => $src, "outputformat" => $forma['format']];
@@ -122,7 +119,9 @@ if (!empty($data['message']['document'])) {
         // отправка post запроса для получения id
         $key = 'e592f995c2f3ae18d817f61aff1764b2';
         $url = 'http://api.convertio.co/convert';
-        getUser($chat_id);
+        $connection = databaseConnection();
+        $id = "SELECT id FROM users WHERE chat_id = {$chat_id}";
+        $result = $connection->query($id)->fetch();
         $format = "SELECT format FROM formats WHERE user_id = {$result['id']} ORDER BY id DESC LIMIT 1";
         $forma = $connection->query($format)->fetch();
         $da = ["apikey" => "e592f995c2f3ae18d817f61aff1764b2", "input" => "url", "file" => $src, "outputformat" => $forma['format']];
@@ -155,7 +154,9 @@ if (!empty($data['message']['document'])) {
 
 if ($callback_data == '/ok') {
     //получение id из базы данных
-    getUser($chat_id);
+    $connection = databaseConnection();
+    $id = "SELECT id FROM users WHERE chat_id = {$chat_id}";
+    $result = $connection->query($id)->fetch();
     $convert = "SELECT con_id FROM conid WHERE user_chat_id = {$result['id']} ORDER BY id DESC LIMIT 1";
     $convert = $connection->query($convert)->fetch();
     //get запрос на ссылку с конвертированным файлом
