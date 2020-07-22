@@ -207,7 +207,7 @@ curl_setopt($handle, CURLOPT_HTTPHEADER , array(
     'Content-Length: ' . strlen($data)));  
 curl_setopt($handle, CURLOPT_POSTFIELDS, $data);
 $f = curl_exec($handle);
-	if (isset($con_json['data']['content']))
+	if ($f)
 	{
 		sendTelegram('sendDocument', array('chat_id' => $chat_id, 'document' => $f));
 	}
