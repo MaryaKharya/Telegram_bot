@@ -162,51 +162,22 @@ if ($text == 'ок') {
     $out = file_get_contents($url);
     $con_json = json_decode($out, true);
 	$delimiter = '-------------' . uniqid();
-// file upload fields: name => array(type=>'mime/type',content=>'raw data')
-$fileFields = array(
-    'file' => array(
-        'type' => 'text/plain',
-        'content' => stripslashes(base64_decode($con_json['data']['content']))
-    ), /* ... */
-);
-// all other fields (not file upload): name => value
-$postFields = array(
-    'name'   => 'lotxt',
-    /* ... */
-);
-
-$datan = '';
-
-// populate normal fields first (simpler)
-foreach ($postFields as $name => $content) {
-   $datan .= "--" . $delimiter . "\r\n";
-    $datan .= 'Content-Disposition: form-data; name="' . $name . '"';
-    // note: double endline
-    $datan .= "\r\n\r\n";
-}
-// populate file fields
-foreach ($fileFields as $name => $file) {
-    $datan .= "--" . $delimiter . "\r\n";
-    // "filename" attribute is not essential; server-side scripts may use it
-    $datan .= 'Content-Disposition: form-data; name="' . $name . '";' .
-             ' filename="' . $name . '"' . "\r\n";
-    // this is, again, informative only; good practice to include though
-    $datan .= 'Content-Type: ' . $file['type'] . "\r\n";
-    // this endline must be here to indicate end of headers
-    $datan .= "\r\n";
-    // the file itself (note: there's no encoding of any kind)
-    $datan .= $file['content'] . "\r\n";
-}
-// last delimiter
-$datan .= "--" . $delimiter . "--\r\n";
-
-$handle = curl_init($url);
-curl_setopt($handle, CURLOPT_POST, true);
-curl_setopt($handle, CURLOPT_HTTPHEADER , array(
-    'Content-Type: multipart/form-data; boundary=' . $delimiter,
-    'Content-Length: ' . strlen($datan)));  
-curl_setopt($handle, CURLOPT_POSTFIELDS, $datan);
-$d = curl_exec($handle);
+$fh = fopen('php://memory','rw');
+fwrite($fh, $con_json['data']['content']);
+rewind($fh);
+$curl = curl_init();
+$options = ($curl, array(
+    CURLOPT_RETURNTRANSFER  => true
+    ,CURLOPT_SSL_VERIFYPEER => false
+    ,CURLOPT_SSL_VERIFYHOST => 1
+    ,CURLOPT_HTTPHEADER     => array(
+        'Content-type: multipart/form-data'
+    )
+    ,CURLOPT_INFILE         => $fh
+    ,CURLOPT_INFILESIZE     => strlen($content)
+));
+$d = curl_exec($curl);
+curl_close($curl);
 	if (isset($con_json['data']['content']))
 	{
 		sendTelegram('sendDocument', array('chat_id' => $chat_id, 'document' => $d));
