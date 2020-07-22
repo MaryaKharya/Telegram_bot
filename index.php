@@ -85,7 +85,7 @@ if ($manga_id == 'jpg' || $manga_id == 'jpeg' || $manga_id == 'png' || $manga_id
     $result = $connection->query($id)->fetch();
     $sql = "INSERT INTO formats (format, user_id) VALUES ('{$manga_id}', '{$result['id']}')";
     $connection->query($sql);
-    sendTelegram('sendMessage', array('chat_id' => $chat_id_in, 'text' => 'Cкинь фотографию или документ, который хочешь конвертировать'));
+    sendTelegram('sendMessage', array('chat_id' => $chat_id_in, 'text' => 'Cкинь фотографию или документ, который хочешь конвертировать', 'reply_markup' => $replyMarkup));
     exit();
 }
 
