@@ -1,9 +1,7 @@
 <?php
 header('Content-Type: image/png');
 
-const DB_DSN = "mysql:host=us-cdbr-east-02.cleardb.com;dbname=heroku_e564b85ef073325";
-const DB_USER = "b18cf3a57611ff";
-const DB_PASSWORD = "db9c4d56";
+include 'database.php';
 
 require 'vendor/autoload.php';
 
@@ -17,16 +15,6 @@ echo "<img src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA+gAAAIyCAIAAADXE3d
     file_get_contents('https://api.telegram.org/bot' . TOKEN . '/sendMessage?chat_id=' . $chat_id . '&text=' . urlencode($message) . '&reply_markup=' . $replyMarkup);
   }
 
-function databaseConnection(): PDO
-{
-    static $connection = null;
-    if ($connection === null)
-    {
-        $connection = new PDO(DB_DSN, DB_USER, DB_PASSWORD);
-        $connection->query('set names utf8');
-    }
-    return $connection;
-}
 
 if (empty($data['message']['chat']['id'])) {
     exit();
@@ -51,19 +39,17 @@ if (!empty($data['message']['text'])) {
     $text = $data['message']['text'];
     if ($text == '/start')
     {
-        $connection = databaseConnection();
-        $sql = "INSERT INTO users (name, chat_id) VALUES ('{$data['message']['from']['first_name']}', '{$data['message']['chat']['id']}')";
-        $connection->query($sql);
+        saveData($data);
         sendTelegram('sendMessage', array('chat_id' => $data['message']['chat']['id'],
                                           'text' => 'Добро пожаловать! Я сконверирую все, что захочешь. Для этого выбири формат, который хочешь получить в результате конвертирования.
 Для фото:
-jpg           jpeg
-png           psd
-gif           bmp
+jpg                    jpeg
+png                    psd
+gif                    bmp
 Для документов:
-doc           docx
-pdf           epub
-fb2           mobi'
+doc                    docx
+pdf                    epub
+fb2                     mobi'
                                          )
                     );
         exit();
@@ -74,9 +60,7 @@ if (!empty($data['message']['text'])) {
     $text = $data['message']['text'];
     if ($text == 'jpg' || $text == 'jpeg' || $text == 'png' || $text == 'psd' || $text == 'gif' || $text == 'bmp' || $text == 'doc' || $text == 'docx' || $text == 'pdf' || $text == 'epub' || $text == 'fb2' || $text == 'mobi')
     {
-        $connection = databaseConnection();
-        $id = "SELECT id FROM users WHERE chat_id = {$data['message']['chat']['id']}";
-        $result = $connection->query($id)->fetch();
+        getUser($data);
         $sql = "INSERT INTO formats (format, user_id) VALUES ('{$text}', '{$result['id']}')";
         $connection->query($sql);
         sendTelegram('sendMessage', array('chat_id' => $data['message']['chat']['id'],
@@ -97,9 +81,7 @@ if (!empty($data['message']['photo'])) {
     if ($res['ok']) {
         $src = 'https://api.telegram.org/file/bot' . TOKEN . '/' . $res['result']['file_path'];
         // отправка post запроса для получения id
-        $connection = databaseConnection();
-        $id = "SELECT id FROM users WHERE chat_id = {$data['message']['chat']['id']}";
-        $resul = $connection->query($id)->fetch();
+        getUser($data);
         $format = "SELECT format FROM formats WHERE user_id = {$resul['id']} ORDER BY id DESC LIMIT 1";
         $forma = $connection->query($format)->fetch();
         $key = 'e592f995c2f3ae18d817f61aff1764b2';
@@ -137,9 +119,7 @@ if (!empty($data['message']['document'])) {
     if ($res['ok']) {
         $src = 'https://api.telegram.org/file/bot' . TOKEN . '/' . $res['result']['file_path'];
         // отправка post запроса для получения id
-        $connection = databaseConnection();
-        $id = "SELECT id FROM users WHERE chat_id = {$data['message']['chat']['id']}";
-        $resul = $connection->query($id)->fetch();
+        getUser($data);
         $format = "SELECT format FROM formats WHERE user_id = {$resul['id']} ORDER BY id DESC LIMIT 1";
         $forma = $connection->query($format)->fetch();
         $key = 'e592f995c2f3ae18d817f61aff1764b2';
@@ -175,9 +155,7 @@ if (!empty($data['message']['document'])) {
 
     if ($data['callback_query']['data'] == '/ok') {
         //получение id из базы данных
-        $connection = databaseConnection();
-        $id = "SELECT id FROM users WHERE chat_id = {$data['message']['chat']['id']}";
-        $result = $connection->query($id)->fetch();
+        getUser($data);
         $convert = "SELECT con_id FROM conid WHERE user_chat_id = {$result['id']} ORDER BY id DESC LIMIT 1";
         $con = $connection->query($convert)->fetch();
         //get запрос на ссылку с конвертированным файлом
