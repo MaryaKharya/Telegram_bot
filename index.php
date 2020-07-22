@@ -144,9 +144,10 @@ if (!empty($data['message']['document'])) {
 
         //Добавление id в базу данных.
         $sql = "INSERT INTO conid (con_id, user_chat_id) VALUES ('{$value['data']['id']}', '{$result['id']}')";
-        if ($connection->query($sql)) { 
+        if ($connection->query($sql)) 
+		{ 
             //клавиатура
-            sendTelegram('sendMessage', array('chat_id' => $chat_id], 'text' => 'результат придет в виде ссылки, ок?'));
+            sendTelegram('sendMessage', array('chat_id' => $chat_id, 'text' => 'результат придет в виде ссылки, ок?'));
         }
     }
     exit(); 
