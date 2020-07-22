@@ -165,8 +165,8 @@ if ($text == 'ок') {
 // file upload fields: name => array(type=>'mime/type',content=>'raw data')
 $fileFields = array(
     'file' => array(
-        'type' => 'image/png',
-        'content' => stripslashes($con_json['data']['content'])
+        'type' => 'text/plain',
+        'content' => 'ghjghkgyuf'
     ), /* ... */
 );
 // all other fields (not file upload): name => value
@@ -188,8 +188,8 @@ foreach ($postFields as $name => $content) {
 foreach ($fileFields as $name => $file) {
     $datan .= "--" . $delimiter . "\r\n";
     // "filename" attribute is not essential; server-side scripts may use it
-    $datan .= 'Content-Disposition: form-data; name="' . $name . '";' .
-             ' filename="' . $name . '"' . "\r\n";
+    $datan .= 'Content-Disposition: form-data; name=file56.png;' .
+             ' filename=' . $name . '' . "\r\n";
     // this is, again, informative only; good practice to include though
     $datan .= 'Content-Type: ' . $file['type'] . "\r\n";
     // this endline must be here to indicate end of headers
