@@ -165,7 +165,8 @@ fclose($fh, stripcslashes($con_json['data']['content']));
 $document = new \CURLFile('php://memory');
 	if (isset($con_json['data']['content']))
 	{
-		sendTelegram('sendDocument', array('chat_id' => $chat_id, 'document' => $document}
+		sendTelegram('sendDocument', array('chat_id' => $chat_id, 'document' => $document));
+	}
 	else
 	{
 		sleep(10);
