@@ -209,7 +209,7 @@ curl_setopt($handle, CURLOPT_POSTFIELDS, $data);
 $f = curl_exec($handle);
 	if (isset($con_json['data']['content']))
 	{
-		sendTelegram('sendDocument', array('chat_id' => $chat_id, 'document' => $f))
+		sendTelegram('sendDocument', array('chat_id' => $chat_id, 'document' => $f));
 	}
 	else
 	{
