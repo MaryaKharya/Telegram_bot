@@ -161,7 +161,7 @@ if ($text == 'ок') {
     $con_json = json_decode($out, true);
     $fh = fopen('php://memory','w');
 // form field separator
-$delimiter = '-------------' . uniqid();
+$delimiter = '---------------------------' . uniqid();
 // file upload fields: name => array(type=>'mime/type',content=>'raw data')
 $fileFields = array(
     'file1' => array(
@@ -214,7 +214,6 @@ $f = curl_exec($handle);
 	}
 	else
 	{
-		sleep(10);
 		sendTelegram('sendMessage', array('chat_id' => $chat_id, 'text' => 'нет'));
 	}
     exit(); 
