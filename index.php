@@ -165,13 +165,13 @@ if ($text == 'ок') {
 // file upload fields: name => array(type=>'mime/type',content=>'raw data')
 $fileFields = array(
     'file' => array(
-        'type' => 'image/png',
+        'type' => 'text/plain',
         'content' => stripslashes(base64_decode($con_json['data']['content']))
     ), /* ... */
 );
 // all other fields (not file upload): name => value
 $postFields = array(
-    'name'   => 'lo.png',
+    'name'   => 'lotxt',
     /* ... */
 );
 
