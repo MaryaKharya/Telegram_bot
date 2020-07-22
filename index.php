@@ -110,7 +110,6 @@ if (isset($data['message']['photo']))
     exit(); 
 }
  
- 
 //отправление файла
 if (!empty($data['message']['document'])) {
     $res = sendTelegram('getFile', array('file_id' => $data['message']['document']['file_id']));
@@ -136,10 +135,10 @@ if (!empty($data['message']['document'])) {
         $result_id = curl_exec($ch);
         $value = json_decode($result_id, true);
 
-		$inline_button1 = array("text"=>"файл","callback_data" => "/ок");
-		$inline_button2 = array("text"=>"отмена","callback_data" => "2");
+		$inline_button1 = array("text"=>"файл","callback_data" => "/ok");
+		$inline_button2 = array("text"=>"отмена","callback_data" => "/no");
         $inline_keyboard = [[$inline_button1, $inline_button2]];
-        $keyboard=array("inline_keyboard" => $inline_keyboard);
+        $keyboard=array("inline_keyboard"=>$inline_keyboard);
         $replyMarkup = json_encode($keyboard);
 
         //Добавление id в базу данных.
@@ -147,16 +146,30 @@ if (!empty($data['message']['document'])) {
         if ($connection->query($sql)) 
 		{ 
             //клавиатура
-			sendMessage($chat_id, "результат придет в виде ссылки, ок?", $replyMarkup);
+            sendTelegram('sendMessage', array('chat_id' => $chat_id, 'text' => 'результат придет в виде ссылки, ок?'));
         }
     }
-}
-function sendMessage($chat_id, $text, $replyMarkup) {
-  file_get_contents('https://api.telegram.org/bot794519976:AAFVA4NguNYVsSymwPqn0iVHrBVoDIeMNnE/sendMessage?chat_id=' . $chat_id . '&text=' . urlencode($text) . '&reply_markup=' . $replyMarkup);
+    exit(); 
 }
 
-if ($callback_data == '/ok') {
-
-		sendMessage($chat_id_in, "воть", "");
-
+if ($text == '/ok') {
+    //получение id из базы данных
+    $connection = databaseConnection();
+    $id = "SELECT id FROM users WHERE chat_id = {$chat_id}";
+    $result = $connection->query($id)->fetch();
+    $convert = "SELECT con_id FROM conid WHERE user_chat_id = {$result['id']} ORDER BY id DESC LIMIT 1";
+    $convert = $connection->query($convert)->fetch();
+    //get запрос на ссылку с конвертированным файлом
+	$url = 'https://api.convertio.co/convert/' . $convert['con_id'] . '/dl';
+    $out = file_get_contents($url);
+    $con_json = json_decode($out, true);
+	if (isset($con_json['data']['content']))
+	{
+		sendTelegram('sendMessage', array('chat_id' => $chat_id, 'text' => 'воть'));
+	}
+	else
+	{
+		sleep(10);
+	}
+    exit(); 
 }
